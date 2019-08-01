@@ -1,15 +1,129 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>Shopco</title>
-  <base href="/">
+  <head>
+    <meta charset="utf-8" />
+    <title>Shopco</title>
+    <base href="/" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-</head>
-<body>
-  <app-root></app-root>
-</body>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Amatic+SC&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light  py-3">
+      <div class="container">
+        <a class="navbar-brand">ShopCo</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#ftco-nav"
+          aria-controls="ftco-nav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="oi oi-menu"></span> Menu
+        </button>
+
+        <div class="collapse navbar-collapse" id="ftco-nav">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a href="index.html" class="nav-link">Home</a>
+            </li>
+            <li class="nav-item ">
+              <a href="index.html" class="nav-link">Jak to działa?</a>
+            </li>
+
+            <li class="nav-item">
+              <a href="about.html" class="nav-link">Kontakt</a>
+            </li>
+          </ul>
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+              <a href="index.html" class="nav-link">Zaloguj się</a>
+            </li>
+            <li class="nav-item">
+              <a href="about.html" class="nav-link">Zarejestruj się</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- END of NAV -->
+    <section>
+      <div class="banner" style="background-image: url(assets/images/bg_1.jpg)">
+        <div class="overlay"></div>
+        <div class="container">
+          <div
+            class="bannner-text row justify-content-center align-items-center"
+          >
+            <div class="col-md-12 text-center">
+              <h1 class="mb-2">
+                Zrealizuj listę zakupową bez wychodzenia z domu
+              </h1>
+              <h2 class="mb-4">
+                Dodaj zakupy do listy, opublikuj ją i oczekuj dostawy
+              </h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- END of banner -->
+    <section class="icons-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4 text-center d-flex align-self-stretch">
+            <div class="media block-6 mb-4 mb-md-0 services d-flex flex-column">
+              <i class="icon material-icons">
+                list_alt
+              </i>
+              <div class="text-center w-100 mt-4">
+                <h3>Listy zakupowe</h3>
+                <span>Twórz listy zakupowe i publikuj je, aby bez wychodzenia z domu zrealizować potrzebne Ci zakupy.</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 text-center d-flex align-self-stretch">
+            <div class="media block-6 mb-4 mb-md-0 services d-flex flex-column">
+              <i class="icon material-icons">
+                shopping_cart
+              </i>
+              <div class="text-center w-100 mt-4">
+                <h3>Dostawa</h3>
+                <span>Wskazujesz miejsce docelowe, pod którą zostaną dostarczone Twoje zakupy. Rozliczasz się dopiero po sprawdzeniu, czy wszystko jest OK.</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 text-center d-flex align-self-stretch">
+            <div class="media block-6 mb-4 mb-md-0 services d-flex flex-column">
+              <i class="icon material-icons">
+                attach_money
+              </i>
+              <div class="text-center w-100 mt-4">
+                <h3>Dodatkowy zarobek</h3>
+                <span
+                  >Razem z ShopCo mozesz takze zostac dostawca zakupow. Realizuj opublikowane zamówienia i zacznij zarabiać.</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <footer id="sticky-footer" class="py-4 bg-dark text-white-50">
+        <div class="container text-center">
+          <small>Copyright &copy; Your Website</small>
+        </div>
+      </footer>
+
+    <!-- <app-root></app-root> -->
+  </body>
 </html>
