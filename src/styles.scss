@@ -1,5 +1,20 @@
 /* You can add global styles to this file, and also import other style files */
 @import './assets/fonts/muli.font.css';
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Muli, sans-serif; }
+html,
+body {
+  height: 100%;
+  min-height: 100%;
+}
+.allButFooter {
+  min-height: calc(100vh - 70px);
+}
+footer{
+  height:70px;
+}
+body {
+  margin: 0;
+  font-family: 'Hind', sans-serif !important;
+}
+
+
