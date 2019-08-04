@@ -1,0 +1,27 @@
+.modal-window {
+    background-color: white;
+    width: 95%;
+    max-width: 480px;
+    font-size: 14px !important;
+    padding: 4rem;
+    position: relative;
+    margin: 0 auto;
+    // .side-text {
+    //     font-weight: 900;
+    //     text-transform: uppercase;
+    //     font-size: 64px;
+    //     color: white;
+    //     width: 300px;
+    //     text-align: right;
+    //     position: absolute;
+    //     left: -325px;
+    //     top: -20px;
+    // }
+}
+
+@media (max-width: 576px) {
+    .modal-window {
+        max-width: 100vw;
+        padding: 2rem;
+    }
+}

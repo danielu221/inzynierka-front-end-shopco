@@ -7,7 +7,11 @@ const routes: Routes = [
   {
       path: 'home',
       loadChildren: './modules/home/home.module#HomeModule'
-  }]
+  },
+  {
+    path: 'register',
+    loadChildren: './modules/register/register.module#RegisterModule'
+}]
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
