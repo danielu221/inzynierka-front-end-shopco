@@ -4,9 +4,10 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { StoreModule } from '@ngrx/store';
-import { reducers, metaReducers } from './core/store';
 import { HeaderComponent } from './core/header/header.component';
+import { RootStoreModule } from './core/store';
+import { HttpClientModule } from '@angular/common/http';
+import { ApiManagementService } from './shared/services/api-management.service';
 
 @NgModule({
   declarations: [
@@ -17,9 +18,10 @@ import { HeaderComponent } from './core/header/header.component';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    StoreModule.forRoot(reducers, { metaReducers })
+    HttpClientModule,
+    RootStoreModule
   ],
-  providers: [],
+  providers: [ApiManagementService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

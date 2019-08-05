@@ -1,19 +1,6 @@
-import {
-  ActionReducer,
-  ActionReducerMap,
-  createFeatureSelector,
-  createSelector,
-  MetaReducer
-} from '@ngrx/store';
-import { environment } from '../../../environments/environment';
-
-export interface State {
-
-}
-
-export const reducers: ActionReducerMap<State> = {
-
-};
-
-
-export const metaReducers: MetaReducer<State>[] = !environment.production ? [] : [];
+import { RootStoreModule } from './root-store.module';
+// import * as RootStoreSelectors from './root-store.selectors';
+import * as RootStoreState from './root-state';
+export * from './auth';
+// export * from './login';
+export { RootStoreState, RootStoreModule };
