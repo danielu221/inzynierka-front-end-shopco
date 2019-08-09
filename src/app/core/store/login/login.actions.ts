@@ -1,7 +1,7 @@
 import { Action } from '@ngrx/store';
 import { FormLogin } from './login.reducer';
 import { HttpErrorResponse } from '@angular/common/http';
-import { LoginResponse } from './login.interfaces';
+import { LoginResponse } from './login-response.interface';
 
 export enum LoginActionsTypes {
     SUBMIT_LOGIN_FORM = '[LOGIN FORM] Submit form',

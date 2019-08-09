@@ -1,16 +1,5 @@
 @import '../../../shared/variables.scss';
 
-mat-form-field {
-    width: 100%;
-}
-.register-form{
-    width:250px;
-}
-.form-header{
-text-transform: uppercase;
-text-align: center;
-font-weight: 400;
-}
 .btn-submit-form {
     background-color: $green;
     color: white;
@@ -21,10 +10,6 @@ font-weight: 400;
         background-color: $lightgreen;
         cursor: pointer;
     }
-}
-
-hr{
-    background-color:$red;
 }
 
 .loader-container {

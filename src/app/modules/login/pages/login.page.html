@@ -1,29 +1,37 @@
 <app-banner [height]="'86vh'">
-    <app-modal-window>
-        <form class="register-form">
-            <h3 class="form-header">Zaloguj się</h3>
-            <hr />
-          <mat-form-field>
-            <input matInput placeholder="Email"  [ngrxFormControlState]="(formState$ | async).controls.email">
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput placeholder="Hasło" >
-          </mat-form-field>
-          <button
-                  type="submit"
-                  class="p-4 btn-submit-form btn-block mt-3"
-              >
-                  <!-- <div
-                      class="three-dots-loading-container row align-items-center justify-content-center"
-                      *ngIf="(componentState$ | async).isLoading"
-                  >
-                      <img src="/assets/three-dots.svg" />
-                  </div> -->
-  
-                  <span class="submit-text" >
-                      Zaloguj
-                  </span>
-              </button>
-      </form>
-    </app-modal-window>
-  </app-banner>
+  <app-modal-window>
+    <form
+      class="register-form"
+      [ngrxFormState]="formState$ | async"
+      (submit)="submit()"
+    >
+      <h3 class="form-header">Zaloguj się</h3>
+      <hr />
+      <mat-form-field floatLabel="auto">
+        <input
+          matInput
+          placeholder="Email"
+          [ngrxFormControlState]="(formState$ | async).controls.email"
+        />
+        <mat-error *ngIf="(formState$ | async).errors._email?.required">
+          To pole jest wymagane
+        </mat-error>
+        <mat-error *ngIf="(formState$ | async).errors._email?.email">
+          Podano niepoprawny format
+      </mat-error>
+      </mat-form-field>
+      <mat-form-field floatLabel="auto">
+        <input
+          matInput
+          type="password"
+          placeholder="Hasło"
+          [ngrxFormControlState]="(formState$ | async).controls.password"
+        />
+        <mat-error *ngIf="(formState$ | async).errors._password?.required">
+          To pole jest wymagane
+        </mat-error>
+      </mat-form-field>
+      <app-submit-btn [isLoading]="(componentState$ | async).isLoading">Zaloguj</app-submit-btn>
+    </form>
+  </app-modal-window>
+</app-banner>

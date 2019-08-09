@@ -1,4 +1,4 @@
 export interface FormLogin {
-    lastName: string;
+    email: string;
     password:string
   }

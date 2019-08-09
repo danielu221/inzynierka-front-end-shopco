@@ -1,41 +1,83 @@
 <app-banner [height]="'86vh'">
   <app-modal-window>
-      <form class="register-form">
-          <h3 class="form-header">Zarejestruj się</h3>
-          <hr />
-        <mat-form-field>
-          <input matInput placeholder="Imię">
-        </mat-form-field>
-        <mat-form-field>
-          <input matInput placeholder="Nazwisko" >
-        </mat-form-field>
-        <mat-form-field>
-          <input matInput placeholder="Numer telefonu" >
-        </mat-form-field>
-        <mat-form-field>
-          <input matInput placeholder="Email" >
-        </mat-form-field>
-        <mat-form-field>
-          <input matInput placeholder="Hasło" >
-        </mat-form-field>
-        <mat-form-field>
-          <input matInput placeholder="Data urodzenia" >
-        </mat-form-field>
-        <button
-                type="submit"
-                class="p-4 btn-submit-form btn-block mt-3"
-            >
-                <!-- <div
-                    class="three-dots-loading-container row align-items-center justify-content-center"
-                    *ngIf="(componentState$ | async).isLoading"
-                >
-                    <img src="/assets/three-dots.svg" />
-                </div> -->
-
-                <span class="submit-text" >
-                    Zarejestruj
-                </span>
-            </button>
+    <form
+      class="register-form"
+      [ngrxFormState]="formState$ | async"
+      (submit)="submit()"
+    >
+      <h3 class="form-header">Zarejestruj się</h3>
+      <hr />
+      <mat-form-field floatLabel="auto">
+        <input
+          matInput
+          placeholder="Imię"
+          [ngrxFormControlState]="(formState$ | async).controls.firstName"
+        />
+        <mat-error *ngIf="(formState$ | async).errors._firstName?.required">
+          To pole jest wymagane
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field floatLabel="auto">
+        <input
+          matInput
+          placeholder="Nazwisko"
+          [ngrxFormControlState]="(formState$ | async).controls.lastName"
+        />
+        <mat-error *ngIf="(formState$ | async).errors._lastName?.required">
+          To pole jest wymagane
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field floatLabel="auto">
+        <input
+          matInput
+          placeholder="Numer telefonu"
+          [ngrxFormControlState]="(formState$ | async).controls.phone"
+        />
+        <mat-error *ngIf="(formState$ | async).errors._phone?.required">
+          To pole jest wymagane
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field floatLabel="auto">
+        <input
+          matInput
+          placeholder="Email"
+          [ngrxFormControlState]="(formState$ | async).controls.email"
+        />
+        <mat-error *ngIf="(formState$ | async).errors._email?.required">
+          To pole jest wymagane
+        </mat-error>
+        <mat-error *ngIf="(formState$ | async).errors._email?.email">
+          Podano niepoprawny format
+      </mat-error>
+      </mat-form-field>
+      <mat-form-field floatLabel="auto">
+        <input
+          matInput
+          placeholder="Hasło"
+          [ngrxFormControlState]="(formState$ | async).controls.password"
+        />
+        <mat-error *ngIf="(formState$ | async).errors._password?.required">
+          To pole jest wymagane
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field floatLabel="auto">
+        <input
+          matInput
+          placeholder="Data urodzenia"
+          [ngrxFormControlState]="(formState$ | async).controls.birthDate"
+        />
+        <mat-error *ngIf="(formState$ | async).errors._birthDate?.required">
+          To pole jest wymagane
+        </mat-error>
+      </mat-form-field>
+      <app-submit-btn  [isLoading]="(componentState$ | async).isLoading"
+        >Zarejestruj</app-submit-btn
+      > 
+      <div class="d-flex error-container mt-2 text-center">
+        <span *ngIf="(componentState$ | async).error">
+            Wystąpił problem podczas komunikacji z serwerem
+        </span>
+    </div>
     </form>
   </app-modal-window>
 </app-banner>

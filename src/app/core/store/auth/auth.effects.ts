@@ -3,7 +3,7 @@ import { Effect, ofType, Actions } from '@ngrx/effects';
 import { Store, State } from '@ngrx/store';
 import { Router } from '@angular/router';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
-import { LoginResponse } from '../login/login.interfaces';
+import { LoginResponse } from '../login/login-response.interface';
 import { LogInSuccess } from './auth.actions';
 import {AuthActionTypes}  from './auth.actions'
 

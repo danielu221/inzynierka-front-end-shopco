@@ -4,6 +4,8 @@ import { FormGroupState } from 'ngrx-forms';
 import { ComponentState } from 'src/app/shared/interface/component-state.interface';
 import { FormLogin, State } from 'src/app/core/store/login/login.reducer';
 import { Store, select } from '@ngrx/store';
+import { take, filter, map } from 'rxjs/operators';
+import { SubmitFormLoginFormAction } from 'src/app/core/store/login/login.actions';
 
 @Component({
   selector: 'app-login',
@@ -19,4 +21,14 @@ export class LoginPage implements OnInit {
   }
 
   ngOnInit() {}
+  submit() {
+    this.formState$
+        .pipe(
+            take(1),
+            filter(s => s.isValid),
+            map(fs =>  new SubmitFormLoginFormAction(fs.value))
+        )
+        .subscribe(this.store);
+}
+
 }

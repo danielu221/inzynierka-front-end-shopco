@@ -1,0 +1,11 @@
+<button type="submit" class="p-4 btn-submit-form btn-block mt-3">
+  <div
+    class="loader-container row align-items-center justify-content-center"
+    *ngIf="isLoading"
+  >
+    <img src="assets/images/ring_loader.svg" />
+  </div>
+  <span class="submit-text" *ngIf="!isLoading">
+    <ng-content></ng-content>
+  </span>
+</button>

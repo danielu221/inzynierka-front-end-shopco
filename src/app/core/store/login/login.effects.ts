@@ -9,7 +9,7 @@ import { Store, State } from "@ngrx/store";
 import * as LoginActions from './login.actions';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { FormLogin } from "./login.reducer";
-import { LoginResponse } from "./login.interfaces";
+import { LoginResponse } from "./login-response.interface";
 import { LoginFailure, LoginSuccess } from './login.actions';
 import { HttpErrorResponse } from "@angular/common/http";
 import {LoginService} from './login.service'
