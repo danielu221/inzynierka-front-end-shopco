@@ -32,3 +32,13 @@ hr{
         height:30px;
     }
 }
+.error-container {
+    width: 100%;
+    padding: 0;
+
+    span {
+        color: #f44336;
+        font-size: 11px;
+        font-weight: 400;
+    }
+}

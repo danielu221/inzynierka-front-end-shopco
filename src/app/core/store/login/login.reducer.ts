@@ -12,7 +12,7 @@ import {
   initialComponentState
 } from 'src/app/shared/interface/component-state.interface';
 import { combineReducers, Action } from '@ngrx/store';
-import { LoginActionsTypes, LoginActions } from './login.actions';
+import { FormLoginActionsTypes, FormLoginActions } from './login.actions';
 
 export interface FormLogin {
   email: string;
@@ -42,15 +42,15 @@ const reducers = combineReducers<State['login'], any>({
   formState(state = INITIAL_STATE, action: Action) {
     return validateAndUpdateForm(formGroupReducer(state, action));
   },
-  componentState(state = initialComponentState, action: LoginActions) {
+  componentState(state = initialComponentState, action: FormLoginActions) {
     switch (action.type) {
-      case LoginActionsTypes.SUBMIT_LOGIN_FORM:
+      case FormLoginActionsTypes.SUBMIT_LOGIN_FORM:
         return {
           isLoading: true,
           error: null
         };
 
-      case LoginActionsTypes.SUBMIT_LOGIN_FORM_FAIL: {
+      case FormLoginActionsTypes.SUBMIT_LOGIN_FORM_FAIL: {
         return {
           isLoading: false,
           error: action.payload.statusText

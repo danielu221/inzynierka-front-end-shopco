@@ -24,9 +24,6 @@ export class RegisterPage implements OnInit {
   }
 
   ngOnInit() {
-    this.formState$.subscribe(s=>{
-      console.log(s)
-    })
   }
   submit() {
     this.formState$

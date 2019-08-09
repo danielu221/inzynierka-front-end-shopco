@@ -6,7 +6,7 @@ import { of } from "rxjs";
 
 import { Store, State } from "@ngrx/store";
 
-import * as LoginActions from './login.actions';
+import * as FormLoginActions from './login.actions';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { FormLogin } from "./login.reducer";
 import { LoginResponse } from "./login-response.interface";
@@ -18,7 +18,7 @@ import {LoginService} from './login.service'
 export class LoginEffects {
     @Effect()
     login = this.actions$.pipe(
-        ofType<LoginActions.SubmitFormLoginFormAction>(LoginActions.LoginActionsTypes.SUBMIT_LOGIN_FORM),
+        ofType<FormLoginActions.SubmitFormLoginFormAction>(FormLoginActions.FormLoginActionsTypes.SUBMIT_LOGIN_FORM),
         map(action => action.payload),
         switchMap((payload: FormLogin) =>
             this.loginService.login(payload).pipe(
