@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -8,6 +8,10 @@ import { HeaderComponent } from './core/header/header.component';
 import { RootStoreModule } from './core/store';
 import { HttpClientModule } from '@angular/common/http';
 import { ApiManagementService } from './shared/services/api-management.service';
+import { registerLocaleData } from '@angular/common';
+import localePl from '@angular/common/locales/pl';
+
+registerLocaleData(localePl, 'pl');
 
 @NgModule({
   declarations: [
@@ -21,7 +25,10 @@ import { ApiManagementService } from './shared/services/api-management.service';
     HttpClientModule,
     RootStoreModule
   ],
-  providers: [ApiManagementService],
+  providers: [ApiManagementService,{
+    provide: LOCALE_ID,
+    useValue: 'pl' 
+   }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

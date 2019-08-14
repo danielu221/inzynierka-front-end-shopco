@@ -1,0 +1,16 @@
+<div class="product-border py-3  px-3">
+  <a (click)="onClick()"
+    ><img #productImg class="img-fluid" [src]="imgSrc" alt=""
+  /></a>
+  <div class="text py-3 pb-4 px-3 text-center">
+    <h3><ng-content></ng-content></h3>
+    <div
+      class=" d-flex price text-center justify-content-center align-items-center"
+    >
+      <span>{{ price | currency: 'PLN':'symbol-narrow' }} </span
+      ><i class="icon material-icons ml-2">
+        shopping_cart
+      </i>
+    </div>
+  </div>
+</div>
