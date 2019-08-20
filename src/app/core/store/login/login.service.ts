@@ -9,6 +9,7 @@ export class LoginService {
     constructor(private http: HttpClient, private apiManagement: ApiManagementService) {}
 
     login(payload: any): Observable<LoginResponse> {
-        return this.http.post<LoginResponse>(this.apiManagement.getURL(endpoints.auth.login), payload);
+        // return this.http.post<LoginResponse>(this.apiManagement.getURL(endpoints.auth.login), payload);
+        return this.http.get<LoginResponse>(this.apiManagement.getURL(endpoints.auth.login));
     }
 }

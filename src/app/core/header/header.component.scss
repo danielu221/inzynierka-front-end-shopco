@@ -1,0 +1,10 @@
+@import '../../shared/variables.scss';
+
+.user-profile{
+    &:hover{
+        cursor: pointer;
+    }
+    &:hover i{
+       color:$green;
+    }
+}

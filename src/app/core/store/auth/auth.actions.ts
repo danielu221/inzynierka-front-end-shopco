@@ -1,60 +1,23 @@
 import { Action } from '@ngrx/store';
 
 export enum AuthActionTypes {
-  LOGIN = '[Auth] Login',
-  LOGIN_SUCCESS = '[Auth] Login Success',
-  LOGIN_FAILURE = '[Auth] Login Failure',
-  SIGNUP = '[Auth] Signup',
-  SIGNUP_SUCCESS = '[Auth] Signup Success',
-  SIGNUP_FAILURE = '[Auth] Signup Failure',
-  LOGOUT = '[Auth] Logout',
-  GET_STATUS = '[Auth] GetStatus'
+    CHECK_TOKEN_VALIDATION = '[Auth] Get Token valid',
+    SET_USER_AUTH_FROM_LS = '[Auth] Get token and user details from localstorage',
+    INVALIDATE_TOKEN = '[Auth] Token is expired'
 }
 
-export class LogIn implements Action {
-  readonly type = AuthActionTypes.LOGIN;
-  constructor(public payload: any) {}
+export class CheckTokenValidation implements Action {
+    readonly type = AuthActionTypes.CHECK_TOKEN_VALIDATION;
+
+    constructor(public payload: string) {}
 }
 
-export class LogInSuccess implements Action {
-  readonly type = AuthActionTypes.LOGIN_SUCCESS;
-  constructor(public payload: any) {}
+export class SetUserAuthFromLS implements Action {
+    readonly type = AuthActionTypes.SET_USER_AUTH_FROM_LS;
 }
 
-export class LogInFailure implements Action {
-  readonly type = AuthActionTypes.LOGIN_FAILURE;
-  constructor(public payload: any) {}
+export class InvalidateToken implements Action {
+    readonly type = AuthActionTypes.INVALIDATE_TOKEN;
 }
 
-export class SignUp implements Action {
-  readonly type = AuthActionTypes.SIGNUP;
-  constructor(public payload: any) {}
-}
-
-export class SignUpSuccess implements Action {
-  readonly type = AuthActionTypes.SIGNUP_SUCCESS;
-  constructor(public payload: any) {}
-}
-
-export class SignUpFailure implements Action {
-  readonly type = AuthActionTypes.SIGNUP_FAILURE;
-  constructor(public payload: any) {}
-}
-
-export class LogOut implements Action {
-  readonly type = AuthActionTypes.LOGOUT;
-}
-
-export class GetStatus implements Action {
-  readonly type = AuthActionTypes.GET_STATUS;
-}
-
-export type AuthAction =
-  | LogIn
-  | LogInSuccess
-  | LogInFailure
-  | SignUp
-  | SignUpSuccess
-  | SignUpFailure
-  | LogOut
-  | GetStatus;
+export type AuthActions = CheckTokenValidation | SetUserAuthFromLS | InvalidateToken;

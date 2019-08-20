@@ -4,11 +4,13 @@ import { Store, State } from '@ngrx/store';
 import { Router } from '@angular/router';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { LoginResponse } from '../login/login-response.interface';
-import { LogInSuccess } from './auth.actions';
+import { CheckTokenValidation, SetUserAuthFromLS, InvalidateToken } from './auth.actions';
 import {AuthActionTypes}  from './auth.actions'
 import { RegisterSuccess, FormRegisterActionsTypes } from '../register/register.actions';
 import { RegisterResponse } from '../register/register-response.interface';
 import { LoginSuccess, FormLoginActionsTypes } from '../login/login.actions';
+import { AuthService } from './auth.service';
+import { of } from 'rxjs';
 
 export const STORAGE_TOKEN = 'token';
 export const STORAGE_USER = 'user';
@@ -38,8 +40,26 @@ export class AuthEffects {
     );
 
 
+    @Effect()
+    checkTokenValidation = this.actions$.pipe(
+        ofType<CheckTokenValidation>(AuthActionTypes.CHECK_TOKEN_VALIDATION),
+        map(action => action.payload),
+        switchMap(token =>
+            this.authService.checkToken(token).pipe(
+                map(() => new SetUserAuthFromLS()),
+                catchError(() => {
+                    // localStorage.removeItem(STORAGE_TOKEN);
+                    // localStorage.removeItem(STORAGE_USER);
+                    // return of(new InvalidateToken());
+                    return of(new SetUserAuthFromLS());
+                })
+            )
+        )
+    );
+
     constructor(
         private actions$: Actions,
         private router: Router,
+        private authService: AuthService
     ) {}
 }

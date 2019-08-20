@@ -10,7 +10,6 @@ import { FormControlState } from 'ngrx-forms';
 })
 export class CustomErrorStateMatcherDirective {
     @Input() set ngrxFormControlState(state: FormControlState<any>) {
-        console.log(state)
         const errorsAreShown = state.isInvalid && (state.isTouched || state.isSubmitted);
 
         if (this.input) {

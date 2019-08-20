@@ -4,6 +4,7 @@ import { AuthStoreModule } from './auth/auth-store.module';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { AuthService } from './auth/auth.service';
 
 @NgModule({
   declarations: [],
@@ -15,6 +16,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
     StoreDevtoolsModule.instrument({
       maxAge: 10
     })
-  ]
+  ],
+  providers:[AuthService]
 })
 export class RootStoreModule {}

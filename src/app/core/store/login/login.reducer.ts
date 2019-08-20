@@ -46,12 +46,18 @@ const reducers = combineReducers<State['login'], any>({
     switch (action.type) {
       case FormLoginActionsTypes.SUBMIT_LOGIN_FORM:
         return {
+          ...state,
           isLoading: true,
           error: null
         };
-
+      case FormLoginActionsTypes.SUBMIT_LOGIN_FORM_SUCCESS:
+        return {
+          ...state,
+          isLoading: false
+        };
       case FormLoginActionsTypes.SUBMIT_LOGIN_FORM_FAIL: {
         return {
+          ...state,
           isLoading: false,
           error: action.payload.statusText
         };

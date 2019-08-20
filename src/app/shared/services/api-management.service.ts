@@ -3,14 +3,11 @@ import { environment } from '../../../environments/environment';
 import { Injectable } from '@angular/core';
 
 export const endpoints = {
-    offers: {
-        main: '/offer/get'
-    },
     auth: {
-        login: '/auth/login',
+        login: '/login',
         register: '/auth/signup',
         registerConfirm: '/auth/registrationConfirm',
-        checkToken: '/auth/checkToken',
+        checkToken: '/checkToken',
         forgetPassword: '/auth/resetPassword',
         confirmForgetPassword: '/auth/resetPasswordConfirm',
         changePassword: '/auth/changePassword'

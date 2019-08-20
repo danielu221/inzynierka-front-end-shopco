@@ -15,26 +15,58 @@
 
     <div class="collapse navbar-collapse" id="ftco-nav">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item" routerLinkActive="active">
+        <li class="nav-item" routerLinkActive="active" *ngIf="!(user$ | async)">
           <a routerLink="/home" class="nav-link">Home</a>
         </li>
-        <li class="nav-item " routerLinkActive="active">
+        <li
+          class="nav-item "
+          routerLinkActive="active"
+          *ngIf="!(user$ | async)"
+        >
           <a href="index.html" class="nav-link">Jak to działa?</a>
         </li>
 
-        <li class="nav-item" routerLinkActive="active">
+        <li class="nav-item" routerLinkActive="active" *ngIf="!(user$ | async)">
           <a href="about.html" class="nav-link">Kontakt</a>
         </li>
 
-        <li class="nav-item" routerLinkActive="active">
-            <a routerLink="/products-list" class="nav-link">Stwórz listę</a>
-          </li>
+        <li class="nav-item" routerLinkActive="active" *ngIf="user$ | async">
+          <a routerLink="/products-list" class="nav-link">Stwórz listę</a>
+        </li>
+
+        <li class="nav-item" routerLinkActive="active" *ngIf="user$ | async">
+          <a routerLink="/your-orders" class="nav-link">Twoje zamówienia</a>
+        </li>
+
+        <li class="nav-item" routerLinkActive="active" *ngIf="user$ | async">
+          <a routerLink="/products-list" class="nav-link">Listy zakupowe</a>
+        </li>
+
+        <li class="nav-item" routerLinkActive="active" *ngIf="user$ | async">
+          <a routerLink="/products-list" class="nav-link">Podejmij zlecenie</a>
+        </li>
+
+        <li class="nav-item" routerLinkActive="active" *ngIf="user$ | async">
+          <a routerLink="/products-list" class="nav-link">Twoje zlecenia</a>
+        </li>
       </ul>
       <ul class="navbar-nav ml-auto">
         <li class="nav-item" routerLinkActive="active">
-          <a routerLink="/login" class="nav-link">Zaloguj się</a>
+          <a routerLink="/login" class="nav-link" *ngIf="!(user$ | async)"
+            >Zaloguj się</a
+          >
+
+          <div
+            class="d-flex align-items-center user-profile"
+            *ngIf="user$ | async"
+          >
+            <i class="icon material-icons ml-2">
+              account_circle
+            </i>
+            <a class="nav-link"> {{ (user$ | async).firstname }}</a>
+          </div>
         </li>
-        <li class="nav-item" routerLinkActive="active">
+        <li class="nav-item" routerLinkActive="active" *ngIf="!(user$ | async)">
           <a routerLink="/register" class="nav-link">Zarejestruj się</a>
         </li>
       </ul>
