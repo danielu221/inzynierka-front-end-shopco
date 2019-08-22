@@ -7,16 +7,13 @@ import { TweenMax } from 'gsap'
   styleUrls: ['./product.component.scss']
 })
 export class ProductComponent implements OnInit {
-
-
   @Input()
   imgSrc:string;
   @Input()
   price:number;
 
+
   constructor() { }
-
-
 
   ngOnInit() {
   }

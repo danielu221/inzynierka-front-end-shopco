@@ -11,7 +11,8 @@ export const endpoints = {
         forgetPassword: '/auth/resetPassword',
         confirmForgetPassword: '/auth/resetPasswordConfirm',
         changePassword: '/auth/changePassword'
-    }
+    },
+    products: '/product'
 };
 
 @Injectable()

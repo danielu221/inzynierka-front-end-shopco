@@ -6,10 +6,11 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderComponent } from './core/header/header.component';
 import { RootStoreModule } from './core/store';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ApiManagementService } from './shared/services/api-management.service';
 import { registerLocaleData } from '@angular/common';
 import localePl from '@angular/common/locales/pl';
+import { TokenInterceptor } from './shared/token.interceptor'
 
 registerLocaleData(localePl, 'pl');
 
@@ -28,7 +29,11 @@ registerLocaleData(localePl, 'pl');
   providers: [ApiManagementService,{
     provide: LOCALE_ID,
     useValue: 'pl' 
-   }],
+   },{
+    provide: HTTP_INTERCEPTORS,
+    useClass: TokenInterceptor,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

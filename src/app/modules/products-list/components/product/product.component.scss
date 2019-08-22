@@ -11,10 +11,11 @@
 }
 
 .text {
-  h3 {
+  .product-name{
     text-transform: uppercase;
-    font-size: 18px;
+    font-size: 15px;
     font-weight: 300;
+    height:66px;
   }
 }
 
@@ -24,6 +25,10 @@ img {
     transform: scale(1.1);
     cursor: pointer;
   }
+}
+
+.img-holder{
+  height: 180px;
 }
 
 .icon{
