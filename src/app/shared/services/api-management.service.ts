@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 
 export const endpoints = {
     auth: {
-        login: '/login',
+        login: '/signin',
         register: '/auth/signup',
         registerConfirm: '/auth/registrationConfirm',
         checkToken: '/checkToken',

@@ -65,9 +65,9 @@
         <input
           matInput
           placeholder="Data urodzenia"
-          [ngrxFormControlState]="(formState$ | async).controls.birthDate"
+          [ngrxFormControlState]="(formState$ | async).controls.dateOfBirth"
         />
-        <mat-error *ngIf="(formState$ | async).errors._birthDate?.required">
+        <mat-error *ngIf="(formState$ | async).errors._dateOfBirth?.required">
           To pole jest wymagane
         </mat-error>
       </mat-form-field>

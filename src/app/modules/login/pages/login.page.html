@@ -34,7 +34,7 @@
       <app-submit-btn [isLoading]="(componentState$ | async).isLoading">Zaloguj</app-submit-btn>
       <div class="d-flex error-container mt-2 text-center">
         <span *ngIf="(componentState$ | async).error">
-            Wystąpił problem podczas komunikacji z serwerem
+            Podano niepoprawne dane logowania.
         </span>
     </div>
     </form>

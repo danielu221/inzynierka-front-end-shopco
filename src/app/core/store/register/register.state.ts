@@ -4,5 +4,5 @@ export interface FormRegister{
     phone:string;
     email:string;
     password:string;
-    birthDate:string;
+    dateOfBirth:string;
   }
