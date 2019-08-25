@@ -6,16 +6,20 @@
   font-weight: 400;
 }
 
+.price-disabled {
+  color: red;
+}
+
 .product-border {
   border: 1px solid #f0f0f0;
 }
 
 .text {
-  .product-name{
+  .product-name {
     text-transform: uppercase;
     font-size: 15px;
     font-weight: 300;
-    height:66px;
+    height: 66px;
   }
 }
 
@@ -27,11 +31,11 @@ img {
   }
 }
 
-.img-holder{
+.img-holder {
   height: 180px;
 }
 
-.icon{
+.icon {
   font-size: 18px;
   line-height: 1.8;
   width: 35px;
@@ -39,8 +43,12 @@ img {
   border-radius: 50%;
   background-color: $green;
   color: white;
-  &:hover{
-      background-color:$lightgreen;
-      cursor: pointer;
+  &:hover {
+    background-color: $lightgreen;
+    cursor: pointer;
+  }
+
+  &.delete {
+    background-color: red;
   }
 }

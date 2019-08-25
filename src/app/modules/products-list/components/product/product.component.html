@@ -1,19 +1,29 @@
 <div class="product-border py-3  px-3">
   <div class="img-holder d-flex justify-content-center align-items-center">
-      <a (click)="onClick()"
-        ><img #productImg class="img-fluid" [src]="imgSrc" alt=""
-      /></a>
+    <a><img #productImg class="img-fluid" [src]="imgSrc" alt=""/></a>
   </div>
   <div class="text py-3 pb-4 px-3 text-center">
     <div class="product-name">
-        <ng-content></ng-content>
+      <ng-content></ng-content>
     </div>
     <div
       class=" d-flex price text-center justify-content-center align-items-center"
+      [ngClass]="{ 'price-disabled': isDisabled }"
     >
       <span>{{ price | currency: 'PLN':'symbol-narrow' }} </span
-      ><i class="icon material-icons ml-2">
+      ><i
+        *ngIf="!isDisabled"
+        (click)="handleCartClicked($event)"
+        class="icon material-icons ml-2"
+      >
         shopping_cart
+      </i>
+      <i
+        *ngIf="isDisabled"
+        (click)="handleDeleteClicked($event)"
+        class="icon delete  material-icons ml-2"
+      >
+        delete
       </i>
     </div>
   </div>

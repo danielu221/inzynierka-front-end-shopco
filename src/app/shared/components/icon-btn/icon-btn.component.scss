@@ -1,0 +1,10 @@
+@import '../../variables.scss';
+
+.btn-custom {
+    background-color: $green;
+    color: white;
+    &:hover{
+        background-color: $lightgreen;
+        cursor: pointer;
+    }
+}

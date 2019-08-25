@@ -1,0 +1,15 @@
+th.mat-header-cell {
+  text-align: center !important;
+}
+
+.cart-table-holder {
+  height: 400px;
+  overflow: scroll;
+}
+
+.delete-icon {
+  &:hover {
+    color: red;
+    cursor: pointer;
+  }
+}

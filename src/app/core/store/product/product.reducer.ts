@@ -1,20 +1,27 @@
 import { State as RootState, State } from '../root-state';
 import { Product } from 'src/app/shared/interface/product.interface';
 import { ProductActions } from './product.action';
-import {ProductActionTypes} from './product.action'
+import { ProductActionTypes } from './product.action';
+import { ProductState } from './ProductState';
 
-export interface ProductsPageState extends State  {
-  products: Product[];
-  cart: any;
+import { CartItem } from '../../../shared/interface/cart-item.interface';
+
+
+
+export interface ProductsPageState {
+  products: ProductState[];
+  productsInCart: CartItem[];
 }
 
 export const initialProductsPageState: ProductsPageState = {
- products:[],
- cart:null,
- auth:null
+  products: [],
+  productsInCart: []
 };
 
-export function ProductsPageReducer(state = initialProductsPageState, action: ProductActions) {
+export function ProductsPageReducer(
+  state = initialProductsPageState,
+  action: ProductActions
+) {
   switch (action.type) {
     case ProductActionTypes.LOAD_SUCCESS:
       return {
@@ -25,14 +32,30 @@ export function ProductsPageReducer(state = initialProductsPageState, action: Pr
     case ProductActionTypes.ADD:
       return {
         ...state,
-        cart: [...state.cart, action.payload]
+        productsInCart: [...state.productsInCart, action.payload],
+        products: state.products.map(product =>
+          product.id === action.payload.id
+            ? {
+                ...product,
+                isInCart: true
+              }
+            : product
+        )
       };
 
-    // case ProductActionTypes.Remove:
-    //   return {
-    //     ...state,
-    //     cart: [...state.cart.filter(item => item.name !== action.payload.name)]
-    //   };
+    case ProductActionTypes.REMOVE:
+      return {
+        ...state,
+        productsInCart: [...state.productsInCart.filter(product => product.id !== action.payload.id)],
+        products: state.products.map(product =>
+          product.id === action.payload.id
+            ? {
+                ...product,
+                isInCart: false
+              }
+            : product
+        )
+      };
 
     default:
       return state;

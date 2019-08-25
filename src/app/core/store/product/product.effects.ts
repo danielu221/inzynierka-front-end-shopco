@@ -21,6 +21,7 @@ import { Product } from 'src/app/shared/interface/product.interface';
 import { ProductService } from './product.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { of } from 'rxjs';
+import { ProductState } from './ProductState';
 
 @Injectable()
 export class ProductsPageEffects {
@@ -30,8 +31,9 @@ export class ProductsPageEffects {
     switchMap(() =>
       this.productService.getAll().pipe(
         map((res: Product[]) => {
-          console.log(res);
-          return new LoadProductsSuccess(res);
+          let productStates = [];
+          res.forEach(product=> productStates.push(new ProductState(product,false)))
+          return new LoadProductsSuccess(productStates);
         }),
         catchError((err: HttpErrorResponse) => of(new LoadProductsFailure(err)))
       )

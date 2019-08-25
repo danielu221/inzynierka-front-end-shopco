@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
 import { TweenMax } from 'gsap'
 
 @Component({
@@ -11,6 +11,12 @@ export class ProductComponent implements OnInit {
   imgSrc:string;
   @Input()
   price:number;
+  @Output()
+  cartClicked: EventEmitter<any> = new EventEmitter();
+  @Output()
+  deleteClicked: EventEmitter<any> = new EventEmitter();
+  @Input()
+  isDisabled = false;
 
 
   constructor() { }
@@ -18,5 +24,12 @@ export class ProductComponent implements OnInit {
   ngOnInit() {
   }
 
+  handleCartClicked(){
+    this.cartClicked.emit();
+  }
+
+  handleDeleteClicked(){
+    this.deleteClicked.emit();
+  }
 
 }

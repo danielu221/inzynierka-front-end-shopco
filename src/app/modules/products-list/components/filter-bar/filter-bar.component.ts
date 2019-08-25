@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { constructor } from 'q';
+import { MatDialog } from '@angular/material/dialog';
+import { PopupDialogComponent } from 'src/app/shared/components/popup-dialog/popup-dialog.component';
+import { CartComponent } from '../cart/cart.component';
 
 @Component({
   selector: 'app-filter-bar',
@@ -6,10 +10,26 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./filter-bar.component.scss']
 })
 export class FilterBarComponent implements OnInit {
+  @Input()
+  numberOfProducts = 0;
 
-  constructor() { }
+  @Output()
+  listIconClicked: EventEmitter<any> = new EventEmitter();
 
-  ngOnInit() {
+  constructor(
+    public dialog: MatDialog) {}
+
+  ngOnInit() {}
+
+  handleListIconClicked(){
+    const dialogRef = this.dialog.open(CartComponent, {
+      width: '800px',
+      height:'600px',
+      data: {}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
   }
-
 }

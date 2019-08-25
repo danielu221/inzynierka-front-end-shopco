@@ -1,15 +1,16 @@
 import { Action } from '@ngrx/store';
 import { Product } from 'src/app/shared/interface/product.interface';
+import { ProductState } from './ProductState';
 
 export enum ProductActionTypes {
-  ADD = '[Product] Add to cart',
-  REMOVE = '[Product] Remove from cart',
+  ADD = '[Product] Add to list',
+  REMOVE = '[Product] Remove from list',
   LOAD_PRODUCTS = '[Products] Load products from server',
   LOAD_SUCCESS = '[Products] Load success',
   LOAD_FAILURE = '[Products] Load failed'
 }
 
-export class AddToCart implements Action {
+export class AddToList implements Action {
   readonly type = ProductActionTypes.ADD;
 
   constructor(public payload: Product) {}
@@ -19,7 +20,7 @@ export class LoadProducts implements Action {
   readonly type = ProductActionTypes.LOAD_PRODUCTS;
 }
 
-export class RemoveFromCart implements Action {
+export class RemoveFromList implements Action {
   readonly type = ProductActionTypes.REMOVE;
 
   constructor(public payload: Product) {}
@@ -28,7 +29,7 @@ export class RemoveFromCart implements Action {
 export class LoadProductsSuccess implements Action {
   readonly type = ProductActionTypes.LOAD_SUCCESS;
 
-  constructor(public payload: Product[]) {}
+  constructor(public payload: ProductState[]) {}
 }
 
 export class LoadProductsFailure implements Action {
@@ -38,4 +39,4 @@ export class LoadProductsFailure implements Action {
 }
 
 
-export type ProductActions = AddToCart | RemoveFromCart | LoadProductsSuccess | LoadProducts | LoadProductsFailure; 
+export type ProductActions = AddToList | RemoveFromList | LoadProductsSuccess | LoadProducts | LoadProductsFailure; 
