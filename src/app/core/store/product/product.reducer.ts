@@ -9,12 +9,16 @@ import { CartItem } from '../../../shared/interface/cart-item.interface';
 export interface ProductsPageState {
   products: ProductState[];
   productsInCart: CartItem[];
+  totalCostOfProductsInCart:number;
 }
 
 export const initialProductsPageState: ProductsPageState = {
   products: [],
-  productsInCart: []
+  productsInCart: [],
+  totalCostOfProductsInCart:0
 };
+
+
 
 export function ProductsPageReducer(
   state = initialProductsPageState,
@@ -42,11 +46,12 @@ export function ProductsPageReducer(
                 isInCart: true
               }
             : product
-        )
+        ),
+        totalCostOfProductsInCart: +(state.totalCostOfProductsInCart + action.payload.unitPrice).toFixed(2)
       };
 
     case ProductActionTypes.REMOVE:
-      return {
+      let newState = {
         ...state,
         productsInCart: [
           ...state.productsInCart.filter(
@@ -61,10 +66,15 @@ export function ProductsPageReducer(
               }
             : product
         )
+      }
+      return {
+        ...newState,
+        totalCostOfProductsInCart: calcTotalCostOfProductsInCart(newState.productsInCart)
       };
 
     case ProductActionTypes.UPDATE_QUANTITY_IN_CART:
-      return {
+      newState = 
+      {
         ...state,
         productsInCart: 
           state.productsInCart.map(cartItem =>
@@ -72,13 +82,24 @@ export function ProductsPageReducer(
               ? {
                   ...cartItem,
                   quantity: action.payload.updatedQuantity,
-                  totalPrice: (action.payload.updatedQuantity * cartItem.unitPrice).toFixed(2)
+                  totalPrice: +(action.payload.updatedQuantity * cartItem.unitPrice).toFixed(2)
                 }
               : cartItem
           )
-      };
+      }
+      return {
+        ...newState,
+        totalCostOfProductsInCart:
+        calcTotalCostOfProductsInCart(newState.productsInCart)
+      }
 
     default:
       return state;
   }
 }
+
+
+function calcTotalCostOfProductsInCart(productsInCart:CartItem[]){
+  return +productsInCart.reduce((a,curr)=>
+  a + curr.totalPrice,0).toFixed(2)
+};

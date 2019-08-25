@@ -12,3 +12,8 @@ export const selectAllProductsInCart = createSelector(
   getProductsPageState,
   (state: ProductsPageState) => state.productsInCart
 );
+
+export const selectTotalCostOfProductsInCart = createSelector(
+  getProductsPageState,
+  (state: ProductsPageState) => state.totalCostOfProductsInCart
+);

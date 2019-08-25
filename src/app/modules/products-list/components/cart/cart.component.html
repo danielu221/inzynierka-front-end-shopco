@@ -72,9 +72,9 @@
     </ng-template>
   </div>
 </div>
-<div class="my-3 d-flex justify-content-end">
+<div class="my-3 d-flex justify-content-end" *ngIf="totalCostOfProductsInCart$ | async">
   <span class="total-price-text">
-      Łączna cena: <strong>140 zł </strong>
+      Łączna cena: <strong>{{totalCostOfProductsInCart$ | async}} zł </strong>
   </span>
 </div>
 <div mat-dialog-actions class="mt-4 d-flex justify-content-center">

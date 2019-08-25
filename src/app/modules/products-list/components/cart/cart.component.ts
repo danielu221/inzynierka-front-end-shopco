@@ -4,7 +4,7 @@ import { PopupDialogComponent } from 'src/app/shared/components/popup-dialog/pop
 import { Store, select } from '@ngrx/store';
 import { ProductsPageState } from 'src/app/core/store/product/product.reducer';
 import { Observable } from 'rxjs';
-import { selectAllProductsInCart } from 'src/app/core/store/product/product.selectors';
+import { selectAllProductsInCart, selectTotalCostOfProductsInCart } from 'src/app/core/store/product/product.selectors';
 import {
   RemoveFromList,
   UpdateQuantityInCart
@@ -44,13 +44,15 @@ export class CartComponent implements OnInit {
     'price'
   ];
   dataSource = ELEMENT_DATA;
-  productsInCart$: Observable<any>;
+  productsInCart$: Observable<CartItem[]>;
+  totalCostOfProductsInCart$:Observable<number>;
 
   constructor(
     public dialogRef: MatDialogRef<CartComponent>,
     private store: Store<ProductsPageState>
   ) {
     this.productsInCart$ = store.pipe(select(selectAllProductsInCart));
+    this.totalCostOfProductsInCart$=store.pipe(select(selectTotalCostOfProductsInCart))
   }
 
   onNoClick(): void {
