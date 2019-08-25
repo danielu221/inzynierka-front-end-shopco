@@ -7,7 +7,8 @@ export enum ProductActionTypes {
   REMOVE = '[Product] Remove from list',
   LOAD_PRODUCTS = '[Products] Load products from server',
   LOAD_SUCCESS = '[Products] Load success',
-  LOAD_FAILURE = '[Products] Load failed'
+  LOAD_FAILURE = '[Products] Load failed',
+  UPDATE_QUANTITY_IN_CART = '[CartItem] Update Quantity'
 }
 
 export class AddToList implements Action {
@@ -38,5 +39,20 @@ export class LoadProductsFailure implements Action {
   constructor(public payload: any) {}
 }
 
+export class UpdateQuantityInCart implements Action {
+  readonly type = ProductActionTypes.UPDATE_QUANTITY_IN_CART;
 
-export type ProductActions = AddToList | RemoveFromList | LoadProductsSuccess | LoadProducts | LoadProductsFailure; 
+  constructor(public payload: {
+    cartItemId:number,
+    updatedQuantity:number
+  }) {}
+}
+
+
+export type ProductActions =
+  | AddToList
+  | RemoveFromList
+  | LoadProductsSuccess
+  | LoadProducts
+  | LoadProductsFailure
+  | UpdateQuantityInCart;

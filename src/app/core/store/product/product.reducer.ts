@@ -6,8 +6,6 @@ import { ProductState } from './ProductState';
 
 import { CartItem } from '../../../shared/interface/cart-item.interface';
 
-
-
 export interface ProductsPageState {
   products: ProductState[];
   productsInCart: CartItem[];
@@ -32,7 +30,11 @@ export function ProductsPageReducer(
     case ProductActionTypes.ADD:
       return {
         ...state,
-        productsInCart: [...state.productsInCart, action.payload],
+        productsInCart: [...state.productsInCart, action.payload].map(
+          product => {
+            return { ...product, quantity: 1, totalPrice: product.unitPrice };
+          }
+        ),
         products: state.products.map(product =>
           product.id === action.payload.id
             ? {
@@ -46,7 +48,11 @@ export function ProductsPageReducer(
     case ProductActionTypes.REMOVE:
       return {
         ...state,
-        productsInCart: [...state.productsInCart.filter(product => product.id !== action.payload.id)],
+        productsInCart: [
+          ...state.productsInCart.filter(
+            product => product.id !== action.payload.id
+          )
+        ],
         products: state.products.map(product =>
           product.id === action.payload.id
             ? {
@@ -55,6 +61,21 @@ export function ProductsPageReducer(
               }
             : product
         )
+      };
+
+    case ProductActionTypes.UPDATE_QUANTITY_IN_CART:
+      return {
+        ...state,
+        productsInCart: 
+          state.productsInCart.map(cartItem =>
+            cartItem.id === action.payload.cartItemId
+              ? {
+                  ...cartItem,
+                  quantity: action.payload.updatedQuantity,
+                  totalPrice: (action.payload.updatedQuantity * cartItem.unitPrice).toFixed(2)
+                }
+              : cartItem
+          )
       };
 
     default:
