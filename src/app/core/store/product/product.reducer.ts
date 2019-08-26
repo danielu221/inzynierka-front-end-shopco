@@ -8,17 +8,15 @@ import { CartItem } from '../../../shared/interface/cart-item.interface';
 
 export interface ProductsPageState {
   products: ProductState[];
-  productsInCart: CartItem[];
-  totalCostOfProductsInCart:number;
+  cartItems: CartItem[];
+  totalCostOfProductsInCart: number;
 }
 
 export const initialProductsPageState: ProductsPageState = {
   products: [],
-  productsInCart: [],
-  totalCostOfProductsInCart:0
+  cartItems: [],
+  totalCostOfProductsInCart: 0
 };
-
-
 
 export function ProductsPageReducer(
   state = initialProductsPageState,
@@ -34,7 +32,7 @@ export function ProductsPageReducer(
     case ProductActionTypes.ADD:
       return {
         ...state,
-        productsInCart: [...state.productsInCart, action.payload].map(
+        cartItems: [...state.cartItems, action.payload].map(
           product => {
             return { ...product, quantity: 1, totalPrice: product.unitPrice };
           }
@@ -47,14 +45,16 @@ export function ProductsPageReducer(
               }
             : product
         ),
-        totalCostOfProductsInCart: +(state.totalCostOfProductsInCart + action.payload.unitPrice).toFixed(2)
+        totalCostOfProductsInCart: +(
+          state.totalCostOfProductsInCart + action.payload.unitPrice
+        ).toFixed(2)
       };
 
     case ProductActionTypes.REMOVE:
       let newState = {
         ...state,
-        productsInCart: [
-          ...state.productsInCart.filter(
+        cartItems: [
+          ...state.cartItems.filter(
             product => product.id !== action.payload.id
           )
         ],
@@ -66,40 +66,41 @@ export function ProductsPageReducer(
               }
             : product
         )
-      }
+      };
       return {
         ...newState,
-        totalCostOfProductsInCart: calcTotalCostOfProductsInCart(newState.productsInCart)
+        totalCostOfProductsInCart: calcTotalCostOfProductsInCart(
+          newState.cartItems
+        )
       };
 
     case ProductActionTypes.UPDATE_QUANTITY_IN_CART:
-      newState = 
-      {
+      newState = {
         ...state,
-        productsInCart: 
-          state.productsInCart.map(cartItem =>
-            cartItem.id === action.payload.cartItemId
-              ? {
-                  ...cartItem,
-                  quantity: action.payload.updatedQuantity,
-                  totalPrice: +(action.payload.updatedQuantity * cartItem.unitPrice).toFixed(2)
-                }
-              : cartItem
-          )
-      }
+        cartItems: state.cartItems.map(cartItem =>
+          cartItem.id === action.payload.cartItemId
+            ? {
+                ...cartItem,
+                quantity: action.payload.updatedQuantity,
+                totalPrice: +(
+                  action.payload.updatedQuantity * cartItem.unitPrice
+                ).toFixed(2)
+              }
+            : cartItem
+        )
+      };
       return {
         ...newState,
-        totalCostOfProductsInCart:
-        calcTotalCostOfProductsInCart(newState.productsInCart)
-      }
+        totalCostOfProductsInCart: calcTotalCostOfProductsInCart(
+          newState.cartItems
+        )
+      };
 
     default:
       return state;
   }
 }
 
-
-function calcTotalCostOfProductsInCart(productsInCart:CartItem[]){
-  return +productsInCart.reduce((a,curr)=>
-  a + curr.totalPrice,0).toFixed(2)
-};
+function calcTotalCostOfProductsInCart(cartItems: CartItem[]) {
+  return +cartItems.reduce((a, curr) => a + curr.totalPrice, 0).toFixed(2);
+}

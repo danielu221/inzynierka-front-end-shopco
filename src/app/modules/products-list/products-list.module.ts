@@ -24,7 +24,7 @@ import { CartComponent } from './components/cart/cart.component';
     CommonModule,
     ProductsListRouting,
     SharedModule,
-    StoreModule.forFeature('productsPage', ProductsPageReducer),
+    StoreModule.forFeature('productsPageState', ProductsPageReducer),
     EffectsModule.forFeature([ProductsPageEffects])
   ],
   providers:[

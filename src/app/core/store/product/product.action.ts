@@ -8,7 +8,10 @@ export enum ProductActionTypes {
   LOAD_PRODUCTS = '[Products] Load products from server',
   LOAD_SUCCESS = '[Products] Load success',
   LOAD_FAILURE = '[Products] Load failed',
-  UPDATE_QUANTITY_IN_CART = '[CartItem] Update Quantity'
+  UPDATE_QUANTITY_IN_CART = '[CartItem] Update Quantity',
+  SAVE_CART = '[Cart] Save cart',
+  SAVE_CART_SUCCESS = '[Cart] Save cart success',
+  SAVE_CART_FAILURE = '[Cart] Save cart failed'
 }
 
 export class AddToList implements Action {
@@ -46,6 +49,22 @@ export class UpdateQuantityInCart implements Action {
     cartItemId:number,
     updatedQuantity:number
   }) {}
+}
+
+export class SaveCart implements Action {
+  readonly type = ProductActionTypes.SAVE_CART;
+
+  constructor(public payload: {listName:string,dialogRef:any}) {}
+}
+
+export class SaveCartSuccess implements Action {
+  readonly type = ProductActionTypes.SAVE_CART_SUCCESS;
+}
+
+export class SaveCartFailure implements Action {
+  readonly type = ProductActionTypes.SAVE_CART_FAILURE;
+
+  constructor(public payload: any) {}
 }
 
 

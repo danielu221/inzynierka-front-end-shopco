@@ -5,7 +5,14 @@ import {
   FormLoginActionsTypes,
   LoginSuccessPayload
 } from '../login/login.actions';
-import { map, tap, switchMap, catchError } from 'rxjs/operators';
+import {
+  map,
+  tap,
+  switchMap,
+  catchError,
+  withLatestFrom,
+  mergeMap
+} from 'rxjs/operators';
 import {
   STORAGE_TOKEN,
   STORAGE_USER
@@ -22,6 +29,11 @@ import { ProductService } from './product.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { of } from 'rxjs';
 import { ProductState } from './ProductState';
+import { Store } from '@ngrx/store';
+import { ProductsPageState } from './product.reducer';
+import { State } from '../root-state';
+import { MatDialogRef, MatDialog } from '@angular/material/dialog';
+import { CartComponent } from 'src/app/modules/products-list/components/cart/cart.component';
 
 @Injectable()
 export class ProductsPageEffects {
@@ -32,7 +44,9 @@ export class ProductsPageEffects {
       this.productService.getAll().pipe(
         map((res: Product[]) => {
           let productStates = [];
-          res.forEach(product=> productStates.push(new ProductState(product,false)))
+          res.forEach(product =>
+            productStates.push(new ProductState(product, false))
+          );
           return new LoadProductsSuccess(productStates);
         }),
         catchError((err: HttpErrorResponse) => of(new LoadProductsFailure(err)))
@@ -40,9 +54,30 @@ export class ProductsPageEffects {
     )
   );
 
+  @Effect()
+  saveCart = this.actions$.pipe(
+    ofType<ProductActions.SaveCart>(ProductActionTypes.SAVE_CART),
+    withLatestFrom(this.store$),
+    mergeMap(([action, store]) => {
+      console.log(store);
+      return this.productService
+        .saveCart(action.payload.listName, store.productsPageState.cartItems)
+        .pipe(
+          map((res: any) => {
+            action.payload.dialogRef.close();
+            return new ProductActions.SaveCartSuccess();
+          }),
+          catchError((err: HttpErrorResponse) => {
+
+            return of(new ProductActions.SaveCartFailure(err));
+          })
+        );
+    })
+  );
 
   constructor(
     private actions$: Actions,
-    private productService: ProductService
+    private productService: ProductService,
+    private store$: Store<State>
   ) {}
 }
