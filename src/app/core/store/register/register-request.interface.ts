@@ -4,5 +4,5 @@ export interface RegisterRequest {
   phone: string;
   email: string;
   password: string;
-  birthDate: string;
+  dateOfBirth: string;
 }
