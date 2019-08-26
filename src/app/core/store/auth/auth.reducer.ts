@@ -20,9 +20,7 @@ export function authReducer(
     case FormRegisterActionsTypes.SUBMIT_REGISTER_FORM_SUCCESS: {
       return {
         ...state,
-        token: `${action.payload.token.type} ${
-          action.payload.token.access_token
-        }`,
+        token: `${action.payload.token}`,
         user: action.payload.user
       };
     }

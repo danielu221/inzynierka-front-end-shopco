@@ -11,6 +11,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatTableModule } from '@angular/material/table';
 
 import { CustomErrorStateMatcherDirective } from './error-state-matcher';
 
@@ -27,7 +28,8 @@ import { CustomErrorStateMatcherDirective } from './error-state-matcher';
         MatIconModule,
         MatTabsModule,
         MatDatepickerModule,
-        MatNativeDateModule
+        MatNativeDateModule,
+        MatTableModule
     ],
     declarations: [CustomErrorStateMatcherDirective],
     exports: [
@@ -43,7 +45,8 @@ import { CustomErrorStateMatcherDirective } from './error-state-matcher';
         MatTabsModule,
         MatDatepickerModule,
         MatNativeDateModule,
-        CustomErrorStateMatcherDirective
+        CustomErrorStateMatcherDirective,
+        MatTableModule
     ],
     providers: [{ provide: MAT_LABEL_GLOBAL_OPTIONS, useValue: { float: 'always' } }]
 })

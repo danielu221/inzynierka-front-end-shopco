@@ -3,12 +3,11 @@ import { Effect, ofType, Actions } from '@ngrx/effects';
 import { Store, State } from '@ngrx/store';
 import { Router } from '@angular/router';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
-import { LoginResponse } from '../login/login-response.interface';
 import { CheckTokenValidation, SetUserAuthFromLS, InvalidateToken } from './auth.actions';
 import {AuthActionTypes}  from './auth.actions'
 import { RegisterSuccess, FormRegisterActionsTypes } from '../register/register.actions';
 import { RegisterResponse } from '../register/register-response.interface';
-import { LoginSuccess, FormLoginActionsTypes } from '../login/login.actions';
+import { LoginSuccess, FormLoginActionsTypes, LoginSuccessPayload } from '../login/login.actions';
 import { AuthService } from './auth.service';
 import { of } from 'rxjs';
 
@@ -21,8 +20,8 @@ export class AuthEffects {
     loginSuccess = this.actions$.pipe(
         ofType<LoginSuccess>(FormLoginActionsTypes.SUBMIT_LOGIN_FORM_SUCCESS),
         map(action => action.payload),
-        tap((payload: LoginResponse) => {
-            localStorage.setItem(STORAGE_TOKEN, `${payload.token.type} ${payload.token.access_token}`);
+        tap((payload: LoginSuccessPayload) => {
+            localStorage.setItem(STORAGE_TOKEN, `${payload.token} `);
             localStorage.setItem(STORAGE_USER, JSON.stringify(payload.user));
             this.router.navigateByUrl('/');
         })
@@ -33,7 +32,7 @@ export class AuthEffects {
         ofType<RegisterSuccess>(FormRegisterActionsTypes.SUBMIT_REGISTER_FORM_SUCCESS),
         map(action => action.payload),
         tap((payload: RegisterResponse) => {
-            localStorage.setItem(STORAGE_TOKEN, `${payload.token.type} ${payload.token.access_token}`);
+            localStorage.setItem(STORAGE_TOKEN, `${payload.token}`);
             localStorage.setItem(STORAGE_USER, JSON.stringify(payload.user));
             this.router.navigateByUrl('/');
         })

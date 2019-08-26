@@ -24,7 +24,7 @@ export class RegisterService {
             phone:payload.phone,
             email: payload.email,
             password: payload.password,
-            birthDate: payload.birthDate
+            dateOfBirth: payload.dateOfBirth
         };
         return this.http.post<RegisterResponse>(this.apiManagement.getURL(endpoints.auth.register), request);
     }

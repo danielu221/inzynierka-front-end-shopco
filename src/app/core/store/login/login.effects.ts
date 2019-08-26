@@ -9,7 +9,6 @@ import { Store, State } from "@ngrx/store";
 import * as FormLoginActions from './login.actions';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { FormLogin } from "./login.reducer";
-import { LoginResponse } from "./login-response.interface";
 import { LoginFailure, LoginSuccess } from './login.actions';
 import { HttpErrorResponse } from "@angular/common/http";
 import {LoginService} from './login.service'
@@ -22,7 +21,16 @@ export class LoginEffects {
         map(action => action.payload),
         switchMap((payload: FormLogin) =>
             this.loginService.login(payload).pipe(
-                map((res: LoginResponse) => new LoginSuccess(res)),
+                map((res: any) => {console.log(res); return new LoginSuccess({
+                    user : {
+                        id: res.body.id,
+                        firstname: res.body.firstname,
+                        lastname: res.body.lastname,
+                        email:res.body.email
+                    },
+                    token:res.headers.get('Authorization')
+
+                })}),
                 catchError((err: HttpErrorResponse) => of(new LoginFailure(err)))
             )
         )

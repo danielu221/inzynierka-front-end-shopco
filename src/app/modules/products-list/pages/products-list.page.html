@@ -1,74 +1,19 @@
-<app-filter-bar></app-filter-bar>
+<app-filter-bar [numberOfProducts]="(productsInCart$ | async).length"></app-filter-bar>
+
 <div class="container">
   <div class="row">
-    <div class="col-md-6 col-lg-3 mt-3">
+
+    <div class="col-md-6 col-lg-3 mt-3" *ngFor="let product of (products$ | async)">
       <app-product
         [imgSrc]="
-          'https://colorlib.com/preview/theme/vegefoods/images/product-1.jpg'
+        product.picture
         "
-        [price]="123"
+        [price]="product.unitPrice"
+        (cartClicked)="addToList(product)"
+        [isDisabled]="product.isInCart"
+        (deleteClicked)="removeFromList(product)"
       >
-        Papryka czerwona
-      </app-product>
-    </div>
-    <div class="col-md-6 col-lg-3 mt-3">
-      <app-product
-        [imgSrc]="
-          'https://colorlib.com/preview/theme/vegefoods/images/product-1.jpg'
-        "
-        [price]="123"
-      >
-        Papryka czerwona
-      </app-product>
-    </div>
-    <div class="col-md-6 col-lg-3 mt-3">
-      <app-product
-        [imgSrc]="
-          'https://colorlib.com/preview/theme/vegefoods/images/product-1.jpg'
-        "
-        [price]="123"
-      >
-        Papryka czerwona
-      </app-product>
-    </div>
-    <div class="col-md-6 col-lg-3 mt-3">
-      <app-product
-        [imgSrc]="
-          'https://colorlib.com/preview/theme/vegefoods/images/product-1.jpg'
-        "
-        [price]="123"
-      >
-        Papryka czerwona
-      </app-product>
-    </div>
-    <div class="col-md-6 col-lg-3 mt-3">
-      <app-product
-        [imgSrc]="
-          'https://colorlib.com/preview/theme/vegefoods/images/product-1.jpg'
-        "
-        [price]="123"
-      >
-        Papryka czerwona
-      </app-product>
-    </div>
-    <div class="col-md-6 col-lg-3 mt-3">
-      <app-product
-        [imgSrc]="
-          'https://colorlib.com/preview/theme/vegefoods/images/product-1.jpg'
-        "
-        [price]="123"
-      >
-        Papryka czerwona
-      </app-product>
-    </div>
-    <div class="col-md-6 col-lg-3 mt-3">
-      <app-product
-        [imgSrc]="
-          'https://colorlib.com/preview/theme/vegefoods/images/product-1.jpg'
-        "
-        [price]="123"
-      >
-        Papryka czerwona
+        {{product.productName}}
       </app-product>
     </div>
   </div>
