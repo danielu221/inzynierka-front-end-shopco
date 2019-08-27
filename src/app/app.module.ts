@@ -12,6 +12,8 @@ import { registerLocaleData } from '@angular/common';
 import localePl from '@angular/common/locales/pl';
 import { TokenInterceptor } from './shared/token.interceptor'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ToasterModule } from 'angular2-toaster';
+import { ToastMessageService } from './shared/services/toast-message.service';
 
 registerLocaleData(localePl, 'pl');
 
@@ -25,7 +27,8 @@ registerLocaleData(localePl, 'pl');
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    RootStoreModule
+    RootStoreModule,
+    ToasterModule.forRoot(),
   ],
   providers: [ApiManagementService,{
     provide: LOCALE_ID,
@@ -35,7 +38,8 @@ registerLocaleData(localePl, 'pl');
     useClass: TokenInterceptor,
     multi: true
   },{ provide: MatDialogRef, useValue: {} },
-  { provide: MAT_DIALOG_DATA, useValue: [] },],
+  { provide: MAT_DIALOG_DATA, useValue: [] },
+  ToastMessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
