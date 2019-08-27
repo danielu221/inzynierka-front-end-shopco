@@ -3,6 +3,9 @@ import { STORAGE_TOKEN } from './shared/variables/local-storage.variables';
 import { Store } from '@ngrx/store';
 import { State } from './core/store/root-state';
 import { CheckTokenValidation } from './core/store/auth/auth.actions';
+import { ToasterService, ToasterConfig } from 'angular2-toaster';
+import { ToastConfig } from './shared/interface/toast-config.interface';
+import { ToastMessageService } from './shared/services/toast-message.service';
 
 @Component({
   selector: 'app-root',
@@ -11,14 +14,25 @@ import { CheckTokenValidation } from './core/store/auth/auth.actions';
 })
 export class AppComponent {
   title = 'shopco';
-  constructor(private store:Store<State>){
+  toasterService: ToasterService;
 
-  const token = localStorage.getItem(STORAGE_TOKEN);
-  // TODO: uncomment when endpoint will be ready
-  if (token) {
+  toasterConfig: ToasterConfig = new ToasterConfig({
+    positionClass: 'toast-top-right',
+    animation: 'fade'
+  });
+
+  toastMessageService:ToastMessageService;
+  constructor(
+    private store: Store<State>,
+    toasterService: ToasterService,
+    toastMessageService: ToastMessageService
+  ) {
+    const token = localStorage.getItem(STORAGE_TOKEN);
+    // TODO: uncomment when endpoint will be ready
+    if (token) {
       this.store.dispatch(new CheckTokenValidation(token));
-  }
+    }
+    this.toastMessageService = toastMessageService;
+    this.toasterService = toasterService;
   }
 }
-
-

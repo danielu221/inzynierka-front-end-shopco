@@ -34,6 +34,8 @@ import { ProductsPageState } from './product.reducer';
 import { State } from '../root-state';
 import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { CartComponent } from 'src/app/modules/products-list/components/cart/cart.component';
+import { ToastMessageService } from 'src/app/shared/services/toast-message.service';
+import { ToastConfig } from 'src/app/shared/interface/toast-config.interface';
 
 @Injectable()
 export class ProductsPageEffects {
@@ -64,11 +66,19 @@ export class ProductsPageEffects {
         .saveCart(action.payload.listName, store.productsPageState.cartItems)
         .pipe(
           map((res: any) => {
+            const toast: ToastConfig = {
+              title: 'Lista pomyślnie zapisana',
+            };
+            this.toasterService.showSuccessMessage(toast);
             action.payload.dialogRef.close();
             return new ProductActions.SaveCartSuccess();
           }),
           catchError((err: HttpErrorResponse) => {
-
+            const toast: ToastConfig = {
+              title: 'Błąd z wysłaniem żądania',
+              body: `Kod błędu: ${err.status}`
+            };
+            this.toasterService.showErrorMessage(toast);
             return of(new ProductActions.SaveCartFailure(err));
           })
         );
@@ -78,6 +88,7 @@ export class ProductsPageEffects {
   constructor(
     private actions$: Actions,
     private productService: ProductService,
-    private store$: Store<State>
+    private store$: Store<State>,
+    private toasterService: ToastMessageService
   ) {}
 }
