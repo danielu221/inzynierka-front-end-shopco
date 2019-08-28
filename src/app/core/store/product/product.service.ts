@@ -8,6 +8,8 @@ import { Observable } from 'rxjs';
 import { Product } from 'src/app/shared/interface/product.interface';
 import { CartItem } from 'src/app/shared/interface/cart-item.interface';
 
+import {getDateNowFormatted} from '../../../shared/utils';
+
 interface ISaveCartRequest {
   listName: string;
   creationDate: string;
@@ -33,7 +35,6 @@ export class ProductService {
   }
 
   saveCart(listName: string, cartItems: CartItem[]): Observable<any> {
-      console.log(listName,cartItems)
     let requestBody: ISaveCartRequest;
     let items: IRequestCartItem[];
     items = cartItems.map(cartItem => {
@@ -43,11 +44,13 @@ export class ProductService {
       };
     });
 
+    console.log(items)
     requestBody = {
         listName:listName,
-        creationDate:"test",
+        creationDate:getDateNowFormatted(),
         items:items
     }
-    return this.http.post(this.apiManagement.getURL(endpoints.cart.save),requestBody);
+    console.log(requestBody)
+    return this.http.post(this.apiManagement.getURL(endpoints.cart.save),requestBody,{responseType: 'text'});
   }
 }

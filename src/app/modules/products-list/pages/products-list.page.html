@@ -1,3 +1,12 @@
+
+<app-banner [height]="'300px'">
+  <div class="col-md-12 text-center text-white font-weight-bold">
+    <h1 class="mb-2">
+     <strong>Produkty</strong>
+    </h1>
+  </div>
+</app-banner>
+
 <app-filter-bar [numberOfProducts]="(productsInCart$ | async).length"></app-filter-bar>
 
 <div class="container">

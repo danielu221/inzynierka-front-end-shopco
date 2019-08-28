@@ -15,7 +15,8 @@ export const endpoints = {
     products: '/product',
     cart:{
         save: '/listofitems'
-    }
+    },
+    carts:'/listofitems'
 };
 
 @Injectable()
