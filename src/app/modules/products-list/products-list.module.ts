@@ -12,6 +12,7 @@ import { ProductsPageReducer } from 'src/app/core/store/product/product.reducer'
 import { ProductsPageEffects } from 'src/app/core/store/product/product.effects';
 import { ProductService } from 'src/app/core/store/product/product.service';
 import { CartComponent } from './components/cart/cart.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { CartComponent } from './components/cart/cart.component';
   ],
   imports: [
     CommonModule,
+    FormsModule,
     ProductsListRouting,
     SharedModule,
     StoreModule.forFeature('productsPageState', ProductsPageReducer),

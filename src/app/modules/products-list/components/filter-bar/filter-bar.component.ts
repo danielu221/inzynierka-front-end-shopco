@@ -24,7 +24,7 @@ export class FilterBarComponent implements OnInit {
   handleListIconClicked(){
     const dialogRef = this.dialog.open(CartComponent, {
       width: '800px',
-      height:'600px',
+      height:'650px',
       data: {}
     });
 

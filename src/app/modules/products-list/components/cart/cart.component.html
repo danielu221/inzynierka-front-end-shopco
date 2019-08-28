@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>Twoja lista zakupowa</h1>
+<h1 mat-dialog-title><input type="text" [(ngModel)]="listName" class="editable"></h1>
 <div mat-dialog-content>
   <div class="cart-table-holder d-flex justify-content-center py-2">
     <table
@@ -77,8 +77,8 @@
       Łączna cena: <strong>{{totalCostOfProductsInCart$ | async}} zł </strong>
   </span>
 </div>
-<div mat-dialog-actions class="mt-4 d-flex justify-content-center">
-  <app-icon-btn class="p-2" [icon]="'shopping_cart'" (click)="onNoClick()"
+<div mat-dialog-actions class="mt-4 d-flex justify-content-center" *ngIf="(productsInCart$ | async).length > 0">
+  <app-icon-btn class="p-2"  [icon]="'shopping_cart'" (click)="onNoClick()"
     >Zamów</app-icon-btn
   >
   <app-icon-btn class="p-2" [icon]="'save'" (click)="onSaveBtnClicked()">Zapisz</app-icon-btn>

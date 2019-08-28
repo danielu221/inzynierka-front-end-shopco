@@ -32,6 +32,7 @@ export class CartComponent implements OnInit {
 
   productsInCart$: Observable<CartItem[]>;
   totalCostOfProductsInCart$: Observable<number>;
+  listName:string = "Twoja lista";
 
   constructor(
     public dialogRef: MatDialogRef<CartComponent>,
@@ -77,7 +78,7 @@ export class CartComponent implements OnInit {
 
   onSaveBtnClicked() {
     this.store.dispatch(
-      new SaveCart({ listName: 'Test listname', dialogRef: this.dialogRef })
+      new SaveCart({ listName: this.listName, dialogRef: this.dialogRef })
     );
   }
 }
