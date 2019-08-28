@@ -33,10 +33,10 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class CartsPage implements OnInit {
   displayedColumns: string[] = [
-    'position',
-    'name',
-    'weight',
-    'symbol',
+    'cartName',
+    'productsInCart',
+    'details',
+    'delete',
     'price'
   ];
 carts$:Observable<any>

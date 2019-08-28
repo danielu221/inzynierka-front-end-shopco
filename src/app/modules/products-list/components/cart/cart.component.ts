@@ -49,7 +49,6 @@ export class CartComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.productsInCart$.subscribe(r => console.log(r));
   }
 
   onDeleteClick(product) {
