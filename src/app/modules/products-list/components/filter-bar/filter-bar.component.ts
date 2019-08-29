@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { constructor } from 'q';
 import { MatDialog } from '@angular/material/dialog';
 import { PopupDialogComponent } from 'src/app/shared/components/popup-dialog/popup-dialog.component';
-import { CartComponent } from '../cart/cart.component';
+import { CartInProductsComponent } from '../cart/cart.component';
 
 @Component({
   selector: 'app-filter-bar',
@@ -22,9 +22,9 @@ export class FilterBarComponent implements OnInit {
   ngOnInit() {}
 
   handleListIconClicked(){
-    const dialogRef = this.dialog.open(CartComponent, {
+    const dialogRef = this.dialog.open(CartInProductsComponent, {
       width: '800px',
-      height:'600px',
+      height:'650px',
       data: {}
     });
 

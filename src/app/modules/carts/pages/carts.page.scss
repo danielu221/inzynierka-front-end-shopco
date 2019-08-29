@@ -1,0 +1,26 @@
+th.mat-header-cell {
+  text-align: center !important;
+}
+
+td.mat-cell {
+  text-align: center !important;
+}
+
+.delete-icon {
+  &:hover {
+    color: red;
+    cursor: pointer;
+  }
+}
+
+.search-icon {
+  &:hover {
+    color: #0080ff;
+    cursor: pointer;
+  }
+}
+
+.no-items-text{
+  margin:0 auto;
+  font-size:20px;
+}

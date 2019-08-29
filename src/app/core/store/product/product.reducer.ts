@@ -37,14 +37,14 @@ export function ProductsPageReducer(
             return { ...product, quantity: 1, totalPrice: product.unitPrice };
           }
         ),
-        products: state.products.map(product =>
+        products: [...state.products.map(product =>
           product.id === action.payload.id
             ? {
                 ...product,
                 isInCart: true
               }
             : product
-        ),
+        )],
         totalCostOfProductsInCart: +(
           state.totalCostOfProductsInCart + action.payload.unitPrice
         ).toFixed(2)
@@ -58,14 +58,14 @@ export function ProductsPageReducer(
             product => product.id !== action.payload.id
           )
         ],
-        products: state.products.map(product =>
+        products: [...state.products.map(product =>
           product.id === action.payload.id
             ? {
                 ...product,
                 isInCart: false
               }
             : product
-        )
+        )]
       };
       return {
         ...newState,
@@ -96,11 +96,24 @@ export function ProductsPageReducer(
         )
       };
 
+      case ProductActionTypes.SAVE_CART_SUCCESS:
+        return{
+          ...state,
+          products:[...state.products.map(product=>{
+            return {
+              ...product,
+              isInCart:false
+            }
+          })],
+          cartItems:[],
+          totalCostOfProductsInCart:null
+        }
+
     default:
       return state;
   }
 }
 
-function calcTotalCostOfProductsInCart(cartItems: CartItem[]) {
+export function calcTotalCostOfProductsInCart(cartItems: CartItem[]) {
   return +cartItems.reduce((a, curr) => a + curr.totalPrice, 0).toFixed(2);
 }

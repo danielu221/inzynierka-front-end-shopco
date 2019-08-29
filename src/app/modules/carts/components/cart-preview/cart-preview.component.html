@@ -2,8 +2,6 @@
   [cartItems$]="productsInCart$"
   [(listName)]="listName"
   [totalCost]="totalCostOfProductsInCart$ | async"
-  (deleteClicked)="onDeleteClick($event)"
-  (saveBtnClicked)="onSaveBtnClicked($event)"
   (decreaseQuantityBtnClicked)="decreaseQuantityBtnClicked($event)"
   (increaseQuantityBtnClicked)="increaseQuantityBtnClicked($event)"
 ></app-cart-shared>
