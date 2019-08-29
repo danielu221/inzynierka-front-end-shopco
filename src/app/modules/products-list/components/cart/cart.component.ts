@@ -16,26 +16,19 @@ import {
 import { CartItem } from 'src/app/shared/interface/cart-item.interface';
 
 @Component({
-  selector: 'app-cart',
+  selector: 'app-cart-products',
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CartComponent implements OnInit {
-  displayedColumns: string[] = [
-    'picture',
-    'name',
-    'quantity',
-    'delete',
-    'price'
-  ];
+export class CartInProductsComponent implements OnInit {
 
   productsInCart$: Observable<CartItem[]>;
   totalCostOfProductsInCart$: Observable<number>;
   listName:string = "Twoja lista";
 
   constructor(
-    public dialogRef: MatDialogRef<CartComponent>,
+    public dialogRef: MatDialogRef<CartInProductsComponent>,
     private store: Store<ProductsPageState>
   ) {
     this.productsInCart$ = store.pipe(select(selectAllProductsInCart));
@@ -79,5 +72,9 @@ export class CartComponent implements OnInit {
     this.store.dispatch(
       new SaveCart({ listName: this.listName, dialogRef: this.dialogRef })
     );
+  }
+
+  onListNameChanged(listName){
+    this.listName = listName;
   }
 }

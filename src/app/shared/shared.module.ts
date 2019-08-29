@@ -7,17 +7,21 @@ import { MaterialModule } from './modules/custom-material.module';
 import { SubmitBtnComponent } from './components/submit-btn/submit-btn.component';
 import { PopupDialogComponent } from './components/popup-dialog/popup-dialog.component';
 import { IconBtnComponent } from './components/icon-btn/icon-btn.component';
+import { CartComponent } from './components/cart/cart.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [ModalWindowComponent, BannerComponent, SubmitBtnComponent, PopupDialogComponent, IconBtnComponent],
-  imports: [CommonModule, MaterialModule],
+  declarations: [ModalWindowComponent, BannerComponent, SubmitBtnComponent, PopupDialogComponent, IconBtnComponent, CartComponent],
+  imports: [CommonModule, MaterialModule,
+    FormsModule],
   exports: [
     ModalWindowComponent,
     BannerComponent,
     MaterialModule,
     SubmitBtnComponent,
     PopupDialogComponent,
-    IconBtnComponent
+    IconBtnComponent,
+    CartComponent
   ],
 
 entryComponents: [PopupDialogComponent]

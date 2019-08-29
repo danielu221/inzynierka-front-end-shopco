@@ -33,7 +33,7 @@ import { Store } from '@ngrx/store';
 import { ProductsPageState } from './product.reducer';
 import { State } from '../root-state';
 import { MatDialogRef, MatDialog } from '@angular/material/dialog';
-import { CartComponent } from 'src/app/modules/products-list/components/cart/cart.component';
+import { CartInProductsComponent } from 'src/app/modules/products-list/components/cart/cart.component';
 import { ToastMessageService } from 'src/app/shared/services/toast-message.service';
 import { ToastConfig } from 'src/app/shared/interface/toast-config.interface';
 
