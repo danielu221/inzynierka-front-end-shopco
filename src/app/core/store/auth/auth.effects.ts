@@ -3,7 +3,7 @@ import { Effect, ofType, Actions } from '@ngrx/effects';
 import { Store, State } from '@ngrx/store';
 import { Router } from '@angular/router';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
-import { CheckTokenValidation, SetUserAuthFromLS, InvalidateToken } from './auth.actions';
+import { CheckTokenValidation, SetUserAuthFromLS, InvalidateToken, Logout } from './auth.actions';
 import {AuthActionTypes}  from './auth.actions'
 import { RegisterSuccess, FormRegisterActionsTypes } from '../register/register.actions';
 import { RegisterResponse } from '../register/register-response.interface';
@@ -55,6 +55,16 @@ export class AuthEffects {
             )
         )
     );
+
+    @Effect({ dispatch: false })
+    logout = this.actions$.pipe(
+        ofType<Logout>(AuthActionTypes.LOGOUT),
+        tap(()=>{
+            localStorage.removeItem(STORAGE_TOKEN);
+            localStorage.removeItem(STORAGE_USER);
+            this.router.navigateByUrl('/')
+        })
+    )
 
     constructor(
         private actions$: Actions,

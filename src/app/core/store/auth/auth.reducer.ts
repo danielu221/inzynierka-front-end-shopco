@@ -43,6 +43,13 @@ export function authReducer(
         user: null
       };
     }
+
+    case AuthActionTypes.LOGOUT: {
+      return {
+        token: null,
+        user: null
+      };
+    }
     default: {
       return state;
     }
