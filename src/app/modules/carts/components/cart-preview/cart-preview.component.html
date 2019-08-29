@@ -1,0 +1,5 @@
+<app-cart-shared
+  [cartItems$]="productsInCart$"
+  [(listName)]="listName"
+  [totalCost]="totalCostOfProductsInCart$ | async"
+></app-cart-shared>
