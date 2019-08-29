@@ -4,6 +4,7 @@ import { User } from 'src/app/shared/interface/user.interface';
 import { Store, select } from '@ngrx/store';
 import { State } from '../store/root-state';
 import { selectUser } from '../store/root-store.selectors';
+import { Logout } from '../store/auth/auth.actions';
 
 @Component({
   selector: 'app-header',
@@ -18,5 +19,9 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  onLogoutClicked(){
+    this.store.dispatch(new Logout())
   }
 }

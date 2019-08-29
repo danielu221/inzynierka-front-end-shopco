@@ -57,13 +57,17 @@
           >
 
           <div
-            class="d-flex align-items-center user-profile"
+            class="d-flex align-items-center "
             *ngIf="user$ | async"
           >
-            <i class="icon material-icons ml-2">
-              account_circle
-            </i>
-            <a class="nav-link"> {{ (user$ | async).firstname }}</a>
+            <div class="d-flex align-items-center user-profile">
+              <i class="icon material-icons ml-2">
+                account_circle
+              </i>
+              <a class="nav-link"> {{ (user$ | async).firstname }}</a>
+            </div>
+            <span class="logout nav-link" (click)="onLogoutClicked()">
+              Wyloguj</span>
           </div>
         </li>
         <li class="nav-item" routerLinkActive="active" *ngIf="!(user$ | async)">
