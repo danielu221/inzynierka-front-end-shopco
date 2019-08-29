@@ -45,16 +45,18 @@ export class LoadProductsFailure implements Action {
 export class UpdateQuantityInCart implements Action {
   readonly type = ProductActionTypes.UPDATE_QUANTITY_IN_CART;
 
-  constructor(public payload: {
-    cartItemId:number,
-    updatedQuantity:number
-  }) {}
+  constructor(
+    public payload: {
+      cartItemId: number;
+      updatedQuantity: number;
+    }
+  ) {}
 }
 
 export class SaveCart implements Action {
   readonly type = ProductActionTypes.SAVE_CART;
 
-  constructor(public payload: {listName:string,dialogRef:any}) {}
+  constructor(public payload: { listName: string; dialogRef: any }) {}
 }
 
 export class SaveCartSuccess implements Action {
@@ -67,11 +69,13 @@ export class SaveCartFailure implements Action {
   constructor(public payload: any) {}
 }
 
-
 export type ProductActions =
   | AddToList
   | RemoveFromList
   | LoadProductsSuccess
   | LoadProducts
   | LoadProductsFailure
-  | UpdateQuantityInCart;
+  | UpdateQuantityInCart
+  | SaveCart
+  | SaveCartFailure
+  | SaveCartSuccess;

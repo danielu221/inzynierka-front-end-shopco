@@ -5,6 +5,7 @@ import { CartItem } from 'src/app/shared/interface/cart-item.interface';
 import { Store, select } from '@ngrx/store';
 import { CartsPageState } from 'src/app/core/store/carts/carts.reducer';
 import { selectCart, selectCartItemsForCart, selectTotalItemsPrice } from 'src/app/core/store/carts/carts.selectors';
+import { RemoveFromCart, UpdateQuantityInCartPreview } from 'src/app/core/store/carts/carts.actions';
 
 @Component({
   selector: 'app-cart-preview',
@@ -33,32 +34,33 @@ export class CartPreviewComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.productsInCart$.subscribe(r=>console.log(r))
   }
 
-  // onDeleteClick(product) {
-  //   this.store.dispatch(new RemoveFromList(product));
-  // }
+  onDeleteClick(cartItem:CartItem) {
+    this.store.dispatch(new RemoveFromCart({id:cartItem.id}));
+  }
 
-  // decreaseQuantityBtnClicked(cartItem: CartItem) {
-  //   if (cartItem.quantity > 1) {
-  //     this.store.dispatch(
-  //       new UpdateQuantityInCart({
-  //         cartItemId: cartItem.id,
-  //         updatedQuantity: cartItem.quantity - 1
-  //       })
-  //     );
-  //   }
-  // }
+  decreaseQuantityBtnClicked(cartItem: CartItem) {
+    if (cartItem.quantity > 1) {
+      this.store.dispatch(
+        new UpdateQuantityInCartPreview({
+          cartId: this.cartPreviewData.cartId,
+          cartItemId: cartItem.id,
+          updatedQuantity: cartItem.quantity - 1
+        })
+      );
+    }
+  }
 
-  // increaseQuantityBtnClicked(cartItem) {
-  //   this.store.dispatch(
-  //     new UpdateQuantityInCart({
-  //       cartItemId: cartItem.id,
-  //       updatedQuantity: cartItem.quantity + 1
-  //     })
-  //   );
-  // }
+  increaseQuantityBtnClicked(cartItem) {
+    this.store.dispatch(
+      new UpdateQuantityInCartPreview({
+        cartId: this.cartPreviewData.cartId,
+        cartItemId: cartItem.id,
+        updatedQuantity: cartItem.quantity + 1
+      })
+    );
+  }
 
   // onSaveBtnClicked() {
   //   this.store.dispatch(

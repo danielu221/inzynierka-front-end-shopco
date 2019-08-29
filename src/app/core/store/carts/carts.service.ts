@@ -16,4 +16,9 @@ export class CartsService {
   getAll(userId:number): Observable<any> {
     return this.http.get(this.apiManagement.getURL(endpoints.carts)+'/'+userId);
   }
+
+  removeCart(cartId:number): Observable<any>{
+    return this.http.delete(this.apiManagement.getURL(endpoints.carts)+'/'+cartId,{responseType: 'text'});
+
+  }
 }

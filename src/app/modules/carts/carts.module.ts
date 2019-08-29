@@ -8,12 +8,19 @@ import { CartsPageReducer } from 'src/app/core/store/carts/carts.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { CartsPageEffects } from 'src/app/core/store/carts/carts.effects';
 import { CartsService } from 'src/app/core/store/carts/carts.service';
+import { CartPreviewComponent } from './components/cart-preview/cart-preview.component';
 
 @NgModule({
-  declarations: [CartsPage],
-  imports: [CommonModule, CartsRouting,SharedModule,
+  declarations: [CartsPage, CartPreviewComponent],
+  imports: [
+    CommonModule,
+    CartsRouting,
+    SharedModule,
     StoreModule.forFeature('cartsPageState', CartsPageReducer),
-    EffectsModule.forFeature([CartsPageEffects])],
-    providers:[CartsService]
+    EffectsModule.forFeature([CartsPageEffects])
+  ],
+  providers: [CartsService],
+
+  entryComponents: [CartPreviewComponent]
 })
 export class CartsModule {}

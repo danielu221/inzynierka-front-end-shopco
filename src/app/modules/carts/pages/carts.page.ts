@@ -1,30 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { LoadCarts } from 'src/app/core/store/carts/carts.actions';
+import { LoadCarts, RemoveCart } from 'src/app/core/store/carts/carts.actions';
 import { Store, select } from '@ngrx/store';
 import { CartsPageState } from 'src/app/core/store/carts/carts.reducer';
 import { STORAGE_USER } from 'src/app/shared/variables/local-storage.variables';
 import { Observable } from 'rxjs';
-import {selectAllCarts} from '../../../core/store/carts/carts.selectors'
-
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
-  { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
-  { position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li' },
-  { position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be' },
-  { position: 5, name: 'Boron', weight: 10.811, symbol: 'B' },
-  { position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C' },
-  { position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N' },
-  { position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O' },
-  { position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F' },
-  { position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne' }
-];
+import { selectAllCarts } from '../../../core/store/carts/carts.selectors';
+import { MatDialog } from '@angular/material/dialog';
+import { CartPreviewComponent } from '../components/cart-preview/cart-preview.component';
+import { Cart } from 'src/app/shared/interface/cart.interface';
 
 @Component({
   selector: 'app-carts',
@@ -39,18 +22,35 @@ export class CartsPage implements OnInit {
     'delete',
     'price'
   ];
-carts$:Observable<any>
-
-  dataSource = ELEMENT_DATA;
-  constructor(private store: Store<CartsPageState>) {
-
+  carts$: Observable<any>;
+  constructor(private store: Store<CartsPageState>, public dialog: MatDialog) {
     this.carts$ = store.pipe(select(selectAllCarts));
   }
 
   ngOnInit() {
-    this.carts$.subscribe(r=>{console.log(r)})
+    this.carts$.subscribe(r => {
+      console.log(r);
+    });
     this.store.dispatch(
-      new LoadCarts({ userId: JSON.parse(localStorage.getItem(STORAGE_USER)).id})
+      new LoadCarts({
+        userId: JSON.parse(localStorage.getItem(STORAGE_USER)).id
+      })
     );
+  }
+
+  onPreviewIconClick(cart:Cart) {
+    const dialogRef = this.dialog.open(CartPreviewComponent, {
+      width: '800px',
+      height: '650px',
+      data: {cartId:cart.id}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+
+  onDeleteClick(cart:Cart){
+    this.store.dispatch(new RemoveCart({id:cart.id}) )
   }
 }

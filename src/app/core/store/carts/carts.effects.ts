@@ -12,6 +12,7 @@ import { of } from 'rxjs';
 import { ToastMessageService } from 'src/app/shared/services/toast-message.service';
 import { Product } from 'src/app/shared/interface/product.interface';
 import { Cart } from 'src/app/shared/interface/cart.interface';
+import { ToastConfig } from 'src/app/shared/interface/toast-config.interface';
 
 interface CartResponse {
   creationDate: string;
@@ -52,12 +53,37 @@ export class CartsPageEffects {
               })
             };
           });
-          console.log(carts)
+          console.log(carts);
           return new CartsActions.LoadCartsSuccess(carts);
         }),
         catchError((err: HttpErrorResponse) =>
           of(new CartsActions.LoadCartsFailure(err))
         )
+      )
+    )
+  );
+
+  @Effect()
+  removeCart = this.actions$.pipe(
+    ofType<CartsActions.RemoveCart>(CartsActionTypes.REMOVE_CART),
+    switchMap(action =>
+      this.cartsService.removeCart(action.payload.id).pipe(
+        map((res: any) => {
+          console.log(res);
+          const toast: ToastConfig = {
+            title: 'Pomyślnie usunięto listę'
+          };
+          this.toasterService.showSuccessMessage(toast);
+          return new CartsActions.RemoveCartSuccess(res);
+        }),
+        catchError((err: HttpErrorResponse) => {
+          const toast: ToastConfig = {
+            title: 'Błąd podczas usuwania listy',
+            body: `Kod błędu: ${err.status}`
+          };
+          this.toasterService.showErrorMessage(toast);
+          return of(new CartsActions.RemoveCartFailure(err));
+        })
       )
     )
   );
