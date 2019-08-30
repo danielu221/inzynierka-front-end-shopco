@@ -23,7 +23,7 @@ export class AuthEffects {
         tap((payload: LoginSuccessPayload) => {
             localStorage.setItem(STORAGE_TOKEN, `${payload.token} `);
             localStorage.setItem(STORAGE_USER, JSON.stringify(payload.user));
-            this.router.navigateByUrl('/');
+            this.router.navigateByUrl('/products-list');
         })
     );
 
@@ -34,7 +34,7 @@ export class AuthEffects {
         tap((payload: RegisterResponse) => {
             localStorage.setItem(STORAGE_TOKEN, `${payload.token}`);
             localStorage.setItem(STORAGE_USER, JSON.stringify(payload.user));
-            this.router.navigateByUrl('/');
+            this.router.navigateByUrl('/products-list');
         })
     );
 
