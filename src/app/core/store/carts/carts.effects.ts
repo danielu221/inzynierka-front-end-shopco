@@ -19,6 +19,8 @@ import { ToastMessageService } from 'src/app/shared/services/toast-message.servi
 import { Product } from 'src/app/shared/interface/product.interface';
 import { Cart } from 'src/app/shared/interface/cart.interface';
 import { ToastConfig } from 'src/app/shared/interface/toast-config.interface';
+import { MatDialog } from '@angular/material/dialog';
+import { PublishCartModalComponent } from 'src/app/shared/components/publish-cart-modal/publish-cart-modal.component';
 
 interface CartResponse {
   creationDate: string;
@@ -164,6 +166,7 @@ export class CartsPageEffects {
     private actions$: Actions,
     private cartsService: CartsService,
     private store$: Store<State>,
-    private toasterService: ToastMessageService
+    private toasterService: ToastMessageService,
+    public dialog: MatDialog
   ) {}
 }

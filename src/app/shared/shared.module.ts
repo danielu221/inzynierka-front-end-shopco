@@ -9,9 +9,10 @@ import { PopupDialogComponent } from './components/popup-dialog/popup-dialog.com
 import { IconBtnComponent } from './components/icon-btn/icon-btn.component';
 import { CartComponent } from './components/cart/cart.component';
 import { FormsModule } from '@angular/forms';
+import { PublishCartModalComponent } from './components/publish-cart-modal/publish-cart-modal.component';
 
 @NgModule({
-  declarations: [ModalWindowComponent, BannerComponent, SubmitBtnComponent, PopupDialogComponent, IconBtnComponent, CartComponent],
+  declarations: [ModalWindowComponent, BannerComponent, SubmitBtnComponent, PopupDialogComponent, IconBtnComponent, CartComponent, PublishCartModalComponent],
   imports: [CommonModule, MaterialModule,
     FormsModule],
   exports: [

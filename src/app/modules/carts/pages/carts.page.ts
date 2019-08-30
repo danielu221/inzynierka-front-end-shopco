@@ -53,4 +53,5 @@ export class CartsPage implements OnInit {
   onDeleteClick(cart:Cart){
     this.store.dispatch(new RemoveCart({id:cart.id}) )
   }
+
 }
