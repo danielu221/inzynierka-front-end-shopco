@@ -6,17 +6,13 @@ export const endpoints = {
     auth: {
         login: '/signin',
         register: '/auth/signup',
-        registerConfirm: '/auth/registrationConfirm',
         checkToken: '/checkToken',
-        forgetPassword: '/auth/resetPassword',
-        confirmForgetPassword: '/auth/resetPasswordConfirm',
-        changePassword: '/auth/changePassword'
     },
     products: '/product',
     cart:{
         save: '/listofitems'
     },
-    carts:'/listofitems'
+    carts:'/listofitems',
 };
 
 @Injectable()

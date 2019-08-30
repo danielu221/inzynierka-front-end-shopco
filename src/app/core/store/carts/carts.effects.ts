@@ -37,7 +37,6 @@ export class CartsPageEffects {
     switchMap(action =>
       this.cartsService.getAll(action.payload.userId).pipe(
         map((res: CartResponse[]) => {
-          console.log(res);
           let carts: Cart[];
           carts = res.map(cartRes => {
             return {
@@ -48,12 +47,12 @@ export class CartsPageEffects {
                 return {
                   quantity: cartResItem.product_units,
                   totalPrice: cartResItem.totalItemPrice,
+                  cartItemId:cartResItem.id,
                   ...cartResItem.product
                 };
               })
             };
           });
-          console.log(carts);
           return new CartsActions.LoadCartsSuccess(carts);
         }),
         catchError((err: HttpErrorResponse) =>
@@ -87,6 +86,37 @@ export class CartsPageEffects {
       )
     )
   );
+
+
+  @Effect()
+  removeFromCart = this.actions$.pipe(
+    ofType<CartsActions.RemoveFromCart>(CartsActionTypes.REMOVE_FROM_CART),
+    switchMap(action =>
+      this.cartsService.removeItemFromCart(action.payload.cartId,action.payload.cartItemId).pipe(
+        map((res: any) => {
+          console.log(res);
+          const toast: ToastConfig = {
+            title: 'Pomyślnie usunięto przedmiot z listy'
+          };
+          this.toasterService.showSuccessMessage(toast);
+          return new CartsActions.RemoveFromCartSuccess(res);
+        }),
+        catchError((err: HttpErrorResponse) => {
+          const toast: ToastConfig = {
+            title: 'Błąd podczas usuwania przedmiotu',
+            body: `Kod błędu: ${err.status}`
+          };
+          this.toasterService.showErrorMessage(toast);
+          return of(new CartsActions.RemoveFromCartFailure(err));
+        })
+      )
+    )
+  );
+
+
+
+
+  
 
   constructor(
     private actions$: Actions,

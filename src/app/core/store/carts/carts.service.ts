@@ -13,12 +13,27 @@ export class CartsService {
     private http: HttpClient,
     private apiManagement: ApiManagementService
   ) {}
-  getAll(userId:number): Observable<any> {
-    return this.http.get(this.apiManagement.getURL(endpoints.carts)+'/'+userId);
+  getAll(userId: number): Observable<any> {
+    return this.http.get(
+      this.apiManagement.getURL(endpoints.carts) + '/' + userId
+    );
   }
 
-  removeCart(cartId:number): Observable<any>{
-    return this.http.delete(this.apiManagement.getURL(endpoints.carts)+'/'+cartId,{responseType: 'text'});
+  removeCart(cartId: number): Observable<any> {
+    return this.http.delete(
+      this.apiManagement.getURL(endpoints.carts) + '/' + cartId,
+      { responseType: 'text' }
+    );
+  }
 
+  removeItemFromCart(cartId: number, cartItemId: number) {
+    return this.http.delete(
+      this.apiManagement.getURL(endpoints.carts) +
+        '/' +
+        cartId +
+        '/' +
+        cartItemId,
+      { responseType: 'text' }
+    );
   }
 }

@@ -37,7 +37,8 @@ export class CartPreviewComponent implements OnInit {
   }
 
   onDeleteClick(cartItem:CartItem) {
-    this.store.dispatch(new RemoveFromCart({id:cartItem.id}));
+    console.log(cartItem)
+    this.store.dispatch(new RemoveFromCart({cartId:this.cartPreviewData.cartId,cartItemId:cartItem.cartItemId}));
   }
 
   decreaseQuantityBtnClicked(cartItem: CartItem) {
