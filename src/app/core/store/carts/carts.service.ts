@@ -6,6 +6,9 @@ import {
 } from 'src/app/shared/services/api-management.service';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { ISaveCartRequest, IRequestCartItem } from '../product/product.service';
+import { CartItem } from 'src/app/shared/interface/cart-item.interface';
+import { getDateNowFormatted } from 'src/app/shared/utils';
 
 @Injectable()
 export class CartsService {
@@ -33,6 +36,27 @@ export class CartsService {
         cartId +
         '/' +
         cartItemId,
+      { responseType: 'text' }
+    );
+  }
+
+  updateCart(cartId: number, cartItems: CartItem[], listName:string): Observable<any> {
+    let requestBody: ISaveCartRequest;
+    let items: IRequestCartItem[];
+    items = cartItems.map(cartItem => {
+      return {
+        productId: cartItem.id,
+        productUnits: cartItem.quantity
+      };
+    });
+    requestBody = {
+      listName: listName,
+      creationDate: getDateNowFormatted(),
+      items: items
+    };
+    return this.http.put(
+      this.apiManagement.getURL(endpoints.carts) + '/' + cartId,
+      requestBody,
       { responseType: 'text' }
     );
   }

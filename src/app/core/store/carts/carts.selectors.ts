@@ -22,3 +22,8 @@ export const selectTotalItemsPrice = createSelector(
   selectCart,
   (cart:Cart)=>cart.totalItemsPrice
 )
+
+export const selectCartName = createSelector(
+  selectCart,
+  (cart:Cart)=> cart.cartName
+)

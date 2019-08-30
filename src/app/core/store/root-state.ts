@@ -1,7 +1,9 @@
 import { AuthState } from './auth/auth.state';
 import { ProductsPageState } from './product/product.reducer';
+import { CartsPageState } from './carts/carts.reducer';
 
 export interface State {
   auth: AuthState;
-  productsPageState?: ProductsPageState
+  productsPageState?: ProductsPageState;
+  cartsPageState?:CartsPageState;
 }
