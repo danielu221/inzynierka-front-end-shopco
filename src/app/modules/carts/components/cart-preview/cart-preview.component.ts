@@ -5,7 +5,7 @@ import { CartItem } from 'src/app/shared/interface/cart-item.interface';
 import { Store, select } from '@ngrx/store';
 import { CartsPageState } from 'src/app/core/store/carts/carts.reducer';
 import { selectCart, selectCartItemsForCart, selectTotalItemsPrice, selectCartName } from 'src/app/core/store/carts/carts.selectors';
-import { RemoveFromCart, UpdateQuantityInCartPreview } from 'src/app/core/store/carts/carts.actions';
+import { RemoveFromCart, UpdateQuantityInCartPreview, UpdateCart } from 'src/app/core/store/carts/carts.actions';
 
 @Component({
   selector: 'app-cart-preview',
@@ -66,11 +66,11 @@ export class CartPreviewComponent implements OnInit {
     );
   }
 
-  // onSaveBtnClicked() {
-  //   this.store.dispatch(
-  //     new SaveCart({ listName: this.listName, dialogRef: this.dialogRef })
-  //   );
-  // }
+  onSaveBtnClicked() {
+    this.store.dispatch(
+      new UpdateCart({ cartId: this.cartPreviewData.cartId, dialogRef: this.dialogRef,cartName:this.listName })
+    );
+  }
 
   // onListNameChanged(listName){
   //   this.listName = listName;

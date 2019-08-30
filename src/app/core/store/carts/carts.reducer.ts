@@ -79,6 +79,19 @@ export function CartsPageReducer(
             : cart
         )
       };
+
+      case CartsActionTypes.UPDATE_CART_SUCCESS:
+          return {
+            ...state,
+            carts: state.carts.map(cart =>
+              cart.id === action.payload.cartId
+                ? {
+                    ...cart,
+                    cartName: action.payload.cartName
+                  }
+                : cart
+            )
+          };
     default:
       return state;
   }

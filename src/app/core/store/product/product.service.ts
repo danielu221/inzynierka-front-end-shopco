@@ -10,13 +10,13 @@ import { CartItem } from 'src/app/shared/interface/cart-item.interface';
 
 import {getDateNowFormatted} from '../../../shared/utils';
 
-interface ISaveCartRequest {
+export interface ISaveCartRequest {
   listName: string;
   creationDate: string;
   items: IRequestCartItem[];
 }
 
-interface IRequestCartItem {
+export interface IRequestCartItem {
   productId: number;
   productUnits: number;
 }

@@ -1,7 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Effect, Actions, ofType } from '@ngrx/effects';
 import { CartsActionTypes } from './carts.actions';
-import { switchMap, map, catchError } from 'rxjs/operators';
+import {
+  switchMap,
+  map,
+  catchError,
+  mergeMap,
+  withLatestFrom
+} from 'rxjs/operators';
 
 import * as CartsActions from './carts.actions';
 import { Store } from '@ngrx/store';
@@ -47,7 +53,7 @@ export class CartsPageEffects {
                 return {
                   quantity: cartResItem.product_units,
                   totalPrice: cartResItem.totalItemPrice,
-                  cartItemId:cartResItem.id,
+                  cartItemId: cartResItem.id,
                   ...cartResItem.product
                 };
               })
@@ -87,36 +93,72 @@ export class CartsPageEffects {
     )
   );
 
-
   @Effect()
   removeFromCart = this.actions$.pipe(
     ofType<CartsActions.RemoveFromCart>(CartsActionTypes.REMOVE_FROM_CART),
     switchMap(action =>
-      this.cartsService.removeItemFromCart(action.payload.cartId,action.payload.cartItemId).pipe(
-        map((res: any) => {
-          console.log(res);
-          const toast: ToastConfig = {
-            title: 'Pomyślnie usunięto przedmiot z listy'
-          };
-          this.toasterService.showSuccessMessage(toast);
-          return new CartsActions.RemoveFromCartSuccess(res);
-        }),
-        catchError((err: HttpErrorResponse) => {
-          const toast: ToastConfig = {
-            title: 'Błąd podczas usuwania przedmiotu',
-            body: `Kod błędu: ${err.status}`
-          };
-          this.toasterService.showErrorMessage(toast);
-          return of(new CartsActions.RemoveFromCartFailure(err));
-        })
-      )
+      this.cartsService
+        .removeItemFromCart(action.payload.cartId, action.payload.cartItemId)
+        .pipe(
+          map((res: any) => {
+            console.log(res);
+            const toast: ToastConfig = {
+              title: 'Pomyślnie usunięto przedmiot z listy'
+            };
+            this.toasterService.showSuccessMessage(toast);
+            return new CartsActions.RemoveFromCartSuccess(res);
+          }),
+          catchError((err: HttpErrorResponse) => {
+            const toast: ToastConfig = {
+              title: 'Błąd podczas usuwania przedmiotu',
+              body: `Kod błędu: ${err.status}`
+            };
+            this.toasterService.showErrorMessage(toast);
+            return of(new CartsActions.RemoveFromCartFailure(err));
+          })
+        )
     )
   );
 
+  @Effect()
+  updateCart = this.actions$.pipe(
+    ofType<CartsActions.UpdateCart>(CartsActionTypes.UPDATE_CART),
+    withLatestFrom(this.store$),
+    mergeMap(([action, store]) => {
+      return this.cartsService
+        .updateCart(
+          action.payload.cartId,
+          this.getCartItemsFromStore(store, action.payload.cartId),
+          action.payload.cartName
+        )
+        .pipe(
+          map((res: any) => {
+            const toast: ToastConfig = {
+              title: 'Lista pomyślnie zapisana'
+            };
+            this.toasterService.showSuccessMessage(toast);
+            action.payload.dialogRef.close();
+            return new CartsActions.UpdateCartSuccess({
+              cartId: action.payload.cartId,
+              cartName: action.payload.cartName
+            });
+          }),
+          catchError((err: HttpErrorResponse) => {
+            const toast: ToastConfig = {
+              title: 'Błąd z wysłaniem żądania',
+              body: `Kod błędu: ${err.status}`
+            };
+            this.toasterService.showErrorMessage(toast);
+            return of(new CartsActions.UpdateCartFailure(err));
+          })
+        );
+    })
+  );
 
-
-
-  
+  getCartItemsFromStore(store: State, cartId: number) {
+    return store.cartsPageState.carts.filter(cart => cart.id === cartId)[0]
+      .cartItems;
+  }
 
   constructor(
     private actions$: Actions,

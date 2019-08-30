@@ -61,7 +61,6 @@ export class ProductsPageEffects {
     ofType<ProductActions.SaveCart>(ProductActionTypes.SAVE_CART),
     withLatestFrom(this.store$),
     mergeMap(([action, store]) => {
-      console.log(store);
       return this.productService
         .saveCart(action.payload.listName, store.productsPageState.cartItems)
         .pipe(

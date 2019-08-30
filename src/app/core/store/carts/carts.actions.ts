@@ -1,5 +1,6 @@
 import { Action } from '@ngrx/store';
 import { Cart } from 'src/app/shared/interface/cart.interface';
+import { CartItem } from 'src/app/shared/interface/cart-item.interface';
 
 export enum CartsActionTypes {
   LOAD_CARTS = '[Carts] Load carts from server',
@@ -11,7 +12,10 @@ export enum CartsActionTypes {
   REMOVE_CART_FAILURE = '[Cart] Remove failure',
   UPDATE_QUANTITY_IN_CART_PREVIEW = '[Cart] Update quantity',
   REMOVE_FROM_CART_SUCCESS = '[Cart] remove item success',
-  REMOVE_FROM_CART_FAILURE = '[Cart] remove item failure'
+  REMOVE_FROM_CART_FAILURE = '[Cart] remove item failure',
+  UPDATE_CART = '[Cart] Update',
+  UPDATE_CART_SUCCESS = '[Cart] Update success',
+  UPDATE_CART_FAILURE = '[Cart] Update failure'
 }
 
 export class LoadCarts implements Action {
@@ -64,6 +68,21 @@ export class UpdateQuantityInCartPreview implements Action {
   constructor(public payload: any) {}
 }
 
+export class UpdateCart implements Action {
+  readonly type = CartsActionTypes.UPDATE_CART;
+  constructor(public payload: { cartId: number, dialogRef: any, cartName:string }) {}
+}
+
+export class UpdateCartSuccess implements Action {
+  readonly type = CartsActionTypes.UPDATE_CART_SUCCESS;
+  constructor(public payload:  { cartId: number,cartName:string}) {}
+}
+
+export class UpdateCartFailure implements Action {
+  readonly type = CartsActionTypes.UPDATE_CART_FAILURE;
+  constructor(public payload: any) {}
+}
+
 export type CartsActions =
   | LoadCarts
   | LoadCartsSuccess
@@ -74,4 +93,7 @@ export type CartsActions =
   | UpdateQuantityInCartPreview
   | RemoveFromCart
   | RemoveFromCartFailure
-  | RemoveCartSuccess;
+  | RemoveCartSuccess
+  | UpdateCart
+  | UpdateCartFailure
+  | UpdateCartSuccess;
