@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { CartItem } from 'src/app/shared/interface/cart-item.interface';
 import { Store, select } from '@ngrx/store';
 import { CartsPageState } from 'src/app/core/store/carts/carts.reducer';
-import { selectCart, selectCartItemsForCart, selectTotalItemsPrice } from 'src/app/core/store/carts/carts.selectors';
+import { selectCart, selectCartItemsForCart, selectTotalItemsPrice, selectCartName } from 'src/app/core/store/carts/carts.selectors';
 import { RemoveFromCart, UpdateQuantityInCartPreview } from 'src/app/core/store/carts/carts.actions';
 
 @Component({
@@ -17,6 +17,7 @@ export class CartPreviewComponent implements OnInit {
   productsInCart$: Observable<CartItem[]>;
   totalCostOfProductsInCart$: Observable<number>;
   listName:string = "Twoja lista";
+  cartName$:Observable<string>
 
   constructor(
     public dialogRef: MatDialogRef<CartPreviewComponent>,
@@ -27,6 +28,7 @@ export class CartPreviewComponent implements OnInit {
     this.totalCostOfProductsInCart$ = store.pipe(
       select(selectTotalItemsPrice,{cartId:cartPreviewData.cartId})
     );
+    this.cartName$ = store.pipe(select(selectCartName,{cartId:cartPreviewData.cartId}))
   }
 
   onNoClick(): void {
@@ -34,10 +36,11 @@ export class CartPreviewComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.cartName$.subscribe(cartName => 
+      this.listName=cartName)
   }
 
   onDeleteClick(cartItem:CartItem) {
-    console.log(cartItem)
     this.store.dispatch(new RemoveFromCart({cartId:this.cartPreviewData.cartId,cartItemId:cartItem.cartItemId}));
   }
 
