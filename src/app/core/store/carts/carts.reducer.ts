@@ -30,29 +30,26 @@ export function CartsPageReducer(
     case CartsActionTypes.UPDATE_QUANTITY_IN_CART_PREVIEW:
       const newState = {
         ...state,
-        carts: [
-          ...state.carts.map(cart =>
-            cart.id === action.payload.cartId
-              ? {
-                  ...cart,
-                  cartItems: [
-                    ...cart.cartItems.map(cartItem =>
-                      cartItem.id === action.payload.cartItemId
-                        ? {
-                            ...cartItem,
-                            quantity: action.payload.updatedQuantity,
-                            totalPrice: +(
-                              action.payload.updatedQuantity *
-                              cartItem.unitPrice
-                            ).toFixed(2)
-                          }
-                        : cartItem
-                    )
-                  ]
-                }
-              : cart
-          )
-        ]
+        carts: state.carts.map(cart =>
+          cart.id === action.payload.cartId
+            ? {
+                ...cart,
+                cartItems: [
+                  ...cart.cartItems.map(cartItem =>
+                    cartItem.id === action.payload.cartItemId
+                      ? {
+                          ...cartItem,
+                          quantity: action.payload.updatedQuantity,
+                          totalPrice: +(
+                            action.payload.updatedQuantity * cartItem.unitPrice
+                          ).toFixed(2)
+                        }
+                      : cartItem
+                  )
+                ]
+              }
+            : cart
+        )
       };
       return {
         ...newState,
@@ -66,6 +63,21 @@ export function CartsPageReducer(
               : cart
           )
         ]
+      };
+
+    case CartsActionTypes.REMOVE_FROM_CART:
+      return {
+        ...state,
+        carts: state.carts.map(cart =>
+          cart.id === action.payload.cartId
+            ? {
+                ...cart,
+                cartItems: cart.cartItems.filter(
+                  cartItem => cartItem.cartItemId != action.payload.cartItemId
+                )
+              }
+            : cart
+        )
       };
     default:
       return state;

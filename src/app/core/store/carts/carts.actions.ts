@@ -9,12 +9,14 @@ export enum CartsActionTypes {
   REMOVE_CART = '[Cart] Remove',
   REMOVE_CART_SUCCESS = '[Cart] Remove success',
   REMOVE_CART_FAILURE = '[Cart] Remove failure',
-  UPDATE_QUANTITY_IN_CART_PREVIEW = '[Cart] Update quantity'
+  UPDATE_QUANTITY_IN_CART_PREVIEW = '[Cart] Update quantity',
+  REMOVE_FROM_CART_SUCCESS = '[Cart] remove item success',
+  REMOVE_FROM_CART_FAILURE = '[Cart] remove item failure'
 }
 
 export class LoadCarts implements Action {
   readonly type = CartsActionTypes.LOAD_CARTS;
-  constructor(public payload: {userId:number}) {}
+  constructor(public payload: { userId: number }) {}
 }
 
 export class LoadCartsSuccess implements Action {
@@ -27,20 +29,29 @@ export class LoadCartsFailure implements Action {
   constructor(public payload: any) {}
 }
 
-
 export class RemoveFromCart implements Action {
   readonly type = CartsActionTypes.REMOVE_FROM_CART;
-  constructor(public payload: {id:number}) {}
+  constructor(public payload: { cartId: number; cartItemId: number }) {}
+}
+
+export class RemoveFromCartSuccess implements Action {
+  readonly type = CartsActionTypes.REMOVE_FROM_CART_SUCCESS;
+  constructor(public payload: any) {}
+}
+
+export class RemoveFromCartFailure implements Action {
+  readonly type = CartsActionTypes.REMOVE_FROM_CART_FAILURE;
+  constructor(public payload: any) {}
 }
 
 export class RemoveCart implements Action {
   readonly type = CartsActionTypes.REMOVE_CART;
-  constructor(public payload: {id:number}) {}
+  constructor(public payload: { id: number }) {}
 }
 
 export class RemoveCartSuccess implements Action {
   readonly type = CartsActionTypes.REMOVE_CART_SUCCESS;
-  constructor(public payload:any) {}
+  constructor(public payload: any) {}
 }
 
 export class RemoveCartFailure implements Action {
@@ -48,9 +59,19 @@ export class RemoveCartFailure implements Action {
   constructor(public payload: any) {}
 }
 
-export class UpdateQuantityInCartPreview implements Action{
+export class UpdateQuantityInCartPreview implements Action {
   readonly type = CartsActionTypes.UPDATE_QUANTITY_IN_CART_PREVIEW;
   constructor(public payload: any) {}
 }
 
-export type CartsActions = LoadCarts | LoadCartsSuccess | LoadCartsFailure | RemoveCart | RemoveCartSuccess | RemoveCartFailure | UpdateQuantityInCartPreview;
+export type CartsActions =
+  | LoadCarts
+  | LoadCartsSuccess
+  | LoadCartsFailure
+  | RemoveCart
+  | RemoveCartSuccess
+  | RemoveCartFailure
+  | UpdateQuantityInCartPreview
+  | RemoveFromCart
+  | RemoveFromCartFailure
+  | RemoveCartSuccess;
