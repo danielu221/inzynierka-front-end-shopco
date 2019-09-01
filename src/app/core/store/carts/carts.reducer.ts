@@ -80,6 +80,7 @@ export function CartsPageReducer(
         )
       };
 
+      case CartsActionTypes.SAVE_CART_AND_REDIRECT_TO_ORDER_SUCCESS:
       case CartsActionTypes.UPDATE_CART_SUCCESS:
           return {
             ...state,

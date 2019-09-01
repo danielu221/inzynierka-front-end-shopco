@@ -6,7 +6,8 @@ import {
   map,
   catchError,
   mergeMap,
-  withLatestFrom
+  withLatestFrom,
+  tap
 } from 'rxjs/operators';
 
 import * as CartsActions from './carts.actions';
@@ -21,6 +22,7 @@ import { Cart } from 'src/app/shared/interface/cart.interface';
 import { ToastConfig } from 'src/app/shared/interface/toast-config.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { PublishCartModalComponent } from 'src/app/shared/components/publish-cart-modal/publish-cart-modal.component';
+import { CartPreviewComponent } from 'src/app/modules/carts/components/cart-preview/cart-preview.component';
 
 interface CartResponse {
   creationDate: string;
@@ -124,7 +126,10 @@ export class CartsPageEffects {
 
   @Effect()
   updateCart = this.actions$.pipe(
-    ofType<CartsActions.UpdateCart>(CartsActionTypes.UPDATE_CART),
+    ofType<CartsActions.UpdateCart | CartsActions.SaveCartAndRedirectToOrder>(
+      CartsActionTypes.UPDATE_CART,
+      CartsActionTypes.SAVE_CART_AND_REDIRECT_TO_ORDER
+    ),
     withLatestFrom(this.store$),
     mergeMap(([action, store]) => {
       return this.cartsService
@@ -140,6 +145,18 @@ export class CartsPageEffects {
             };
             this.toasterService.showSuccessMessage(toast);
             action.payload.dialogRef.close();
+            if (
+              action.type === CartsActionTypes.SAVE_CART_AND_REDIRECT_TO_ORDER
+            ) {
+              this.dialog.open(PublishCartModalComponent, {
+                width: '800px',
+                height: '650px'
+              });
+              return new CartsActions.SaveCartAndRedirectToOrderSuccess({
+                cartId: action.payload.cartId,
+                cartName: action.payload.cartName
+              });
+            }
             return new CartsActions.UpdateCartSuccess({
               cartId: action.payload.cartId,
               cartName: action.payload.cartName
@@ -157,10 +174,28 @@ export class CartsPageEffects {
     })
   );
 
+  @Effect({dispatch: false})
+  openOrderDialog = this.actions$.pipe(
+    ofType<CartsActions.OpenCartDialog>(
+      CartsActionTypes.OPEN_CART_DIALOG
+    ),
+    tap((action) => {
+      console.log(action)
+      this.dialog.closeAll();
+      this.dialog.open(CartPreviewComponent, {
+        width: '800px',
+        height: '650px',  
+        data: {cartId:action.payload.cartId}
+    })
+  
+  }));
+
+
   getCartItemsFromStore(store: State, cartId: number) {
     return store.cartsPageState.carts.filter(cart => cart.id === cartId)[0]
       .cartItems;
   }
+
 
   constructor(
     private actions$: Actions,

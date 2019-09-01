@@ -1,12 +1,67 @@
-<h1 mat-dialog-title>Tytul</h1>
+<h1 mat-dialog-title>Podsumowanie zamówienia</h1>
 <div mat-dialog-content>
-  <div class="cart-table-holder d-flex justify-content-center py-2">
-    Content
+  <div class="container-fluid">
+    <div class="row align-items-center customized-row py-4 ">
+      <div class="col-12 col-md-4 font-weight-bold">Wybrana lista</div>
+      <div class="col-12 col-md-4 pt-2 pt-md-0 d-flex align-items-center">
+        Diasd asd<i
+          class="material-icons preview-icon"
+          (click)="onPreviewListClick()"
+        >
+          search
+        </i>
+      </div>
+    </div>
+    <div class="row align-items-center customized-row py-4">
+      <div class="col-12 col-md-4 font-weight-bold">Adres dostawy</div>
+      <div class="col-12 col-md-4 d-flex pt-2 pt-md-0">
+        <i class="material-icons">
+          room
+        </i>
+        <input class="ml-2" />
+      </div>
+    </div>
+    <div class="row align-items-center customized-row py-4">
+      <div class="col-12 col-md-4 font-weight-bold">Termin dostawy</div>
+      <div class="col-12 col-md-4 pt-2 pt-md-0">
+        <input type="checkbox" />
+        jak najszybciej
+      </div>
+      <div class="col-12 col-md-4 d-flex pt-2 pt-md-0">
+        <i class="material-icons">
+          calendar_today
+        </i>
+        <input class="ml-2" />
+      </div>
+    </div>
+    <div class="row align-items-center customized-row py-4">
+      <div class="col-12 col-md-4 font-weight-bold">Płatność</div>
+      <div class="col-12 col-md-4  d-flex align-items-center">
+        <i class="material-icons"> credit_card </i>
+        <!-- Wybierz kartę  -->
+        <mat-form-field floatLabel="auto" class="ml-2">
+          <mat-label>Wybierz kartę</mat-label>
+          <mat-select>
+            <mat-option value="option1">
+              ****-3456
+            </mat-option>
+            <mat-option value="option2">
+              ****-1235
+            </mat-option>
+            <mat-option value="option3">
+              ****-7896
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row align-items-center my-3 my-md-5">
+      <div class="col-12 col-md-4 offset-md-8">
+        Łączny koszt <strong>123.45 zł</strong>
+      </div>
+    </div>
   </div>
 </div>
-<div mat-dialog-actions class="mt-4 d-flex justify-content-center" >
-  <app-icon-btn class="p-2"  [icon]="'shopping_cart'"
-    >Zamów</app-icon-btn
-  >
-  <app-icon-btn class="p-2" [icon]="'save'">Zapisz</app-icon-btn>
+<div mat-dialog-actions class="mt-4 d-flex justify-content-center">
+  <app-icon-btn class="p-2" [icon]="'public'">Opublikuj</app-icon-btn>
 </div>
