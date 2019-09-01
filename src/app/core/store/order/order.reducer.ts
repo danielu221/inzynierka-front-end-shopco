@@ -3,11 +3,11 @@ import { CartsActions, CartsActionTypes } from '../carts/carts.actions';
 import { OrderActionTypes, OrderActions } from './order.action';
 
 export interface OrderState {
-  order: Order;
+  currentOrder: Order;
 }
 
 const initialOrderState: OrderState = {
-  order: null
+  currentOrder: null
 };
 
 export function orderReducer(
@@ -18,8 +18,8 @@ export function orderReducer(
     case CartsActionTypes.SAVE_CART_AND_REDIRECT_TO_ORDER_SUCCESS:
       return {
         ...state,
-        order: {
-          ...state.order,
+        currentOrder: {
+          ...state.currentOrder,
           address: 'test',
           cartName: action.payload.cartName,
           cartId: action.payload.cartId,

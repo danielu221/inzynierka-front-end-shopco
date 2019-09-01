@@ -1,5 +1,3 @@
-import { Cart } from './cart.interface';
-
 export interface Order {
   address: string;
   cartName: string;

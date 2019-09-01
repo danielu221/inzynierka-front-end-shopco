@@ -4,7 +4,7 @@
     <div class="row align-items-center customized-row py-4 ">
       <div class="col-12 col-md-4 font-weight-bold">Wybrana lista</div>
       <div class="col-12 col-md-4 pt-2 pt-md-0 d-flex align-items-center">
-        Diasd asd<i
+        {{(currentOrder$ | async).cartName }}<i
           class="material-icons preview-icon"
           (click)="onPreviewListClick()"
         >
@@ -36,7 +36,7 @@
     </div>
     <div class="row align-items-center customized-row py-4">
       <div class="col-12 col-md-4 font-weight-bold">Płatność</div>
-      <div class="col-12 col-md-4  d-flex align-items-center">
+      <div class="col-12 col-md-4  d-flex align-items-center pt-2 pt-md-0">
         <i class="material-icons"> credit_card </i>
         <!-- Wybierz kartę  -->
         <mat-form-field floatLabel="auto" class="ml-2">
@@ -54,10 +54,19 @@
           </mat-select>
         </mat-form-field>
       </div>
+      <div class="col-12 col-md-4 d-flex pt-2 pt-md-0">
+          <i class="material-icons">
+              credit_card 
+          </i>
+          <input class="ml-2" placeholder="Wpisz nr" />
+        </div>
+      <div>
+
+      </div>
     </div>
     <div class="row align-items-center my-3 my-md-5">
       <div class="col-12 col-md-4 offset-md-8">
-        Łączny koszt <strong>123.45 zł</strong>
+        Łączny koszt <strong>21.40 zł</strong>
       </div>
     </div>
   </div>

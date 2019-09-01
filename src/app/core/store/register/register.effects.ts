@@ -27,7 +27,7 @@ export class RegisterEffects {
           return new RegisterSuccess({
             token: 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkYW5pZWx1a21hdGV1c3pAZ21haWwuY29tIiwicm9sZXMiOlsiVVNFUiJdLCJleHAiOjE1NjgxOTUzNzh9.f2cMaJIt0I0vrsBmbZln3-JNIiFXqquelduMQ3qU9VC-C9Pd3f4s3Psk3iecdl1cq39a2KPLBJK4oJMJZSe_Zw',
             user: {
-              id: 123,
+              id: 612,
               firstname: 'Mateusz',
               lastname: 'Danieluk',
               email: 'danielukmateusz@gmail.com'
