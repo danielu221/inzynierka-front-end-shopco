@@ -33,7 +33,7 @@ export class RegisterService {
     return this.http.post(
       this.apiManagement.getURL(endpoints.auth.register),
       request,
-      { responseType: 'text', observe: 'response' }
+      { observe: 'response' }
     );
   }
 }

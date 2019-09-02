@@ -24,14 +24,15 @@ export class RegisterEffects {
       this.registerService.register(payload).pipe(
         map((res: any) => {
           console.log(payload);
+          console.log(res)
           return new RegisterSuccess({
-            token: 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkYW5pZWx1a21hdGV1c3pAZ21haWwuY29tIiwicm9sZXMiOlsiVVNFUiJdLCJleHAiOjE1NjgxOTUzNzh9.f2cMaJIt0I0vrsBmbZln3-JNIiFXqquelduMQ3qU9VC-C9Pd3f4s3Psk3iecdl1cq39a2KPLBJK4oJMJZSe_Zw',
             user: {
-              id: 612,
-              firstname: 'Mateusz',
-              lastname: 'Danieluk',
-              email: 'danielukmateusz@gmail.com'
-            }
+              id: res.body.id,
+              firstname: res.body.firstname,
+              lastname: res.body.lastname,
+              email: res.body.email
+            },
+            token: res.headers.get('Authorization')
           });
         }),
         catchError((err: Error) => of(new RegisterFailure(err)))
