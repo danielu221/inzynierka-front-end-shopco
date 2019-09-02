@@ -94,7 +94,7 @@ export class SaveCartAndRedirectToOrder implements Action {
 
 export class SaveCartAndRedirectToOrderSuccess implements Action {
   readonly type = CartsActionTypes.SAVE_CART_AND_REDIRECT_TO_ORDER_SUCCESS;
-  constructor(public payload: { cartId: number,cartName:string}) {}
+  constructor(public payload: { cartId: number,cartName:string, totalItemsPrice:number}) {}
 }
 
 export class OpenCartDialog implements Action {

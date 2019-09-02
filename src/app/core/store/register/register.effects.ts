@@ -23,8 +23,6 @@ export class RegisterEffects {
     switchMap((payload: FormRegister) =>
       this.registerService.register(payload).pipe(
         map((res: any) => {
-          console.log(payload);
-          console.log(res)
           return new RegisterSuccess({
             user: {
               id: res.body.id,

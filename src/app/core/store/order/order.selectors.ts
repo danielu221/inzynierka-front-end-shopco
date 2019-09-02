@@ -1,9 +1,18 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { OrderState } from './order.reducer';
+import { OrderState, CurrentOrderState } from './order.reducer';
 
 export const selectOrderState = createFeatureSelector('order');
 
-export const selectCurrentOrder = createSelector(
+export const selectCartInformation = createSelector(
   selectOrderState,
-  (state: OrderState) => state.currentOrder
+  (state: CurrentOrderState) => state.cartInformation
+);
+export const selectFormOrder = createSelector(
+  selectOrderState,
+  (state: CurrentOrderState) => state.orderForm
+);
+
+export const selectTotalItemsPriceForOrder = createSelector(
+  selectOrderState,
+  (state: CurrentOrderState) => state.cartInformation.totalItemsPrice
 );

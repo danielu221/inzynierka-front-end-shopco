@@ -4,9 +4,13 @@ import { CartPreviewComponent } from 'src/app/modules/carts/components/cart-prev
 import { Store, select } from '@ngrx/store';
 import { State } from 'src/app/core/store/root-state';
 import { OpenCartDialog } from 'src/app/core/store/carts/carts.actions';
-import { selectCurrentOrder } from 'src/app/core/store/order/order.selectors';
+import { selectCartInformation, selectFormOrder } from 'src/app/core/store/order/order.selectors';
 import { Observable } from 'rxjs';
 import { Order } from '../../interface/order.interface';
+import { FormGroupState } from 'ngrx-forms';
+import { FormOrder } from 'src/app/core/store/order/order.reducer';
+import { take, filter, map } from 'rxjs/operators';
+import { PublishOrder } from 'src/app/core/store/order/order.action';
 
 @Component({
   selector: 'app-publish-cart-modal',
@@ -14,20 +18,36 @@ import { Order } from '../../interface/order.interface';
   styleUrls: ['./publish-cart-modal.component.scss']
 })
 export class PublishCartModalComponent implements OnInit {
-  currentOrder$: Observable<Order>;
+  cartInformation$: Observable<any>;
   cartId: number;
+  formState$: Observable<FormGroupState<FormOrder>>;
 
   constructor(private dialog: MatDialog, private store: Store<State>) {
-    this.currentOrder$ = store.pipe(select(selectCurrentOrder));
+    this.cartInformation$ = store.pipe(select(selectCartInformation));
+    this.formState$ = store.pipe(select(selectFormOrder))
   }
 
   ngOnInit() {
-    this.currentOrder$.subscribe((order: Order) => {
-      this.cartId = order.cartId;
-      console.log(order)
+    this.cartInformation$.subscribe((cartInformation) => {
+      this.cartId = cartInformation.cartId;
     });
   }
   onPreviewListClick() {
     this.store.dispatch(new OpenCartDialog({ cartId: this.cartId }));
   }
+  submit() {
+    this.formState$
+        .pipe(
+            take(1),
+            filter(s => s.isValid),
+            map(fs =>  new PublishOrder({
+              dispositionDeliveryAddress: fs.value.address,
+              listId: this.cartId,
+              creationDatetime: "2019-07-23 14:00:00",
+              deliveryDatetime: "2019-07-24 14:00:00",
+              asap: fs.value.asap
+            }))
+        )
+        .subscribe(this.store);
+}
 }

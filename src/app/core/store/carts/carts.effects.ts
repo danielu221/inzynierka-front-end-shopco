@@ -154,7 +154,8 @@ export class CartsPageEffects {
               });
               return new CartsActions.SaveCartAndRedirectToOrderSuccess({
                 cartId: action.payload.cartId,
-                cartName: action.payload.cartName
+                cartName: action.payload.cartName,
+                totalItemsPrice:this.getTotalItemsPrice(store,action.payload.cartId)
               });
             }
             return new CartsActions.UpdateCartSuccess({
@@ -194,6 +195,11 @@ export class CartsPageEffects {
   getCartItemsFromStore(store: State, cartId: number) {
     return store.cartsPageState.carts.filter(cart => cart.id === cartId)[0]
       .cartItems;
+  }
+
+  getTotalItemsPrice(store: State, cartId: number) {
+    return store.cartsPageState.carts.filter(cart => cart.id === cartId)[0]
+      .totalItemsPrice;
   }
 
 

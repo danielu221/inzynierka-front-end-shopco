@@ -14,6 +14,7 @@ import {
   SaveCart
 } from 'src/app/core/store/product/product.action';
 import { CartItem } from 'src/app/shared/interface/cart-item.interface';
+import { SaveCartAndRedirectToOrder } from 'src/app/core/store/carts/carts.actions';
 
 @Component({
   selector: 'app-cart-products',
@@ -74,7 +75,10 @@ export class CartInProductsComponent implements OnInit {
     );
   }
 
-  onListNameChanged(listName){
-    this.listName = listName;
+  onOrderBtnClick(){
+    // this.store.dispatch(
+    //   new SaveCartAndRedirectToOrder({ cartId: this.cartPreviewData.cartId, dialogRef: this.dialogRef,cartName:this.listName })
+    // );
   }
+
 }

@@ -12,6 +12,9 @@ export const endpoints = {
     cart:{
         save: '/listofitems'
     },
+    order:{
+        publish:'/disposition'
+    },
     carts:'/listofitems',
 };
 
