@@ -28,7 +28,7 @@ export function CartsPageReducer(
       };
 
     case CartsActionTypes.UPDATE_QUANTITY_IN_CART_PREVIEW:
-      const newState = {
+      let newState = {
         ...state,
         carts: state.carts.map(cart =>
           cart.id === action.payload.cartId
@@ -66,7 +66,7 @@ export function CartsPageReducer(
       };
 
     case CartsActionTypes.REMOVE_FROM_CART:
-      return {
+      newState = {
         ...state,
         carts: state.carts.map(cart =>
           cart.id === action.payload.cartId
@@ -79,20 +79,33 @@ export function CartsPageReducer(
             : cart
         )
       };
+      return {
+        ...newState,
+        carts: [
+          ...newState.carts.map(cart =>
+            cart.id === action.payload.cartId
+              ? {
+                  ...cart,
+                  totalItemsPrice: calcTotalCostOfProductsInCart(cart.cartItems)
+                }
+              : cart
+          )
+        ]
+      };
 
-      case CartsActionTypes.SAVE_CART_AND_REDIRECT_TO_ORDER_SUCCESS:
-      case CartsActionTypes.UPDATE_CART_SUCCESS:
-          return {
-            ...state,
-            carts: state.carts.map(cart =>
-              cart.id === action.payload.cartId
-                ? {
-                    ...cart,
-                    cartName: action.payload.cartName
-                  }
-                : cart
-            )
-          };
+    case CartsActionTypes.SAVE_CART_AND_REDIRECT_TO_ORDER_SUCCESS:
+    case CartsActionTypes.UPDATE_CART_SUCCESS:
+      return {
+        ...state,
+        carts: state.carts.map(cart =>
+          cart.id === action.payload.cartId
+            ? {
+                ...cart,
+                cartName: action.payload.cartName
+              }
+            : cart
+        )
+      };
     default:
       return state;
   }
