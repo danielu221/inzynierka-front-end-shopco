@@ -6,7 +6,8 @@ import {
   map,
   catchError,
   mergeMap,
-  withLatestFrom
+  withLatestFrom,
+  tap
 } from 'rxjs/operators';
 
 import * as CartsActions from './carts.actions';
@@ -19,6 +20,10 @@ import { ToastMessageService } from 'src/app/shared/services/toast-message.servi
 import { Product } from 'src/app/shared/interface/product.interface';
 import { Cart } from 'src/app/shared/interface/cart.interface';
 import { ToastConfig } from 'src/app/shared/interface/toast-config.interface';
+import { MatDialog } from '@angular/material/dialog';
+import { PublishCartModalComponent } from 'src/app/shared/components/publish-cart-modal/publish-cart-modal.component';
+import { CartPreviewComponent } from 'src/app/modules/carts/components/cart-preview/cart-preview.component';
+import * as OrderActions  from '../order/order.action';
 
 interface CartResponse {
   creationDate: string;
@@ -122,7 +127,10 @@ export class CartsPageEffects {
 
   @Effect()
   updateCart = this.actions$.pipe(
-    ofType<CartsActions.UpdateCart>(CartsActionTypes.UPDATE_CART),
+    ofType<CartsActions.UpdateCart | CartsActions.SaveCartAndRedirectToOrder>(
+      CartsActionTypes.UPDATE_CART,
+      CartsActionTypes.SAVE_CART_AND_REDIRECT_TO_ORDER
+    ),
     withLatestFrom(this.store$),
     mergeMap(([action, store]) => {
       return this.cartsService
@@ -138,6 +146,19 @@ export class CartsPageEffects {
             };
             this.toasterService.showSuccessMessage(toast);
             action.payload.dialogRef.close();
+            if (
+              action.type === CartsActionTypes.SAVE_CART_AND_REDIRECT_TO_ORDER
+            ) {
+              this.dialog.open(PublishCartModalComponent, {
+                width: '800px',
+                height: '650px'
+              });
+              return new CartsActions.SaveCartAndRedirectToOrderSuccess({
+                cartId: action.payload.cartId,
+                cartName: action.payload.cartName,
+                totalItemsPrice:this.getTotalItemsPrice(store,action.payload.cartId)
+              });
+            }
             return new CartsActions.UpdateCartSuccess({
               cartId: action.payload.cartId,
               cartName: action.payload.cartName
@@ -155,15 +176,47 @@ export class CartsPageEffects {
     })
   );
 
+  @Effect({dispatch: false})
+  openOrderDialog = this.actions$.pipe(
+    ofType<CartsActions.OpenCartDialog>(
+      CartsActionTypes.OPEN_CART_DIALOG
+    ),
+    tap((action) => {
+      this.dialog.closeAll();
+      this.dialog.open(CartPreviewComponent, {
+        width: '800px',
+        height: '650px',  
+        data: {cartId:action.payload.cartId}
+    })
+  }));
+
+  @Effect({dispatch: false})
+  closeOrderDialog = this.actions$.pipe(
+    ofType<OrderActions.PublishOrderSuccess>(
+      OrderActions.OrderActionTypes.PUBLISH_ORDER_SUCCESS
+    ),
+    tap(() => {
+      this.dialog.closeAll();
+  }));
+
+
+
   getCartItemsFromStore(store: State, cartId: number) {
     return store.cartsPageState.carts.filter(cart => cart.id === cartId)[0]
       .cartItems;
   }
 
+  getTotalItemsPrice(store: State, cartId: number) {
+    return store.cartsPageState.carts.filter(cart => cart.id === cartId)[0]
+      .totalItemsPrice;
+  }
+
+
   constructor(
     private actions$: Actions,
     private cartsService: CartsService,
     private store$: Store<State>,
-    private toasterService: ToastMessageService
+    private toasterService: ToastMessageService,
+    public dialog: MatDialog
   ) {}
 }

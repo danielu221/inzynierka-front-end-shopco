@@ -35,6 +35,9 @@ export class CartComponent implements OnInit {
   @Output()
   decreaseQuantityBtnClicked:EventEmitter<any> = new EventEmitter();
 
+  @Output()
+  orderBtnClicked:EventEmitter<any> = new EventEmitter();
+
   displayedColumns: string[] = [
     'picture',
     'name',

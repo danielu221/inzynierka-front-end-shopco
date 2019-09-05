@@ -1,0 +1,110 @@
+<form [ngrxFormState]="formState$ | async" (submit)="submit()">
+  <h1 mat-dialog-title>Podsumowanie zamówienia</h1>
+
+  <div mat-dialog-content>
+    <div class="container-fluid">
+      <div class="row align-items-center customized-row py-4 ">
+        <div class="col-12 col-md-4 font-weight-bold">Wybrana lista</div>
+        <div class="col-12 col-md-4 pt-2 pt-md-0 d-flex align-items-center">
+          {{ (cartInformation$ | async).cartName
+          }}<i
+            class="material-icons preview-icon"
+            (click)="onPreviewListClick()"
+          >
+            search
+          </i>
+        </div>
+      </div>
+      <div class="row align-items-center customized-row py-4">
+        <div class="col-12 col-md-4 font-weight-bold">Adres dostawy</div>
+        <div
+          class="col-12 col-md-8 d-flex pt-2 pt-md-0 d-flex align-items-center"
+        >
+          <i class="material-icons">
+            room
+          </i>
+          <mat-form-field floatLabel="auto" class="w-100">
+            <input
+              placeholder="ulica, miasto, kod pocztowy"
+              matInput
+              [ngrxFormControlState]="(formState$ | async).controls.address"
+            />
+            <mat-error *ngIf="(formState$ | async).errors._address?.required">
+              To pole jest wymagane
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row align-items-center customized-row py-4">
+        <div class="col-12 col-md-4 font-weight-bold">Termin dostawy</div>
+        <div class="col-12 col-md-4 pt-2 pt-md-0">
+          <input
+            type="checkbox"
+            [ngrxFormControlState]="(formState$ | async).controls.asap"
+          />
+          jak najszybciej
+        </div>
+        <div class="col-12 col-md-4 d-flex align-items-center pt-2 pt-md-0">
+          <i class="material-icons">
+            calendar_today
+          </i>
+          <mat-form-field floatLabel="auto" class="w-100 ml-2">
+            <input
+              placeholder="yyyy-mm-dd hh:mm"
+              matInput
+              [disabled]="(formState$ | async).value.asap"
+              class="ml-2"
+              [ngrxFormControlState]="
+                (formState$ | async).controls.deliveryDateTime
+              "
+            />
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row align-items-center customized-row py-4">
+        <div class="col-12 col-md-4 font-weight-bold">Płatność</div>
+        <!-- <div class="col-12 col-md-4  d-flex align-items-center pt-2 pt-md-0">
+          <i class="material-icons"> credit_card </i>
+          <mat-form-field floatLabel="auto" class="ml-2">
+            <mat-label>Wybierz kartę</mat-label>
+            <mat-select>
+              <mat-option value="option1">
+                ****-3456
+              </mat-option>
+              <mat-option value="option2">
+                ****-1235
+              </mat-option>
+              <mat-option value="option3">
+                ****-7896
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div> -->
+        <div class="col-12 col-md-4 d-flex align-items-center pt-2 pt-md-0">
+          <i class="material-icons">
+            credit_card
+          </i>
+          <mat-form-field floatLabel="auto" class="w-100 ml-2">
+              <input
+                placeholder="numer karty"
+                matInput
+                [ngrxFormControlState]="(formState$ | async).controls.paymentCard"
+              />
+              <mat-error *ngIf="(formState$ | async).errors._paymentCard?.required">
+                  To pole jest wymagane
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div></div>
+      </div>
+      <div class="row align-items-center my-3 ">
+        <div class="col-12 col-md-4 offset-md-8">
+          Łączny koszt <strong>{{(cartInformation$ | async).totalItemsPrice}} zł</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div mat-dialog-actions class="d-flex justify-content-center">
+    <app-icon-btn [type]="'submit'" class="p-2" [icon]="'public'">Opublikuj</app-icon-btn>
+  </div>
+</form>

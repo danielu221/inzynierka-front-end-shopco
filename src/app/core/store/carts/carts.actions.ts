@@ -1,6 +1,7 @@
 import { Action } from '@ngrx/store';
 import { Cart } from 'src/app/shared/interface/cart.interface';
 import { CartItem } from 'src/app/shared/interface/cart-item.interface';
+import { MatDialogRef } from '@angular/material/dialog';
 
 export enum CartsActionTypes {
   LOAD_CARTS = '[Carts] Load carts from server',
@@ -15,7 +16,11 @@ export enum CartsActionTypes {
   REMOVE_FROM_CART_FAILURE = '[Cart] remove item failure',
   UPDATE_CART = '[Cart] Update',
   UPDATE_CART_SUCCESS = '[Cart] Update success',
-  UPDATE_CART_FAILURE = '[Cart] Update failure'
+  UPDATE_CART_FAILURE = '[Cart] Update failure',
+  SAVE_CART_AND_REDIRECT_TO_ORDER = '[Cart] Save and redirect',
+  SAVE_CART_AND_REDIRECT_TO_ORDER_SUCCESS ='[Cart] Save and redirect success',
+  OPEN_CART_DIALOG = '[Cart] open dialog',
+  CLOSE_ALL_DIALOGS='Close all dialogs'
 }
 
 export class LoadCarts implements Action {
@@ -75,12 +80,33 @@ export class UpdateCart implements Action {
 
 export class UpdateCartSuccess implements Action {
   readonly type = CartsActionTypes.UPDATE_CART_SUCCESS;
-  constructor(public payload:  { cartId: number,cartName:string}) {}
+  constructor(public payload:  { cartId: number,cartName:string }) {}
 }
 
 export class UpdateCartFailure implements Action {
   readonly type = CartsActionTypes.UPDATE_CART_FAILURE;
   constructor(public payload: any) {}
+}
+
+export class SaveCartAndRedirectToOrder implements Action {
+  readonly type = CartsActionTypes.SAVE_CART_AND_REDIRECT_TO_ORDER;
+  constructor(public payload: { cartId: number, dialogRef: any, cartName:string }) {}
+}
+
+export class SaveCartAndRedirectToOrderSuccess implements Action {
+  readonly type = CartsActionTypes.SAVE_CART_AND_REDIRECT_TO_ORDER_SUCCESS;
+  constructor(public payload: { cartId: number,cartName:string, totalItemsPrice:number}) {}
+}
+
+export class OpenCartDialog implements Action {
+  readonly type = CartsActionTypes.OPEN_CART_DIALOG;
+  constructor(public payload: { cartId: number }) {}
+}
+
+
+export class CloseAllDialogs implements Action {
+  readonly type = CartsActionTypes.CLOSE_ALL_DIALOGS;
+  constructor() {}
 }
 
 export type CartsActions =
@@ -96,4 +122,8 @@ export type CartsActions =
   | RemoveCartSuccess
   | UpdateCart
   | UpdateCartFailure
-  | UpdateCartSuccess;
+  | UpdateCartSuccess
+  | SaveCartAndRedirectToOrder
+  | SaveCartAndRedirectToOrderSuccess
+  | OpenCartDialog
+  | CloseAllDialogs;

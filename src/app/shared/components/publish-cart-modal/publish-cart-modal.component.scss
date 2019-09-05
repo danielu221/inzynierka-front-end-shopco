@@ -1,0 +1,30 @@
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+@import '~@angular/material/theming';
+
+.customized-row {
+  border-bottom: 1px solid;
+}
+
+// input {s
+
+  
+
+mat-label {
+  color: black !important;
+}
+
+// Define a custom typography config that overrides the font-family as well as the
+// `headlines` and `body-1` levels.
+$custom-typography: mat-typography-config(
+  $font-family: '"Hind", sans-serif;'
+);
+
+@include mat-core($custom-typography);
+
+
+.preview-icon {
+    &:hover {
+      color: #0080ff;
+      cursor: pointer;
+    }
+  }

@@ -11,7 +11,9 @@ export enum ProductActionTypes {
   UPDATE_QUANTITY_IN_CART = '[CartItem] Update Quantity',
   SAVE_CART = '[Cart] Save cart',
   SAVE_CART_SUCCESS = '[Cart] Save cart success',
-  SAVE_CART_FAILURE = '[Cart] Save cart failed'
+  SAVE_CART_FAILURE = '[Cart] Save cart failed',
+  SAVE_CURRENT_CART_AND_REDIRECT_TO_ORDER='[Cart] Save current and redirect to order',
+  SAVE_CURRENT_CART_AND_REDIRECT_TO_ORDER_SUCCESS='[Cart] Save current and redirect to order success'
 }
 
 export class AddToList implements Action {
@@ -69,6 +71,18 @@ export class SaveCartFailure implements Action {
   constructor(public payload: any) {}
 }
 
+export class SaveCurrentCartAndRedirectToOrder implements Action {
+  readonly type = ProductActionTypes.SAVE_CURRENT_CART_AND_REDIRECT_TO_ORDER;
+
+  constructor(public payload: { listName: string; dialogRef: any }) {}
+}
+
+export class SaveCurrentCartAndRedirectToOrderSuccess implements Action {
+  readonly type = ProductActionTypes.SAVE_CURRENT_CART_AND_REDIRECT_TO_ORDER_SUCCESS;
+
+  constructor(public payload: { cartId: number,cartName:string, totalItemsPrice:number}) {}
+}
+
 export type ProductActions =
   | AddToList
   | RemoveFromList
@@ -78,4 +92,6 @@ export type ProductActions =
   | UpdateQuantityInCart
   | SaveCart
   | SaveCartFailure
-  | SaveCartSuccess;
+  | SaveCartSuccess
+  | SaveCurrentCartAndRedirectToOrder
+  | SaveCurrentCartAndRedirectToOrderSuccess;

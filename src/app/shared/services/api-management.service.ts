@@ -5,12 +5,17 @@ import { Injectable } from '@angular/core';
 export const endpoints = {
     auth: {
         login: '/signin',
-        register: '/auth/signup',
+        register: '/user',
         checkToken: '/checkToken',
     },
     products: '/product',
     cart:{
         save: '/listofitems'
+    },
+    order:{
+        publish:'/disposition',
+        myOrders:'/disposition/principal',
+        othersOrders:'/disposition'
     },
     carts:'/listofitems',
 };

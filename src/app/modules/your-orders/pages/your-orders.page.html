@@ -1,3 +1,86 @@
-<p>
-  your-orders works!
-</p>
+<app-banner [height]="'300px'">
+  <div class="col-md-12 text-center text-white font-weight-bold">
+    <h1 class="mb-2">
+      <strong>Twoje zamówienia</strong>
+    </h1>
+  </div>
+</app-banner>
+<div class="container my-5">
+  <div class="row">
+    <table
+      mat-table
+      [dataSource]="myOrders$ | async"
+      class="mat-elevation-z8 w-100"
+      *ngIf="(myOrders$ | async).length; else noItems"
+    >
+      <ng-container matColumnDef="creationDate">
+        <th mat-header-cell *matHeaderCellDef>Data zamówienia</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.creationDatetime }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="dispositionDeliveryAddress">
+        <th mat-header-cell *matHeaderCellDef>Adres</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.dispositionDeliveryAddress }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef>Status</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.status }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="totalItemsPrice">
+        <th mat-header-cell *matHeaderCellDef>Koszt(zł)</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.listOfItems.totalItemsPrice }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="preview">
+        <th mat-header-cell *matHeaderCellDef>Podgląd</th>
+        <td mat-cell *matCellDef="let element">
+          <i
+            class="preview-icon material-icons"
+            (click)="onPreviewIconClick(element)"
+          >
+            search
+          </i>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="supplier">
+        <th mat-header-cell *matHeaderCellDef>Zleceniobiorca</th>
+        <td mat-cell *matCellDef="let element">-</td>
+      </ng-container>
+
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef>Odbiór</th>
+        <td mat-cell *matCellDef="let element"><i class="material-icons receive-icon">
+            check_circle
+            </i></td>
+      </ng-container>
+
+      <ng-container matColumnDef="problem">
+          <th mat-header-cell *matHeaderCellDef>Zgłoś problem</th>
+          <td mat-cell *matCellDef="let element"><i class="material-icons error-icon">
+              error
+              </i></td>
+        </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+
+    <ng-template #noItems>
+      <div class="no-items-text text-center">
+        Brak zamówień do wyświetlenia. Aby utworzyć zamówiennie opublikuj listę
+        zakupową.
+      </div>
+    </ng-template>
+  </div>
+</div>

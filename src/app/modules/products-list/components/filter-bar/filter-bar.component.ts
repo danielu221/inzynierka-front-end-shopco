@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { constructor } from 'q';
 import { MatDialog } from '@angular/material/dialog';
-import { PopupDialogComponent } from 'src/app/shared/components/popup-dialog/popup-dialog.component';
 import { CartInProductsComponent } from '../cart/cart.component';
 
 @Component({

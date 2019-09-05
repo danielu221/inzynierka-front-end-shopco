@@ -75,6 +75,13 @@ const reducers = combineReducers<State['register'], any>({
         };
       }
 
+      case FormRegisterActionsTypes.SUBMIT_REGISTER_FORM_SUCCESS: {
+        return {
+          ...state,
+          isLoading: false
+        };
+      }
+
       default:
         return state;
     }

@@ -21,7 +21,7 @@ export class LoginEffects {
         map(action => action.payload),
         switchMap((payload: FormLogin) =>
             this.loginService.login(payload).pipe(
-                map((res: any) => {console.log(res); return new LoginSuccess({
+                map((res: any) => {return new LoginSuccess({
                     user : {
                         id: res.body.id,
                         firstname: res.body.firstname,

@@ -44,13 +44,11 @@ export class ProductService {
       };
     });
 
-    console.log(items)
     requestBody = {
         listName:listName,
         creationDate:getDateNowFormatted(),
         items:items
     }
-    console.log(requestBody)
-    return this.http.post(this.apiManagement.getURL(endpoints.cart.save),requestBody,{responseType: 'text'});
+    return this.http.post(this.apiManagement.getURL(endpoints.cart.save),requestBody);
   }
 }
