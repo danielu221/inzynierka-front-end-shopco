@@ -1,8 +1,18 @@
+import { Cart } from './cart.interface';
+
 export interface Order {
-  address: string;
-  cartName: string;
-  cartId: number;
+  dispositionDeliveryAddress: string;
   creationDatetime: string;
+  listOfItems: Cart;
   deliveryDateTime: string;
-  asap: boolean;
+  status: string;
+  id:number;
+}
+
+
+export enum OrderStatus{
+  Published="Opublikowano",
+  InProgress = "W trakcie realizacji",
+  Canceled = "Anulowano",
+  Delivered = "Dostarczono"
 }

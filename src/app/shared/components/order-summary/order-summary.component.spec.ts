@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PopupDialogComponent } from './popup-dialog.component';
+import { OrderSummaryComponent } from './order-summary.component';
 
-describe('PopupDialogComponent', () => {
-  let component: PopupDialogComponent;
-  let fixture: ComponentFixture<PopupDialogComponent>;
+describe('OrderSummaryComponent', () => {
+  let component: OrderSummaryComponent;
+  let fixture: ComponentFixture<OrderSummaryComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PopupDialogComponent ]
+      declarations: [ OrderSummaryComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PopupDialogComponent);
+    fixture = TestBed.createComponent(OrderSummaryComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

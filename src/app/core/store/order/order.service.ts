@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { ApiManagementService, endpoints } from '../../../shared/services/api-management.service';
 import { PublishOrderRequestBody } from './order.action';
 import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable()
 export class OrderService {
@@ -14,5 +14,13 @@ export class OrderService {
 
   publishOrder(reqBody:PublishOrderRequestBody): Observable<any> {
     return this.http.post(this.apiManagement.getURL(endpoints.order.publish),reqBody,{responseType: 'text'});
+  }
+
+  getMyOrders(): Observable<any> {
+    // let headers = new HttpHeaders();
+    // headers=headers.set('Content-Type', 'application/json; charset=utf-8');
+    return this.http.get(
+      this.apiManagement.getURL(endpoints.order.myOrders)
+    );
   }
 }

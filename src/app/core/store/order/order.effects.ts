@@ -5,7 +5,9 @@ import { map, switchMap, catchError } from 'rxjs/operators';
 import {
   PublishOrderRequestBody,
   PublishOrderSuccess,
-  PublishOrderFailure
+  PublishOrderFailure,
+  GetMyOrdersSuccess,
+  GetMyOrdersFailure
 } from './order.action';
 import { OrderService } from './order.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -13,6 +15,8 @@ import { of } from 'rxjs';
 import { ToastConfig } from 'src/app/shared/interface/toast-config.interface';
 import { ToasterService } from 'angular2-toaster';
 import { ToastMessageService } from 'src/app/shared/services/toast-message.service';
+import { Order, OrderStatus } from 'src/app/shared/interface/order.interface';
+import { MatDialog } from '@angular/material/dialog';
 
 @Injectable()
 export class OrderEffects {
@@ -42,6 +46,66 @@ export class OrderEffects {
       )
     )
   );
+
+  @Effect()
+  getMyOrders = this.actions$.pipe(
+    ofType<OrderActions.GetMyOrders>(
+      OrderActions.OrderActionTypes.GET_MY_ORDERS
+    ),
+    switchMap(() =>
+      this.orderService.getMyOrders().pipe(
+        map((res: OrderActions.GetMyOrdersResponseObj[]) => {
+          console.log(res);
+          let myOrders: Order[] = [];
+          myOrders = res.map(orderRes => {
+            return {
+              dispositionDeliveryAddress: orderRes.dispositionDeliveryAddress,
+              listOfItems: {
+                cartItems: orderRes.listOfItems.items.map(orderResItem => {
+                  return {
+                    cartItemId: orderResItem.id,
+                    quantity: orderResItem['product_units'],
+                    totalPrice: orderResItem.totalItemPrice,
+                    productName:orderResItem.product.productName,
+                    unitPrice:orderResItem.product.unitPrice,
+                    picture:orderResItem.product.picture,
+                    id:orderResItem.product.id
+                  };
+                }),
+                cartName: orderRes.listOfItems.listName,
+                totalItemsPrice: orderRes.listOfItems.totalItemsPrice,
+                id: orderRes.listOfItems.id
+              },
+              deliveryDateTime: orderRes.deliveryDatetime,
+              status: this.mapOrderResStatusToOrderStatus(
+                orderRes.dispositionStatus.dispositionStatusName
+              ),
+              creationDatetime: orderRes.creationDatetime,
+              id: orderRes.id
+            };
+          });
+          return new GetMyOrdersSuccess({ myOrders: myOrders });
+        }),
+        catchError((err: HttpErrorResponse) => {
+          const toast: ToastConfig = {
+            title: 'Błąd z wysłaniem żądania',
+            body: `Kod błędu: ${err.status}`
+          };
+          this.toasterService.showErrorMessage(toast);
+          return of(new GetMyOrdersFailure(err));
+        })
+      )
+    )
+  );
+
+  mapOrderResStatusToOrderStatus(orderResStatus: string): string {
+    switch (orderResStatus) {
+      case 'PUBLISHED':
+        return OrderStatus.Published;
+      default:
+        return '';
+    }
+  }
 
   constructor(
     private actions$: Actions,

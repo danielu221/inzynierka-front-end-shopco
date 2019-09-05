@@ -11,6 +11,7 @@ import { FormGroupState } from 'ngrx-forms';
 import { FormOrder } from 'src/app/core/store/order/order.reducer';
 import { take, filter, map } from 'rxjs/operators';
 import { PublishOrder } from 'src/app/core/store/order/order.action';
+import { getDateTimeNowFormatted } from '../../utils';
 
 @Component({
   selector: 'app-publish-cart-modal',
@@ -43,7 +44,7 @@ export class PublishCartModalComponent implements OnInit {
             map(fs =>  new PublishOrder({
               dispositionDeliveryAddress: fs.value.address,
               listId: this.cartId,
-              creationDatetime: "2019-07-23 14:00:00",
+              creationDatetime: getDateTimeNowFormatted(),
               deliveryDatetime: "2019-07-24 14:00:00",
               asap: fs.value.asap
             }))

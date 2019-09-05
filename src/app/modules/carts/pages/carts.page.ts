@@ -39,14 +39,10 @@ export class CartsPage implements OnInit {
   }
 
   onPreviewIconClick(cart:Cart) {
-    const dialogRef = this.dialog.open(CartPreviewComponent, {
+    this.dialog.open(CartPreviewComponent, {
       width: '800px',
       height: '650px',
       data: {cartId:cart.id}
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
     });
   }
 

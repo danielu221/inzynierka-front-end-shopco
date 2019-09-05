@@ -95,7 +95,7 @@ export function ProductsPageReducer(
           newState.cartItems
         )
       };
-
+      case ProductActionTypes.SAVE_CURRENT_CART_AND_REDIRECT_TO_ORDER_SUCCESS:
       case ProductActionTypes.SAVE_CART_SUCCESS:
         return{
           ...state,

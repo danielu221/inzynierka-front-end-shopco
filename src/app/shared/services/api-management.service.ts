@@ -13,7 +13,9 @@ export const endpoints = {
         save: '/listofitems'
     },
     order:{
-        publish:'/disposition'
+        publish:'/disposition',
+        myOrders:'/disposition/principal',
+        othersOrders:'/disposition'
     },
     carts:'/listofitems',
 };

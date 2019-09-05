@@ -23,6 +23,7 @@ import { ToastConfig } from 'src/app/shared/interface/toast-config.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { PublishCartModalComponent } from 'src/app/shared/components/publish-cart-modal/publish-cart-modal.component';
 import { CartPreviewComponent } from 'src/app/modules/carts/components/cart-preview/cart-preview.component';
+import * as OrderActions  from '../order/order.action';
 
 interface CartResponse {
   creationDate: string;
@@ -181,15 +182,23 @@ export class CartsPageEffects {
       CartsActionTypes.OPEN_CART_DIALOG
     ),
     tap((action) => {
-      console.log(action)
       this.dialog.closeAll();
       this.dialog.open(CartPreviewComponent, {
         width: '800px',
         height: '650px',  
         data: {cartId:action.payload.cartId}
     })
-  
   }));
+
+  @Effect({dispatch: false})
+  closeOrderDialog = this.actions$.pipe(
+    ofType<OrderActions.PublishOrderSuccess>(
+      OrderActions.OrderActionTypes.PUBLISH_ORDER_SUCCESS
+    ),
+    tap(() => {
+      this.dialog.closeAll();
+  }));
+
 
 
   getCartItemsFromStore(store: State, cartId: number) {

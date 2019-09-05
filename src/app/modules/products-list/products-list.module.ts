@@ -12,7 +12,9 @@ import { ProductsPageReducer } from 'src/app/core/store/product/product.reducer'
 import { ProductsPageEffects } from 'src/app/core/store/product/product.effects';
 import { ProductService } from 'src/app/core/store/product/product.service';
 import { CartInProductsComponent } from './components/cart/cart.component';
-import { FormsModule } from '@angular/forms';
+import { PublishCartModalComponent } from 'src/app/shared/components/publish-cart-modal/publish-cart-modal.component';
+
+
 
 @NgModule({
   declarations: [
@@ -31,6 +33,6 @@ import { FormsModule } from '@angular/forms';
   providers:[
     ProductService
   ],
-  entryComponents:[CartInProductsComponent]
+  entryComponents:[CartInProductsComponent,PublishCartModalComponent]
 })
 export class ProductsListModule {}

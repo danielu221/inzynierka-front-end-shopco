@@ -1,6 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { MatDialogRef, MatDialog } from '@angular/material/dialog';
-import { PopupDialogComponent } from 'src/app/shared/components/popup-dialog/popup-dialog.component';
+import { MatDialogRef } from '@angular/material/dialog';
 import { Store, select } from '@ngrx/store';
 import { ProductsPageState } from 'src/app/core/store/product/product.reducer';
 import { Observable } from 'rxjs';
@@ -11,7 +10,8 @@ import {
 import {
   RemoveFromList,
   UpdateQuantityInCart,
-  SaveCart
+  SaveCart,
+  SaveCurrentCartAndRedirectToOrder
 } from 'src/app/core/store/product/product.action';
 import { CartItem } from 'src/app/shared/interface/cart-item.interface';
 import { SaveCartAndRedirectToOrder } from 'src/app/core/store/carts/carts.actions';
@@ -76,9 +76,9 @@ export class CartInProductsComponent implements OnInit {
   }
 
   onOrderBtnClick(){
-    // this.store.dispatch(
-    //   new SaveCartAndRedirectToOrder({ cartId: this.cartPreviewData.cartId, dialogRef: this.dialogRef,cartName:this.listName })
-    // );
+    this.store.dispatch(
+      new SaveCurrentCartAndRedirectToOrder({ listName: this.listName, dialogRef: this.dialogRef })
+    );
   }
 
 }

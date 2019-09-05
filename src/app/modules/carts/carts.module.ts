@@ -22,6 +22,7 @@ import { OrderStoreModule } from 'src/app/core/store/order/order-store.module';
     EffectsModule.forFeature([CartsPageEffects])
   ],
   providers: [CartsService],
+  exports:[CartPreviewComponent],
 
   entryComponents: [CartPreviewComponent,PublishCartModalComponent]
 })

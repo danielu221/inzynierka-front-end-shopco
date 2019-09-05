@@ -11,18 +11,21 @@ import {
 import { combineReducers, Action } from '@ngrx/store';
 import { State as RootState } from '../root-state';
 import { required } from 'ngrx-forms/validation';
+import { ProductActionTypes, ProductActions } from '../product/product.action';
+import { state } from '@angular/animations';
 
-export interface OrderState extends RootState {
-  order:CurrentOrderState
+export interface State extends RootState {
+  order:OrderState
 }
 
-export interface CurrentOrderState{
+export interface OrderState{
   cartInformation: {
     cartId:number;
     cartName:string;
     totalItemsPrice:number;
   };
   orderForm: FormGroupState<FormOrder>;
+  myOrders: Order[];
 }
 
 
@@ -47,17 +50,20 @@ const initialCartInformation = {
   totalItemsPrice:null
 };
 
+const initialMyOrders = [];
+
 export const validateAndUpdateForm = updateGroup<FormOrder>({
   address: validate(required),
   paymentCard:validate(required)
 });
 
-const reducers = combineReducers<OrderState['order'], any>({
+const reducers = combineReducers<State['order'], any>({
   orderForm(s = INITIAL_STATE, a: Action) {
     return validateAndUpdateForm(formGroupReducer(s, a));
   },
-  cartInformation(state = initialCartInformation, action: CartsActions | OrderActions) {
+  cartInformation(state = initialCartInformation, action: CartsActions | OrderActions | ProductActions) {
     switch (action.type) {
+      case ProductActionTypes.SAVE_CURRENT_CART_AND_REDIRECT_TO_ORDER_SUCCESS:
       case CartsActionTypes.SAVE_CART_AND_REDIRECT_TO_ORDER_SUCCESS:
         return {
           ...state,
@@ -68,9 +74,17 @@ const reducers = combineReducers<OrderState['order'], any>({
       default:
         return state;
     }
+  },
+  myOrders(state = initialMyOrders, action: CartsActions | OrderActions | ProductActions) {
+    switch (action.type) {
+      case OrderActionTypes.GET_MY_ORDERS_SUCCESS:
+        return [...action.payload.myOrders]
+    }
+    return state;
   }
+
 });
 
-export function reducer(s: OrderState['order'], a: Action) {
+export function reducer(s: State['order'], a: Action) {
   return reducers(s, a);
 }

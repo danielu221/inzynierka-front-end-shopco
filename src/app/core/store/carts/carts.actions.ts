@@ -19,7 +19,8 @@ export enum CartsActionTypes {
   UPDATE_CART_FAILURE = '[Cart] Update failure',
   SAVE_CART_AND_REDIRECT_TO_ORDER = '[Cart] Save and redirect',
   SAVE_CART_AND_REDIRECT_TO_ORDER_SUCCESS ='[Cart] Save and redirect success',
-  OPEN_CART_DIALOG = '[Cart] open dialog'
+  OPEN_CART_DIALOG = '[Cart] open dialog',
+  CLOSE_ALL_DIALOGS='Close all dialogs'
 }
 
 export class LoadCarts implements Action {
@@ -102,6 +103,12 @@ export class OpenCartDialog implements Action {
   constructor(public payload: { cartId: number }) {}
 }
 
+
+export class CloseAllDialogs implements Action {
+  readonly type = CartsActionTypes.CLOSE_ALL_DIALOGS;
+  constructor() {}
+}
+
 export type CartsActions =
   | LoadCarts
   | LoadCartsSuccess
@@ -118,4 +125,5 @@ export type CartsActions =
   | UpdateCartSuccess
   | SaveCartAndRedirectToOrder
   | SaveCartAndRedirectToOrderSuccess
-  | OpenCartDialog;
+  | OpenCartDialog
+  | CloseAllDialogs;

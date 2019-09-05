@@ -49,6 +49,6 @@ export class ProductService {
         creationDate:getDateNowFormatted(),
         items:items
     }
-    return this.http.post(this.apiManagement.getURL(endpoints.cart.save),requestBody,{responseType: 'text'});
+    return this.http.post(this.apiManagement.getURL(endpoints.cart.save),requestBody);
   }
 }
