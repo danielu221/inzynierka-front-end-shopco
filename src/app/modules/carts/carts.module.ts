@@ -13,17 +13,14 @@ import { PublishCartModalComponent } from 'src/app/shared/components/publish-car
 import { OrderStoreModule } from 'src/app/core/store/order/order-store.module';
 
 @NgModule({
-  declarations: [CartsPage, CartPreviewComponent],
+  declarations: [CartsPage],
   imports: [
     CommonModule,
     CartsRouting,
     SharedModule,
-    StoreModule.forFeature('cartsPageState', CartsPageReducer),
-    EffectsModule.forFeature([CartsPageEffects])
   ],
   providers: [CartsService],
-  exports:[CartPreviewComponent],
 
-  entryComponents: [CartPreviewComponent,PublishCartModalComponent]
+  entryComponents: [PublishCartModalComponent]
 })
 export class CartsModule {}

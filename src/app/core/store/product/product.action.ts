@@ -80,7 +80,7 @@ export class SaveCurrentCartAndRedirectToOrder implements Action {
 export class SaveCurrentCartAndRedirectToOrderSuccess implements Action {
   readonly type = ProductActionTypes.SAVE_CURRENT_CART_AND_REDIRECT_TO_ORDER_SUCCESS;
 
-  constructor(public payload: { cartId: number,cartName:string, totalItemsPrice:number}) {}
+  constructor(public payload: { cartId: number,cartName:string, totalItemsPrice:number, cartItems:any}) {}
 }
 
 export type ProductActions =
