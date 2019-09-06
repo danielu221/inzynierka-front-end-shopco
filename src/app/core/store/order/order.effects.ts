@@ -55,7 +55,6 @@ export class OrderEffects {
     switchMap(() =>
       this.orderService.getMyOrders().pipe(
         map((res: OrderActions.GetMyOrdersResponseObj[]) => {
-          console.log(res);
           let myOrders: Order[] = [];
           myOrders = res.map(orderRes => {
             return {
@@ -66,16 +65,17 @@ export class OrderEffects {
                     cartItemId: orderResItem.id,
                     quantity: orderResItem['product_units'],
                     totalPrice: orderResItem.totalItemPrice,
-                    productName:orderResItem.product.productName,
-                    unitPrice:orderResItem.product.unitPrice,
-                    picture:orderResItem.product.picture,
-                    id:orderResItem.product.id
+                    productName: orderResItem.product.productName,
+                    unitPrice: orderResItem.product.unitPrice,
+                    picture: orderResItem.product.picture,
+                    id: orderResItem.product.id
                   };
                 }),
                 cartName: orderRes.listOfItems.listName,
                 totalItemsPrice: orderRes.listOfItems.totalItemsPrice,
                 id: orderRes.listOfItems.id
               },
+              code: orderRes.code,
               deliveryDateTime: orderRes.deliveryDatetime,
               status: this.mapOrderResStatusToOrderStatus(
                 orderRes.dispositionStatus.dispositionStatusName
