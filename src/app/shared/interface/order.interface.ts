@@ -6,13 +6,13 @@ export interface Order {
   listOfItems: Cart;
   deliveryDateTime: string;
   status: string;
-  id:number;
+  id: number;
+  code: string;
 }
 
-
-export enum OrderStatus{
-  Published="Opublikowano",
-  InProgress = "W trakcie realizacji",
-  Canceled = "Anulowano",
-  Delivered = "Dostarczono"
+export enum OrderStatus {
+  Published = 'Opublikowano',
+  InProgress = 'W trakcie realizacji',
+  Canceled = 'Anulowano',
+  Delivered = 'Dostarczono'
 }

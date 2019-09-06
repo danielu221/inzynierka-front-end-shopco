@@ -1,0 +1,34 @@
+<h1 mat-dialog-title>Odbiór zamówienia</h1>
+<div mat-dialog-content class="container pt-3 pt-md-5">
+  <div>
+    <div class="row py-3">
+      <div class="col-12 col-md-4"><strong>Data złożenia zamówienia:</strong></div>
+      <div class="col-12 col-md-4">{{order.creationDatetime}}</div>
+    </div>
+    <div class="row py-3">
+        <div class="col-12 col-md-4"><strong>Miejsce dostarczenia:</strong></div>
+        <div class="col-12 col-md-4">{{order.dispositionDeliveryAddress}}</div>
+      </div>
+    <div class="row py-3">
+      <div class="col-12 col-md-4"><strong>Do zapłaty</strong></div>
+      <div class="col-12 col-md-4">{{order.listOfItems.totalItemsPrice}} zł</div>
+    </div>
+    <div class="row mt-1 mt-md-3 py-1 py-md-3">
+      <!-- <div class="col-12 text-center">
+        <span
+          >Kiedy spotkasz się z dostawcą podaj mu poniższy kod, aby
+          potwierdzić, że wszystko jest OK i zapłacić za zamówienie.</span
+        >
+      </div> -->
+      <div class="col-12 text-center d-flex flex-column mt-2 mt-md-4">
+        <span class="code-text">Kod dla zamówienia:</span>
+        <span class="code-text-code">{{
+          order.code
+        }}</span>
+      </div>
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions class="mt-2 d-flex justify-content-center" >
+    <app-icon-btn class="p-2" [icon]="'arrow_left'" (click)="onReturnClick()">Powrót</app-icon-btn>
+  </div>
