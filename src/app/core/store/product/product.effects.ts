@@ -95,7 +95,8 @@ export class ProductsPageEffects {
                 {
                   cartId: res.id,
                   cartName: res.listName,
-                  totalItemsPrice: res.totalItemsPrice
+                  totalItemsPrice: res.totalItemsPrice,
+                  cartItems:store.productsPageState.cartItems
                 }
               );
             }

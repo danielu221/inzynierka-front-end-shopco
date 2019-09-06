@@ -1,6 +1,7 @@
 import { Cart } from '../../../shared/interface/cart.interface';
 import { CartsActions, CartsActionTypes } from './carts.actions';
 import { calcTotalCostOfProductsInCart } from '../product/product.reducer';
+import { ProductActions, ProductActionTypes } from '../product/product.action';
 
 export interface CartsPageState {
   carts: Cart[];
@@ -12,7 +13,7 @@ export const initialCartsPageState: CartsPageState = {
 
 export function CartsPageReducer(
   state = initialCartsPageState,
-  action: CartsActions
+  action: CartsActions | ProductActions
 ) {
   switch (action.type) {
     case CartsActionTypes.LOAD_SUCCESS:
@@ -106,6 +107,18 @@ export function CartsPageReducer(
             : cart
         )
       };
+
+    case ProductActionTypes.SAVE_CURRENT_CART_AND_REDIRECT_TO_ORDER_SUCCESS:
+      let cart : Cart = {
+        cartItems:action.payload.cartItems,
+        cartName:action.payload.cartName,
+        totalItemsPrice:action.payload.totalItemsPrice,
+        id:action.payload.cartId,
+      }
+      return{
+        ...state,
+        carts: [...state.carts,cart]
+      }
     default:
       return state;
   }
