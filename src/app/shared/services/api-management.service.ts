@@ -15,7 +15,9 @@ export const endpoints = {
     order:{
         publish:'/disposition',
         myOrders:'/disposition/principal',
-        othersOrders:'/disposition'
+        othersOrders:'/disposition',
+        toTake:'/disposition/status/PUBLISHED',
+        take:'/disposition/mandatory'
     },
     carts:'/listofitems',
 };

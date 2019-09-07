@@ -54,7 +54,7 @@ export class OrderEffects {
     ),
     switchMap(() =>
       this.orderService.getMyOrders().pipe(
-        map((res: OrderActions.GetMyOrdersResponseObj[]) => {
+        map((res: OrderActions.OrderResponseObj[]) => {
           let myOrders: Order[] = [];
           myOrders = res.map(orderRes => {
             return {
@@ -81,7 +81,9 @@ export class OrderEffects {
                 orderRes.dispositionStatus.dispositionStatusName
               ),
               creationDatetime: orderRes.creationDatetime,
-              id: orderRes.id
+              id: orderRes.id,
+              principal: orderRes.principal,
+              mandatory: orderRes.mandatory
             };
           });
           return new GetMyOrdersSuccess({ myOrders: myOrders });
@@ -97,6 +99,96 @@ export class OrderEffects {
       )
     )
   );
+
+  @Effect()
+  getOrdersToTake = this.actions$.pipe(
+    ofType<OrderActions.GetOrdersToTake>(
+      OrderActions.OrderActionTypes.GET_ORDERS_TO_TAKE
+    ),
+    switchMap(() =>
+      this.orderService.getOrdersToTake().pipe(
+        map((res: OrderActions.OrderResponseObj[]) => {
+          let ordersToTake: Order[] = [];
+          ordersToTake = res.map(orderRes => {
+            return {
+              dispositionDeliveryAddress: orderRes.dispositionDeliveryAddress,
+              listOfItems: {
+                cartItems: orderRes.listOfItems.items.map(orderResItem => {
+                  return {
+                    cartItemId: orderResItem.id,
+                    quantity: orderResItem['product_units'],
+                    totalPrice: orderResItem.totalItemPrice,
+                    productName: orderResItem.product.productName,
+                    unitPrice: orderResItem.product.unitPrice,
+                    picture: orderResItem.product.picture,
+                    id: orderResItem.product.id
+                  };
+                }),
+                cartName: orderRes.listOfItems.listName,
+                totalItemsPrice: orderRes.listOfItems.totalItemsPrice,
+                id: orderRes.listOfItems.id
+              },
+              code: orderRes.code,
+              deliveryDateTime: orderRes.deliveryDatetime,
+              status: this.mapOrderResStatusToOrderStatus(
+                orderRes.dispositionStatus.dispositionStatusName
+              ),
+              creationDatetime: orderRes.creationDatetime,
+              id: orderRes.id,
+              principal: orderRes.principal,
+              mandatory: orderRes.mandatory
+            };
+          });
+          return new OrderActions.GetOrdersToTakeSuccess({
+            ordersToTake: ordersToTake
+          });
+        }),
+        catchError((err: HttpErrorResponse) => {
+          const toast: ToastConfig = {
+            title: 'Błąd z wysłaniem żądania',
+            body: `Kod błędu: ${err.status}`
+          };
+          this.toasterService.showErrorMessage(toast);
+          return of(new OrderActions.GetOrdersToTakeFailure(err));
+        })
+      )
+    )
+  );
+  
+  @Effect()
+  takeOrder = this.actions$.pipe(
+    ofType<OrderActions.TakeOrder>(
+      OrderActions.OrderActionTypes.TAKE_ORDER
+    ),
+    map(action => action.payload),
+    switchMap((payload) =>
+      this.orderService.takeOrder(payload.orderId).pipe(
+        map((res: any) => {
+          const toast: ToastConfig = {
+            title: 'Podjąłeś się zlecenia'
+          };
+          this.toasterService.showSuccessMessage(toast);
+          return new OrderActions.TakeOrderSuccess({
+            orderId: payload.orderId
+          });
+        }),
+        catchError((err: HttpErrorResponse) => {
+          const toast: ToastConfig = {
+            title: 'Błąd z wysłaniem żądania',
+            body: `Kod błędu: ${err.status}`
+          };
+          this.toasterService.showErrorMessage(toast);
+          return of(new OrderActions.GetOrdersToTakeFailure(err));
+        })
+      )
+    )
+  );
+
+  
+
+  
+
+
 
   mapOrderResStatusToOrderStatus(orderResStatus: string): string {
     switch (orderResStatus) {

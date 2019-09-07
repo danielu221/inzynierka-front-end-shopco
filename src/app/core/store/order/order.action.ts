@@ -3,6 +3,7 @@ import { Order } from 'src/app/shared/interface/order.interface';
 import { Cart } from 'src/app/shared/interface/cart.interface';
 import { Product } from 'src/app/shared/interface/product.interface';
 import { CartItem } from 'src/app/shared/interface/cart-item.interface';
+import { User } from 'src/app/shared/interface/user.interface';
 
 export enum OrderActionTypes {
   PUBLISH_ORDER = '[Order] Publish order',
@@ -11,7 +12,13 @@ export enum OrderActionTypes {
   PUBLISH_ORDER_FAILURE = '[Order] publish failed',
   GET_MY_ORDERS = '[Order] get all',
   GET_MY_ORDERS_SUCCESS = '[Order] get success',
-  GET_MY_ORDERS_FAILURE = '[Order] get failure'
+  GET_MY_ORDERS_FAILURE = '[Order] get failure',
+  GET_ORDERS_TO_TAKE = '[Order] get all orders to take',
+  GET_ORDERS_TO_TAKE_SUCCESS = '[Order] get orderst to take success',
+  GET_ORDERS_TO_TAKE_FAILURE = '[Order] get orders to take failure',
+  TAKE_ORDER_SUCCESS = '[Order] Take order success',
+  TAKE_ORDER = '[Order] Take order',
+  TAKE_ORDER_FAILURE = '[Order] Take order failure'
 }
 
 export interface PublishOrderRequestBody {
@@ -22,14 +29,14 @@ export interface PublishOrderRequestBody {
   asap: boolean;
 }
 
-export interface GetMyOrdersResponseObj {
+export interface OrderResponseObj {
   dispositionDeliveryAddress: string;
   listOfItems: {
-    listName:string;
-    creationDate:string;
-    items:any[];
-    id:number;
-    totalItemsPrice:number;
+    listName: string;
+    creationDate: string;
+    items: any[];
+    id: number;
+    totalItemsPrice: number;
   };
   lat: string;
   lng: string;
@@ -42,6 +49,8 @@ export interface GetMyOrdersResponseObj {
     id: number;
     dispositionStatusName: string;
   };
+  principal: User;
+  mandatory: User;
 }
 
 export class PublishOrder implements Action {
@@ -66,7 +75,7 @@ export class GetMyOrders implements Action {
 
 export class GetMyOrdersSuccess implements Action {
   readonly type = OrderActionTypes.GET_MY_ORDERS_SUCCESS;
-  constructor(public payload: {myOrders:Order[]}) {}
+  constructor(public payload: { myOrders: Order[] }) {}
 }
 
 export class GetMyOrdersFailure implements Action {
@@ -74,6 +83,35 @@ export class GetMyOrdersFailure implements Action {
   constructor(public payload: any) {}
 }
 
+export class GetOrdersToTake implements Action {
+  readonly type = OrderActionTypes.GET_ORDERS_TO_TAKE;
+  constructor() {}
+}
+
+export class GetOrdersToTakeSuccess implements Action {
+  readonly type = OrderActionTypes.GET_ORDERS_TO_TAKE_SUCCESS;
+  constructor(public payload: { ordersToTake: Order[] }) {}
+}
+
+export class GetOrdersToTakeFailure implements Action {
+  readonly type = OrderActionTypes.GET_ORDERS_TO_TAKE_FAILURE;
+  constructor(public payload: any) {}
+}
+
+export class TakeOrder implements Action {
+  readonly type = OrderActionTypes.TAKE_ORDER;
+  constructor(public payload: { orderId: number }) {}
+}
+
+export class TakeOrderSuccess implements Action {
+  readonly type = OrderActionTypes.TAKE_ORDER_SUCCESS;
+  constructor(public payload: { orderId: number }) {}
+}
+
+export class TakeOrderFailure implements Action {
+  readonly type = OrderActionTypes.TAKE_ORDER_FAILURE;
+  constructor(public payload: any) {}
+}
 // export class SubmitOrderFormAction implements Action {
 //   readonly type = OrderActionTypes.SUBMIT_ORDER_FORM;
 //   constructor(public payload: SaveOrderRequestBody) {}
@@ -85,4 +123,10 @@ export type OrderActions =
   | PublishOrderFailure
   | GetMyOrders
   | GetMyOrdersSuccess
-  | GetMyOrdersFailure;
+  | GetMyOrdersFailure
+  | GetOrdersToTake
+  | GetOrdersToTakeFailure
+  | GetOrdersToTakeSuccess
+  | TakeOrder
+  | TakeOrderSuccess
+  | TakeOrderFailure;

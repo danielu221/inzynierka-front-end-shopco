@@ -22,7 +22,7 @@ export function CartsPageReducer(
         carts: [...action.payload]
       };
 
-    case CartsActionTypes.REMOVE_CART:
+    case CartsActionTypes.REMOVE_CART_SUCCESS:
       return {
         ...state,
         carts: [...state.carts.filter(cart => cart.id !== action.payload.id)]

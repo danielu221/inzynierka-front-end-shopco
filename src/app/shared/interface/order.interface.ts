@@ -1,4 +1,5 @@
 import { Cart } from './cart.interface';
+import { User } from './user.interface';
 
 export interface Order {
   dispositionDeliveryAddress: string;
@@ -8,6 +9,8 @@ export interface Order {
   status: string;
   id: number;
   code: string;
+  principal: User;
+  mandatory: User;
 }
 
 export enum OrderStatus {
