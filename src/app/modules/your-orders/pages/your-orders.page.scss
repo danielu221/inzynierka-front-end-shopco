@@ -6,7 +6,6 @@ th.mat-header-cell {
 
 td.mat-cell {
   text-align: center !important;
-  max-width: 150px !important;
 }
 
 .preview-icon {
@@ -29,42 +28,5 @@ td.mat-cell {
     cursor: pointer;
   }
 }
-.mobile-label {
-  display: none;
-}
 
 
-@media(max-width: 600px) {
-  .mobile-label {
-    width: 120px;
-    padding-right: 20px;
-    display: inline-block;
-        font-weight: bold;
-  }
-
-  .mat-header-row {
-    display: none;
-  }
-
-  .mat-row { 
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    padding: 8px 24px;
-    height: 100%;
-  }
-  td.mat-cell{
-    text-align: center !important;
-    display: flex;
-    width: 100% !important;
-    align-items: center;
-    height: 50px;
-    max-width: 100% !important;
-  }
-  td.mat-cell:first-of-type{
-    padding-left: 0px;
-  }
-  // tr .mat-row{
-  //   height:
-  // }
-}

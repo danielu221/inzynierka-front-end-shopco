@@ -8,6 +8,8 @@
     <ng-container matColumnDef="picture">
       <th mat-header-cell *matHeaderCellDef>Zdjęcie</th>
       <td class="p-3 img-holder" mat-cell *matCellDef="let element">
+
+          <span class="mobile-label">Zdjęcie:</span>
         <img [src]="element.picture" />
       </td>
     </ng-container>
@@ -15,6 +17,8 @@
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef>Nazwa</th>
       <td class="p-3" mat-cell *matCellDef="let element">
+
+          <span class="mobile-label">Nazwa:</span>
         {{ element.productName }}
       </td>
     </ng-container>
@@ -22,13 +26,16 @@
     <ng-container matColumnDef="quantity">
       <th mat-header-cell *matHeaderCellDef>Ilość</th>
       <td class="p-3" mat-cell *matCellDef="let element">
+
+          <span class="mobile-label">Ilość:</span>
         {{ element.quantity }}
       </td></ng-container
     >
 
     <ng-container matColumnDef="price">
       <th mat-header-cell *matHeaderCellDef>Cena (zł)</th>
-      <td mat-cell *matCellDef="let element">{{ element.totalPrice }}</td>
+      <td mat-cell *matCellDef="let element">
+          <span class="mobile-label">Cena (zł):</span>{{ element.totalPrice }}</td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
