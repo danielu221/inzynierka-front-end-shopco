@@ -62,7 +62,14 @@
         <th mat-header-cell *matHeaderCellDef>Zleceniobiorca</th>
         
         <td mat-cell *matCellDef="let element">
-            <span class="mobile-label">Zleceniobiorca:</span>-</td>
+            <span class="mobile-label">Zleceniobiorca:</span>
+            <span *ngIf="element.mandatory">
+                {{element.mandatory.email}}
+            </span>
+            <span *ngIf="!!element.mandatory">
+                -
+            </span>
+          </td>
       </ng-container>
 
       <ng-container matColumnDef="action">
@@ -86,7 +93,7 @@
 
     <ng-template #noItems>
       <div class="no-items-text text-center">
-        Brak zamówień do wyświetlenia. Aby utworzyć zamówiennie opublikuj listę
+        Brak zleceń do wyświetlenia. Aby utworzyć zamówiennie opublikuj listę
         zakupową.
       </div>
     </ng-template>

@@ -15,19 +15,21 @@ import { ProductActionTypes, ProductActions } from '../product/product.action';
 import { state } from '@angular/animations';
 
 export interface State extends RootState {
-  order:OrderState
+  order: OrderState;
 }
 
-export interface OrderState{
+export interface OrderState {
   cartInformation: {
-    cartId:number;
-    cartName:string;
-    totalItemsPrice:number;
+    cartId: number;
+    cartName: string;
+    totalItemsPrice: number;
   };
   orderForm: FormGroupState<FormOrder>;
   myOrders: Order[];
+  ordersToTake: {
+    orders: Order[];
+  };
 }
-
 
 export interface FormOrder {
   address: string;
@@ -47,21 +49,28 @@ export const INITIAL_STATE = createFormGroupState<FormOrder>(FORM_ID, {
 const initialCartInformation = {
   cartName: '',
   cartId: null,
-  totalItemsPrice:null
+  totalItemsPrice: null
 };
 
 const initialMyOrders = [];
 
+const initialOrdersToTake = {
+  orders: []
+};
+
 export const validateAndUpdateForm = updateGroup<FormOrder>({
   address: validate(required),
-  paymentCard:validate(required)
+  paymentCard: validate(required)
 });
 
 const reducers = combineReducers<State['order'], any>({
   orderForm(s = INITIAL_STATE, a: Action) {
     return validateAndUpdateForm(formGroupReducer(s, a));
   },
-  cartInformation(state = initialCartInformation, action: CartsActions | OrderActions | ProductActions) {
+  cartInformation(
+    state = initialCartInformation,
+    action: CartsActions | OrderActions | ProductActions
+  ) {
     switch (action.type) {
       case ProductActionTypes.SAVE_CURRENT_CART_AND_REDIRECT_TO_ORDER_SUCCESS:
       case CartsActionTypes.SAVE_CART_AND_REDIRECT_TO_ORDER_SUCCESS:
@@ -75,14 +84,37 @@ const reducers = combineReducers<State['order'], any>({
         return state;
     }
   },
-  myOrders(state = initialMyOrders, action: CartsActions | OrderActions | ProductActions) {
+  myOrders(
+    state = initialMyOrders,
+    action: CartsActions | OrderActions | ProductActions
+  ) {
     switch (action.type) {
       case OrderActionTypes.GET_MY_ORDERS_SUCCESS:
-        return [...action.payload.myOrders]
+        return [...action.payload.myOrders];
+      default:
+        return state;
+    }
+  },
+  ordersToTake(
+    state = initialOrdersToTake,
+    action: CartsActions | OrderActions | ProductActions
+  ) {
+    switch (action.type) {
+      case OrderActionTypes.GET_ORDERS_TO_TAKE_SUCCESS:
+        return {
+          ...state,
+          orders: [...action.payload.ordersToTake]
+        };
+      case OrderActionTypes.TAKE_ORDER_SUCCESS:
+        return {
+          ...state,
+          orders: [
+            ...state.orders.filter(order => order.id !== action.payload.orderId)
+          ]
+        };
     }
     return state;
   }
-
 });
 
 export function reducer(s: State['order'], a: Action) {

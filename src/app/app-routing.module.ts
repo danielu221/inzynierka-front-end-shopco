@@ -24,6 +24,10 @@ const routes: Routes = [
 {
   path: 'carts',
   loadChildren: './modules/carts/carts.module#CartsModule'
+},
+{
+  path: 'take-order',
+  loadChildren: './modules/take-order/take-order.module#TakeOrderModule'
 }]
 
 

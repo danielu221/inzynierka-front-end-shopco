@@ -9,6 +9,9 @@ export class BannerComponent implements OnInit {
   @Input()
   height = '650px';
 
+  @Input()
+  imageUrl = 'assets/images/bg_1.jpg'
+
   constructor() {}
 
   ngOnInit() {

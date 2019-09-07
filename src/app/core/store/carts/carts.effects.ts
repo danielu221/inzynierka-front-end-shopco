@@ -84,12 +84,16 @@ export class CartsPageEffects {
             title: 'Pomyślnie usunięto listę'
           };
           this.toasterService.showSuccessMessage(toast);
-          return new CartsActions.RemoveCartSuccess(res);
+          return new CartsActions.RemoveCartSuccess(action.payload.id);
         }),
         catchError((err: HttpErrorResponse) => {
+          let toastBody = `Kod błędu: ${err.status}`
+          if(err.status === 409){
+            toastBody = `Lista znajduje się, w którymś z zamówień`
+          }
           const toast: ToastConfig = {
             title: 'Błąd podczas usuwania listy',
-            body: `Kod błędu: ${err.status}`
+            body: toastBody
           };
           this.toasterService.showErrorMessage(toast);
           return of(new CartsActions.RemoveCartFailure(err));

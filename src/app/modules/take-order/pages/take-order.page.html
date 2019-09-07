@@ -1,0 +1,85 @@
+<app-banner [height]="'300px'" [imageUrl]="'assets/images/bg_2.jpg'">
+    <div class="col-md-12 text-center text-white font-weight-bold">
+      <h1 class="mb-2">
+        <strong>Podejmij zlecenie</strong>
+      </h1>
+    </div>
+  </app-banner>
+  <div class="container my-5">
+    <div class="row">
+      <table
+        mat-table
+        [dataSource]="ordersToTake$ | async"
+        class="mat-elevation-z8 w-100"
+        *ngIf="(ordersToTake$ | async).length; else noItems"
+      >
+        <ng-container matColumnDef="address">
+          <th mat-header-cell *matHeaderCellDef>Adres dostawy</th>
+          <td mat-cell *matCellDef="let element">
+              <span class="mobile-label">Adres dostawy:</span>
+              <div class="d-flex align-items-center justify-content-center">
+              <i class="material-icons">
+                  room
+                </i>
+                <span>
+                    {{ element.dispositionDeliveryAddress }}</span>
+                  </div>
+          </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="deliveryDate">
+          <th mat-header-cell *matHeaderCellDef>Data dostawy</th>
+          <td mat-cell *matCellDef="let element">
+              <span class="mobile-label">Data dostawy:</span>
+            {{ element.creationDatetime }}
+          </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="totalItemsPrice">
+          <th mat-header-cell *matHeaderCellDef>Koszt(zł)</th>
+          <td mat-cell *matCellDef="let element">
+              <span class="mobile-label">Koszt(zł):</span>
+            {{ element.listOfItems.totalItemsPrice }}
+          </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="preview">
+          <th mat-header-cell *matHeaderCellDef>Podgląd listy</th>
+          <td mat-cell *matCellDef="let element">
+              <span class="mobile-label">Podgląd listy:</span>
+            <i
+              class="preview-icon material-icons"
+              (click)="onPreviewIconClick(element)"
+            >
+              search
+            </i>
+          </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="contact">
+            <th mat-header-cell *matHeaderCellDef>Kontakt</th>
+            <td mat-cell *matCellDef="let element">
+                <span class="mobile-label">Kontakt:</span>
+                {{element.principal.phone}}
+          </ng-container>
+
+        <ng-container matColumnDef="take">
+          <th mat-header-cell *matHeaderCellDef>Realizacja</th>
+          <td mat-cell *matCellDef="let element">
+              <span class="mobile-label">Realizacja:</span>
+              <app-icon-btn (click)="onTakeOrderButtonClick(element)">Zrealizuj</app-icon-btn>
+        </ng-container>
+  
+  
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+  
+      <ng-template #noItems>
+        <div class="no-items-text text-center">
+          Aktualnie brak aktywnych zleceń.
+        </div>
+      </ng-template>
+    </div>
+  </div>
+  

@@ -9,14 +9,14 @@ import { CartItem } from '../../interface/cart-item.interface';
 })
 export class OrderSummaryComponent implements OnInit {
   @Input()
-  totalCost:number;
+  totalCost: number;
 
   @Input()
-  cartItems:CartItem[];
-  constructor() { }
+  title = 'Podsumowanie zamówienia';
 
-  ngOnInit() {
+  @Input()
+  cartItems: CartItem[];
+  constructor() {}
 
-  }
-
+  ngOnInit() {}
 }
