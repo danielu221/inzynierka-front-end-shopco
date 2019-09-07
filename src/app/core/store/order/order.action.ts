@@ -29,7 +29,31 @@ export interface PublishOrderRequestBody {
   asap: boolean;
 }
 
-export interface OrderResponseObj {
+export interface MyOrderResponseObj {
+  dispositionDeliveryAddress: string;
+  listOfItems: {
+    listName: string;
+    creationDate: string;
+    items: any[];
+    id: number;
+    totalItemsPrice: number;
+  };
+  lat: string;
+  lng: string;
+  creationDatetime: string;
+  deliveryDatetime: string;
+  asap: boolean;
+  id: number;
+  code: string;
+  dispositionStatus: {
+    id: number;
+    dispositionStatusName: string;
+  };
+  principal: User;
+  mandatory: User;
+}
+
+export interface OrderToTakeResponseObj {
   dispositionDeliveryAddress: string;
   listOfItems: {
     listName: string;

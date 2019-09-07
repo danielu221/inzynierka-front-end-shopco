@@ -105,6 +105,13 @@ const reducers = combineReducers<State['order'], any>({
           ...state,
           orders: [...action.payload.ordersToTake]
         };
+      case OrderActionTypes.TAKE_ORDER_SUCCESS:
+        return {
+          ...state,
+          orders: [
+            ...state.orders.filter(order => order.id !== action.payload.orderId)
+          ]
+        };
     }
     return state;
   }

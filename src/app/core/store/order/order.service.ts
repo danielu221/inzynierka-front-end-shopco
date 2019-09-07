@@ -33,7 +33,8 @@ export class OrderService {
   takeOrder(orderId: number): Observable<any> {
     return this.http.put(
       this.apiManagement.getURL(endpoints.order.take + '/' + orderId),
-      {}
+      {},
+      {responseType:'text'}
     );
   }
 }

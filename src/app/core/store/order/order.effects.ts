@@ -54,7 +54,7 @@ export class OrderEffects {
     ),
     switchMap(() =>
       this.orderService.getMyOrders().pipe(
-        map((res: OrderActions.OrderResponseObj[]) => {
+        map((res: OrderActions.MyOrderResponseObj[]) => {
           let myOrders: Order[] = [];
           myOrders = res.map(orderRes => {
             return {
@@ -107,7 +107,7 @@ export class OrderEffects {
     ),
     switchMap(() =>
       this.orderService.getOrdersToTake().pipe(
-        map((res: OrderActions.OrderResponseObj[]) => {
+        map((res: OrderActions.OrderToTakeResponseObj[]) => {
           let ordersToTake: Order[] = [];
           ordersToTake = res.map(orderRes => {
             return {
@@ -154,14 +154,12 @@ export class OrderEffects {
       )
     )
   );
-  
+
   @Effect()
   takeOrder = this.actions$.pipe(
-    ofType<OrderActions.TakeOrder>(
-      OrderActions.OrderActionTypes.TAKE_ORDER
-    ),
+    ofType<OrderActions.TakeOrder>(OrderActions.OrderActionTypes.TAKE_ORDER),
     map(action => action.payload),
-    switchMap((payload) =>
+    switchMap(payload =>
       this.orderService.takeOrder(payload.orderId).pipe(
         map((res: any) => {
           const toast: ToastConfig = {
@@ -183,12 +181,6 @@ export class OrderEffects {
       )
     )
   );
-
-  
-
-  
-
-
 
   mapOrderResStatusToOrderStatus(orderResStatus: string): string {
     switch (orderResStatus) {
