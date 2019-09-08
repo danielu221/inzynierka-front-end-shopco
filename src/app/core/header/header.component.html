@@ -26,9 +26,6 @@
           <a href="index.html" class="nav-link">Jak to działa?</a>
         </li>
 
-        <li class="nav-item" routerLinkActive="active" *ngIf="!(user$ | async)">
-          <a routerLink="/contact" class="nav-link">Kontakt</a>
-        </li>
 
         <li class="nav-item" routerLinkActive="active" *ngIf="user$ | async">
           <a routerLink="/products-list" class="nav-link">Stwórz listę</a>
@@ -49,6 +46,10 @@
         <li class="nav-item" routerLinkActive="active" *ngIf="user$ | async">
           <a routerLink="/taken-orders" class="nav-link">Twoje zlecenia</a>
         </li>
+
+        <li class="nav-item" routerLinkActive="active">
+            <a routerLink="/contact" class="nav-link">Kontakt</a>
+          </li>
       </ul>
       <ul class="navbar-nav ml-auto">
         <li class="nav-item" routerLinkActive="active">
