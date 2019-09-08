@@ -5,6 +5,7 @@ import { TakenOrdersRouting } from './taken-orders-routing.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { TakenOrderListPreviewComponent } from './components/taken-order-list-preview/taken-order-list-preview.component';
 import { GetMoneyComponent } from './components/get-money/get-money.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -12,7 +13,7 @@ import { GetMoneyComponent } from './components/get-money/get-money.component';
     TakenOrderListPreviewComponent,
     GetMoneyComponent
   ],
-  imports: [CommonModule, TakenOrdersRouting, SharedModule],
+  imports: [CommonModule, TakenOrdersRouting, SharedModule, FormsModule],
   entryComponents: [TakenOrderListPreviewComponent, GetMoneyComponent]
 })
 export class TakenOrdersModule {}

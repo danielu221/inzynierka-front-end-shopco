@@ -133,7 +133,13 @@ const reducers = combineReducers<State['order'], any>({
           ...state,
           orders: [...action.payload.takenOrders]
         };
-
+      case OrderActionTypes.SEND_CODE_SUCCESS:
+        return {
+          ...state,
+          orders: [
+            ...state.orders.filter(order => order.id !== action.payload.orderId)
+          ]
+        };
       default:
         return state;
     }

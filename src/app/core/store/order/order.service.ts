@@ -34,11 +34,21 @@ export class OrderService {
     return this.http.put(
       this.apiManagement.getURL(endpoints.order.take + '/' + orderId),
       {},
-      {responseType:'text'}
+      { responseType: 'text' }
     );
   }
 
   getTakenOrders(): Observable<any> {
-    return this.http.get(this.apiManagement.getURL(endpoints.order.takenOrders));
+    return this.http.get(
+      this.apiManagement.getURL(endpoints.order.takenOrders)
+    );
+  }
+
+  sendCode(orderId: number, code: string): Observable<any> {
+    return this.http.post(
+      this.apiManagement.getURL(endpoints.order.sendCode + '/' + orderId),
+      { code: code },
+      { responseType: 'text' }
+    );
   }
 }

@@ -237,6 +237,34 @@ export class OrderEffects {
     )
   );
 
+  @Effect()
+  sendCode = this.actions$.pipe(
+    ofType<OrderActions.SendCode>(OrderActions.OrderActionTypes.SEND_CODE),
+    map(action => action.payload),
+    switchMap(payload =>
+      this.orderService.sendCode(payload.orderId, payload.code).pipe(
+        map((res: any) => {
+          const toast: ToastConfig = {
+            title:
+              'Pieniądze za realizację zamówienia zostaną przesłane na Twoje konto.'
+          };
+          this.toasterService.showSuccessMessage(toast);
+          return new OrderActions.SendCodeSuccess({
+            orderId: payload.orderId
+          });
+        }),
+        catchError((err: HttpErrorResponse) => {
+          const toast: ToastConfig = {
+            title: 'Błędny kod',
+            body: `Wpisany kod nie odpowiada temu zleceniu`
+          };
+          this.toasterService.showErrorMessage(toast);
+          return of(new OrderActions.SendCodeFailure(err));
+        })
+      )
+    )
+  );
+
   mapOrderResStatusToOrderStatus(orderResStatus: string): string {
     switch (orderResStatus) {
       case 'PUBLISHED':

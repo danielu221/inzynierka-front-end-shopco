@@ -18,7 +18,8 @@ export const endpoints = {
         othersOrders:'/disposition',
         toTake:'/disposition/status/PUBLISHED',
         take:'/disposition/mandatory',
-        takenOrders:'/disposition/mandatory'
+        takenOrders:'/disposition/mandatory',
+        sendCode:'/disposition/code'
     },
     carts:'/listofitems',
 };

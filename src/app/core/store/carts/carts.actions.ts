@@ -60,7 +60,7 @@ export class RemoveCart implements Action {
 
 export class RemoveCartSuccess implements Action {
   readonly type = CartsActionTypes.REMOVE_CART_SUCCESS;
-  constructor(public payload: any) {}
+  constructor(public payload: {id:number}) {}
 }
 
 export class RemoveCartFailure implements Action {

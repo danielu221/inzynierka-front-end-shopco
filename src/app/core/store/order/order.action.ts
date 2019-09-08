@@ -21,7 +21,10 @@ export enum OrderActionTypes {
   TAKE_ORDER_FAILURE = '[Order] Take order failure',
   GET_TAKEN_ORDERS = '[Order] get taken orders',
   GET_TAKEN_ORDERS_SUCCESS = '[Order] get taken orders success',
-  GET_TAKEN_ORDERS_FAILURE = '[Order] get taken orders faiure'
+  GET_TAKEN_ORDERS_FAILURE = '[Order] get taken orders faiure',
+  SEND_CODE = '[Order] send code to get money',
+  SEND_CODE_SUCCESS = '[Order] send code to get money success',
+  SEND_CODE_FAILURE = '[Order] send code to get money failure'
 }
 
 export interface PublishOrderRequestBody {
@@ -155,6 +158,20 @@ export class GetTakenOrdersFailure implements Action {
   constructor(public payload: any) {}
 }
 
+export class SendCode implements Action {
+  readonly type = OrderActionTypes.SEND_CODE;
+  constructor(public payload: { code: string, orderId:number }) {}
+}
+
+export class SendCodeSuccess implements Action {
+  readonly type = OrderActionTypes.SEND_CODE_SUCCESS;
+  constructor(public payload: {  orderId:number }) {}
+}
+export class SendCodeFailure implements Action {
+  readonly type = OrderActionTypes.SEND_CODE_FAILURE;
+  constructor(public payload: any) {}
+}
+
 export type OrderActions =
   | PublishOrder
   | PublishOrderSuccess
@@ -170,4 +187,7 @@ export type OrderActions =
   | TakeOrderFailure
   | GetTakenOrders
   | GetTakenOrdersFailure
-  | GetTakenOrdersSuccess;
+  | GetTakenOrdersSuccess
+  | SendCode
+  | SendCodeSuccess
+  | SendCodeFailure;
