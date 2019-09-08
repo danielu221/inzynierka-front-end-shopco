@@ -11,6 +11,10 @@ export class IconBtnComponent implements OnInit {
 
   @Input()
   type="button"
+
+  @Input()
+  isLoading=false;
+
   constructor() { }
 
   ngOnInit() {

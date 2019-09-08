@@ -1,8 +1,15 @@
 <button type="type" class="btn btn-custom py-2 rounded-0">
   <div class="d-flex justify-content-center flex-row">
     <div class="d-flex align-items-center">
-      <i class="material-icons btn-icon mr-2"> {{ icon }} </i
-      ><span><ng-content></ng-content></span>
+      <i class="material-icons btn-icon mr-2"> {{ icon }} </i>
+      <div
+        class="loader-container row align-items-center justify-content-center"
+        *ngIf="isLoading"
+      >
+        <img src="assets/images/ring_loader.svg" />
+      </div>
+
+      <span *ngIf="!isLoading"><ng-content></ng-content></span>
     </div>
   </div>
 </button>

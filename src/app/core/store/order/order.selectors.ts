@@ -4,6 +4,11 @@ import { Order } from 'src/app/shared/interface/order.interface';
 
 export const selectOrderState = createFeatureSelector('order');
 
+export const selectIsLoading = createSelector(
+  selectOrderState,
+  (state: OrdersState) => state.componentState.isLoading
+);
+
 export const selectCartInformation = createSelector(
   selectOrderState,
   (state: OrdersState) => state.cartInformation

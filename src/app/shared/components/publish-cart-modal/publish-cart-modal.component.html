@@ -105,6 +105,6 @@
     </div>
   </div>
   <div mat-dialog-actions class="d-flex justify-content-center">
-    <app-icon-btn [type]="'submit'" class="p-2" [icon]="'public'">Opublikuj</app-icon-btn>
+    <app-icon-btn [type]="'submit'" class="p-2" [icon]="'public'" [isLoading]="isLoading$ | async">Opublikuj</app-icon-btn>
   </div>
 </form>
