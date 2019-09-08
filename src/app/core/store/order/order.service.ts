@@ -37,4 +37,8 @@ export class OrderService {
       {responseType:'text'}
     );
   }
+
+  getTakenOrders(): Observable<any> {
+    return this.http.get(this.apiManagement.getURL(endpoints.order.takenOrders));
+  }
 }

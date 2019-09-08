@@ -1,0 +1,19 @@
+<h2 mat-dialog-title>Odbiór pieniędzy za zlecenie</h2>
+<div mat-dialog-content class="container pt-3 pt-md-5">
+  <div>
+    <div class="col-12 text-center d-flex flex-column mt-2 mt-md-4">
+      <span class="code-text"
+        >Wprowadź kod zamówienia otrzymany od zleceniodawcy:</span
+      >
+      <input class="code-input my-4" type="text" />
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions class="mt-2 d-flex justify-content-center">
+  <app-icon-btn class="p-2" [icon]="'arrow_left'" (click)="onReturnClick()"
+    >Powrót</app-icon-btn
+  >
+  <app-icon-btn class="p-2" [icon]="'attach_money'" (click)="onGetMoneyBtnClick()"
+    >Odbierz</app-icon-btn
+  >
+</div>

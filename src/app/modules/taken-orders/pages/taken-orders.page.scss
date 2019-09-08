@@ -1,0 +1,30 @@
+@import '../../../shared/variables.scss';
+
+th.mat-header-cell {
+  text-align: center !important;
+}
+
+td.mat-cell {
+  text-align: center !important;
+}
+
+.preview-icon {
+  &:hover {
+    color: #0080ff;
+    cursor: pointer;
+  }
+}
+
+.error-icon {
+  &:hover {
+    color: red;
+    cursor: pointer;
+  }
+}
+
+.get-money-icon {
+  &:hover {
+    color: $green;
+    cursor: pointer;
+  }
+}

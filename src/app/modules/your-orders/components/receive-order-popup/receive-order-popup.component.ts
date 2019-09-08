@@ -18,7 +18,6 @@ export class ReceiveOrderPopupComponent implements OnInit {
      }
 
   ngOnInit() {
-    console.log(this.order)
   }
 
   onReturnClick(){

@@ -1,47 +1,73 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import {  OrderState } from './order.reducer';
+import { OrdersState } from './order.reducer';
 import { Order } from 'src/app/shared/interface/order.interface';
 
 export const selectOrderState = createFeatureSelector('order');
 
 export const selectCartInformation = createSelector(
   selectOrderState,
-  (state: OrderState) => state.cartInformation
+  (state: OrdersState) => state.cartInformation
 );
 export const selectFormOrder = createSelector(
   selectOrderState,
-  (state: OrderState) => state.orderForm
+  (state: OrdersState) => state.orderForm
 );
 
 export const selectTotalItemsPriceForOrder = createSelector(
   selectOrderState,
-  (state: OrderState) => state.cartInformation.totalItemsPrice
+  (state: OrdersState) => state.cartInformation.totalItemsPrice
 );
 
 export const selectMyOrders = createSelector(
   selectOrderState,
-  (state: OrderState) => state.myOrders
+  (state: OrdersState) => state.myOrders
 );
 
 export const selectMyOrderTotalItemsPrice = createSelector(
   selectMyOrders,
-  (myOrders: Order[],props) => myOrders.filter(order => order.id===props.orderId)[0].listOfItems.totalItemsPrice
+  (myOrders: Order[], props) =>
+    myOrders.filter(order => order.id === props.orderId)[0].listOfItems
+      .totalItemsPrice
 );
 export const selectMyOrderCartItems = createSelector(
   selectMyOrders,
-  (myOrders: Order[],props) => myOrders.filter(order => order.id===props.orderId)[0].listOfItems.cartItems
+  (myOrders: Order[], props) =>
+    myOrders.filter(order => order.id === props.orderId)[0].listOfItems
+      .cartItems
 );
 
 export const selectOrdersToTake = createSelector(
   selectOrderState,
-  (state: OrderState) => state.ordersToTake.orders
+  (state: OrdersState) => state.ordersToTake.orders
 );
 
 export const selectOrderToTakeTotalItemsPrice = createSelector(
   selectOrdersToTake,
-  (ordersToTake: Order[],props) => ordersToTake.filter(order => order.id===props.orderId)[0].listOfItems.totalItemsPrice
+  (ordersToTake: Order[], props) =>
+    ordersToTake.filter(order => order.id === props.orderId)[0].listOfItems
+      .totalItemsPrice
 );
 export const selectOrderToTakeCartItems = createSelector(
   selectOrdersToTake,
-  (ordersToTake: Order[],props) => ordersToTake.filter(order => order.id===props.orderId)[0].listOfItems.cartItems
+  (ordersToTake: Order[], props) =>
+    ordersToTake.filter(order => order.id === props.orderId)[0].listOfItems
+      .cartItems
+);
+
+export const selectTakenOrders = createSelector(
+  selectOrderState,
+  (state: OrdersState) => state.takenOrders.orders
+);
+
+export const selectTakenOrderTotalItemsPrice = createSelector(
+  selectTakenOrders,
+  (takenOrders: Order[], props) =>
+    takenOrders.filter(order => order.id === props.orderId)[0].listOfItems
+      .totalItemsPrice
+);
+export const selectTakenOrderCartItems = createSelector(
+  selectTakenOrders,
+  (takenOrders: Order[], props) =>
+    takenOrders.filter(order => order.id === props.orderId)[0].listOfItems
+      .cartItems
 );

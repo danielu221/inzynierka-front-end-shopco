@@ -156,6 +156,61 @@ export class OrderEffects {
   );
 
   @Effect()
+  getTakennOrders = this.actions$.pipe(
+    ofType<OrderActions.GetTakenOrders>(
+      OrderActions.OrderActionTypes.GET_TAKEN_ORDERS
+    ),
+    switchMap(() =>
+      this.orderService.getTakenOrders().pipe(
+        map((res: OrderActions.OrderToTakeResponseObj[]) => {
+          let takenOrders: Order[] = [];
+          takenOrders = res.map(orderRes => {
+            return {
+              dispositionDeliveryAddress: orderRes.dispositionDeliveryAddress,
+              listOfItems: {
+                cartItems: orderRes.listOfItems.items.map(orderResItem => {
+                  return {
+                    cartItemId: orderResItem.id,
+                    quantity: orderResItem['product_units'],
+                    totalPrice: orderResItem.totalItemPrice,
+                    productName: orderResItem.product.productName,
+                    unitPrice: orderResItem.product.unitPrice,
+                    picture: orderResItem.product.picture,
+                    id: orderResItem.product.id
+                  };
+                }),
+                cartName: orderRes.listOfItems.listName,
+                totalItemsPrice: orderRes.listOfItems.totalItemsPrice,
+                id: orderRes.listOfItems.id
+              },
+              code: orderRes.code,
+              deliveryDateTime: orderRes.deliveryDatetime,
+              status: this.mapOrderResStatusToOrderStatus(
+                orderRes.dispositionStatus.dispositionStatusName
+              ),
+              creationDatetime: orderRes.creationDatetime,
+              id: orderRes.id,
+              principal: orderRes.principal,
+              mandatory: orderRes.mandatory
+            };
+          });
+          return new OrderActions.GetTakenOrdersSuccess({
+            takenOrders: takenOrders
+          });
+        }),
+        catchError((err: HttpErrorResponse) => {
+          const toast: ToastConfig = {
+            title: 'Błąd z wysłaniem żądania',
+            body: `Kod błędu: ${err.status}`
+          };
+          this.toasterService.showErrorMessage(toast);
+          return of(new OrderActions.GetTakenOrdersFailure(err));
+        })
+      )
+    )
+  );
+
+  @Effect()
   takeOrder = this.actions$.pipe(
     ofType<OrderActions.TakeOrder>(OrderActions.OrderActionTypes.TAKE_ORDER),
     map(action => action.payload),

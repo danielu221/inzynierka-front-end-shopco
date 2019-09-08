@@ -28,6 +28,10 @@ const routes: Routes = [
 {
   path: 'take-order',
   loadChildren: './modules/take-order/take-order.module#TakeOrderModule'
+},
+{
+  path: 'taken-orders',
+  loadChildren: './modules/taken-orders/taken-orders.module#TakenOrdersModule'
 }]
 
 
