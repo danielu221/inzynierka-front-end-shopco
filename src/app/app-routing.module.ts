@@ -32,6 +32,10 @@ const routes: Routes = [
 {
   path: 'taken-orders',
   loadChildren: './modules/taken-orders/taken-orders.module#TakenOrdersModule'
+},
+{
+  path: 'contact',
+  loadChildren: './modules/contact/contact.module#ContactModule'
 }]
 
 
