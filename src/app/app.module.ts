@@ -14,6 +14,7 @@ import { TokenInterceptor } from './shared/token.interceptor'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ToasterModule } from 'angular2-toaster';
 import { ToastMessageService } from './shared/services/toast-message.service';
+import { AuthGuardService } from './core/store/auth/auth-guard.service';
 
 
 registerLocaleData(localePl, 'pl');
@@ -31,7 +32,7 @@ registerLocaleData(localePl, 'pl');
     RootStoreModule,
     ToasterModule.forRoot(),
   ],
-  providers: [ApiManagementService,{
+  providers: [AuthGuardService, ApiManagementService,{
     provide: LOCALE_ID,
     useValue: 'pl' 
    },{
