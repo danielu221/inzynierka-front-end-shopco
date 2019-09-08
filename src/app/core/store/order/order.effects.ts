@@ -76,7 +76,7 @@ export class OrderEffects {
                 id: orderRes.listOfItems.id
               },
               code: orderRes.code,
-              deliveryDateTime: orderRes.deliveryDatetime,
+              deliveryDatetime: orderRes.asap ? 'Jak najszybciej' : orderRes.deliveryDatetime,
               status: this.mapOrderResStatusToOrderStatus(
                 orderRes.dispositionStatus.dispositionStatusName
               ),
@@ -111,7 +111,7 @@ export class OrderEffects {
           let ordersToTake: Order[] = [];
           ordersToTake = res.map(orderRes => {
             return {
-              dispositionDeliveryAddress: orderRes.dispositionDeliveryAddress,
+              dispositionDeliveryAddress:orderRes.dispositionDeliveryAddress ,
               listOfItems: {
                 cartItems: orderRes.listOfItems.items.map(orderResItem => {
                   return {
@@ -129,7 +129,7 @@ export class OrderEffects {
                 id: orderRes.listOfItems.id
               },
               code: orderRes.code,
-              deliveryDateTime: orderRes.deliveryDatetime,
+              deliveryDatetime: orderRes.asap ? 'Jak najszybciej' : orderRes.deliveryDatetime,
               status: this.mapOrderResStatusToOrderStatus(
                 orderRes.dispositionStatus.dispositionStatusName
               ),
@@ -156,7 +156,7 @@ export class OrderEffects {
   );
 
   @Effect()
-  getTakennOrders = this.actions$.pipe(
+  getTakenOrders = this.actions$.pipe(
     ofType<OrderActions.GetTakenOrders>(
       OrderActions.OrderActionTypes.GET_TAKEN_ORDERS
     ),
@@ -184,7 +184,7 @@ export class OrderEffects {
                 id: orderRes.listOfItems.id
               },
               code: orderRes.code,
-              deliveryDateTime: orderRes.deliveryDatetime,
+              deliveryDatetime: orderRes.asap ? 'Jak najszybciej' : orderRes.deliveryDatetime,
               status: this.mapOrderResStatusToOrderStatus(
                 orderRes.dispositionStatus.dispositionStatusName
               ),

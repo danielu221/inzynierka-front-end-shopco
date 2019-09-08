@@ -32,6 +32,9 @@ export interface OrdersState {
   takenOrders: {
     orders: Order[];
   };
+  componentState: {
+    isLoading: boolean;
+  };
 }
 
 export interface FormOrder {
@@ -63,6 +66,10 @@ const initialOrdersToTake = {
 
 const initialTakenOrders = {
   orders: []
+};
+
+const initialComponentState = {
+  isLoading: false
 };
 
 export const validateAndUpdateForm = updateGroup<FormOrder>({
@@ -139,6 +146,26 @@ const reducers = combineReducers<State['order'], any>({
           orders: [
             ...state.orders.filter(order => order.id !== action.payload.orderId)
           ]
+        };
+      default:
+        return state;
+    }
+  },
+  componentState(
+    state = initialComponentState,
+    action: CartsActions | OrderActions | ProductActions
+  ) {
+    switch (action.type) {
+      case OrderActionTypes.PUBLISH_ORDER:
+        return {
+          ...state,
+          isLoading: true
+        };
+      case OrderActionTypes.PUBLISH_ORDER_SUCCESS:
+      case OrderActionTypes.PUBLISH_ORDER_FAILURE:
+        return {
+          ...state,
+          isLoading: true
         };
       default:
         return state;

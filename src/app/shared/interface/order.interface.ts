@@ -5,7 +5,7 @@ export interface Order {
   dispositionDeliveryAddress: string;
   creationDatetime: string;
   listOfItems: Cart;
-  deliveryDateTime: string;
+  deliveryDatetime: string;
   status: string;
   id: number;
   code: string;

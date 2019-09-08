@@ -18,6 +18,7 @@ export class YourOrdersPage implements OnInit {
   myOrders$: Observable<any>;
   displayedColumns: string[] = [
     'creationDate',
+    'deliveryDate',
     'dispositionDeliveryAddress',
     'status',
     'totalItemsPrice',

@@ -21,6 +21,14 @@
         </td>
       </ng-container>
 
+      <ng-container matColumnDef="deliveryDate">
+          <th mat-header-cell *matHeaderCellDef>Data dostawy</th>
+          <td mat-cell *matCellDef="let element">
+              <span class="mobile-label">Data dostawy:</span>
+            {{ element.deliveryDatetime }}
+          </td>
+        </ng-container>
+
       <ng-container matColumnDef="dispositionDeliveryAddress">
         <th mat-header-cell *matHeaderCellDef>Adres</th>
         <td mat-cell *matCellDef="let element">

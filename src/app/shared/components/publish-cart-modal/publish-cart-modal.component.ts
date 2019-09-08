@@ -4,7 +4,7 @@ import { CartPreviewComponent } from 'src/app/modules/carts/components/cart-prev
 import { Store, select } from '@ngrx/store';
 import { State } from 'src/app/core/store/root-state';
 import { OpenCartDialog } from 'src/app/core/store/carts/carts.actions';
-import { selectCartInformation, selectFormOrder } from 'src/app/core/store/order/order.selectors';
+import { selectCartInformation, selectFormOrder, selectIsLoading } from 'src/app/core/store/order/order.selectors';
 import { Observable } from 'rxjs';
 import { Order } from '../../interface/order.interface';
 import { FormGroupState } from 'ngrx-forms';
@@ -22,10 +22,12 @@ export class PublishCartModalComponent implements OnInit {
   cartInformation$: Observable<any>;
   cartId: number;
   formState$: Observable<FormGroupState<FormOrder>>;
+  isLoading$:Observable<boolean>;
 
   constructor(private dialog: MatDialog, private store: Store<State>) {
     this.cartInformation$ = store.pipe(select(selectCartInformation));
-    this.formState$ = store.pipe(select(selectFormOrder))
+    this.formState$ = store.pipe(select(selectFormOrder));
+    this.isLoading$ = store.pipe(select(selectIsLoading))
   }
 
   ngOnInit() {
