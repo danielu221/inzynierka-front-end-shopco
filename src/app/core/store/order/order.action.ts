@@ -18,7 +18,13 @@ export enum OrderActionTypes {
   GET_ORDERS_TO_TAKE_FAILURE = '[Order] get orders to take failure',
   TAKE_ORDER_SUCCESS = '[Order] Take order success',
   TAKE_ORDER = '[Order] Take order',
-  TAKE_ORDER_FAILURE = '[Order] Take order failure'
+  TAKE_ORDER_FAILURE = '[Order] Take order failure',
+  GET_TAKEN_ORDERS = '[Order] get taken orders',
+  GET_TAKEN_ORDERS_SUCCESS = '[Order] get taken orders success',
+  GET_TAKEN_ORDERS_FAILURE = '[Order] get taken orders faiure',
+  SEND_CODE = '[Order] send code to get money',
+  SEND_CODE_SUCCESS = '[Order] send code to get money success',
+  SEND_CODE_FAILURE = '[Order] send code to get money failure'
 }
 
 export interface PublishOrderRequestBody {
@@ -136,10 +142,35 @@ export class TakeOrderFailure implements Action {
   readonly type = OrderActionTypes.TAKE_ORDER_FAILURE;
   constructor(public payload: any) {}
 }
-// export class SubmitOrderFormAction implements Action {
-//   readonly type = OrderActionTypes.SUBMIT_ORDER_FORM;
-//   constructor(public payload: SaveOrderRequestBody) {}
-// }
+
+export class GetTakenOrders implements Action {
+  readonly type = OrderActionTypes.GET_TAKEN_ORDERS;
+  constructor() {}
+}
+
+export class GetTakenOrdersSuccess implements Action {
+  readonly type = OrderActionTypes.GET_TAKEN_ORDERS_SUCCESS;
+  constructor(public payload: { takenOrders: Order[] }) {}
+}
+
+export class GetTakenOrdersFailure implements Action {
+  readonly type = OrderActionTypes.GET_TAKEN_ORDERS_FAILURE;
+  constructor(public payload: any) {}
+}
+
+export class SendCode implements Action {
+  readonly type = OrderActionTypes.SEND_CODE;
+  constructor(public payload: { code: string, orderId:number }) {}
+}
+
+export class SendCodeSuccess implements Action {
+  readonly type = OrderActionTypes.SEND_CODE_SUCCESS;
+  constructor(public payload: {  orderId:number }) {}
+}
+export class SendCodeFailure implements Action {
+  readonly type = OrderActionTypes.SEND_CODE_FAILURE;
+  constructor(public payload: any) {}
+}
 
 export type OrderActions =
   | PublishOrder
@@ -153,4 +184,10 @@ export type OrderActions =
   | GetOrdersToTakeSuccess
   | TakeOrder
   | TakeOrderSuccess
-  | TakeOrderFailure;
+  | TakeOrderFailure
+  | GetTakenOrders
+  | GetTakenOrdersFailure
+  | GetTakenOrdersSuccess
+  | SendCode
+  | SendCodeSuccess
+  | SendCodeFailure;

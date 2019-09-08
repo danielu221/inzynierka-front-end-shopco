@@ -84,7 +84,7 @@ export class CartsPageEffects {
             title: 'Pomyślnie usunięto listę'
           };
           this.toasterService.showSuccessMessage(toast);
-          return new CartsActions.RemoveCartSuccess(action.payload.id);
+          return new CartsActions.RemoveCartSuccess({id:action.payload.id});
         }),
         catchError((err: HttpErrorResponse) => {
           let toastBody = `Kod błędu: ${err.status}`

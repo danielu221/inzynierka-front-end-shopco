@@ -15,10 +15,10 @@ import { ProductActionTypes, ProductActions } from '../product/product.action';
 import { state } from '@angular/animations';
 
 export interface State extends RootState {
-  order: OrderState;
+  order: OrdersState;
 }
 
-export interface OrderState {
+export interface OrdersState {
   cartInformation: {
     cartId: number;
     cartName: string;
@@ -27,6 +27,9 @@ export interface OrderState {
   orderForm: FormGroupState<FormOrder>;
   myOrders: Order[];
   ordersToTake: {
+    orders: Order[];
+  };
+  takenOrders: {
     orders: Order[];
   };
 }
@@ -55,6 +58,10 @@ const initialCartInformation = {
 const initialMyOrders = [];
 
 const initialOrdersToTake = {
+  orders: []
+};
+
+const initialTakenOrders = {
   orders: []
 };
 
@@ -112,8 +119,30 @@ const reducers = combineReducers<State['order'], any>({
             ...state.orders.filter(order => order.id !== action.payload.orderId)
           ]
         };
+      default:
+        return state;
     }
-    return state;
+  },
+  takenOrders(
+    state = initialTakenOrders,
+    action: CartsActions | OrderActions | ProductActions
+  ) {
+    switch (action.type) {
+      case OrderActionTypes.GET_TAKEN_ORDERS_SUCCESS:
+        return {
+          ...state,
+          orders: [...action.payload.takenOrders]
+        };
+      case OrderActionTypes.SEND_CODE_SUCCESS:
+        return {
+          ...state,
+          orders: [
+            ...state.orders.filter(order => order.id !== action.payload.orderId)
+          ]
+        };
+      default:
+        return state;
+    }
   }
 });
 
