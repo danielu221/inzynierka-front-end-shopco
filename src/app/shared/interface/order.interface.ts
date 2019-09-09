@@ -16,6 +16,6 @@ export interface Order {
 export enum OrderStatus {
   Published = 'Opublikowano',
   InProgress = 'W trakcie realizacji',
-  Canceled = 'Anulowano',
-  Delivered = 'Dostarczono'
+  Cancelled = 'Anulowano',
+  Completed = 'Dostarczono'
 }

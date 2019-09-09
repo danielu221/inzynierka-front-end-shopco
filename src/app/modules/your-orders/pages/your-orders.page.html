@@ -16,23 +16,23 @@
       <ng-container matColumnDef="creationDate">
         <th mat-header-cell *matHeaderCellDef>Data zamówienia</th>
         <td mat-cell *matCellDef="let element">
-            <span class="mobile-label">Data zamówienia:</span>
+          <span class="mobile-label">Data zamówienia:</span>
           {{ element.creationDatetime }}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="deliveryDate">
-          <th mat-header-cell *matHeaderCellDef>Data dostawy</th>
-          <td mat-cell *matCellDef="let element">
-              <span class="mobile-label">Data dostawy:</span>
-            {{ element.deliveryDatetime }}
-          </td>
-        </ng-container>
+        <th mat-header-cell *matHeaderCellDef>Data dostawy</th>
+        <td mat-cell *matCellDef="let element">
+          <span class="mobile-label">Data dostawy:</span>
+          {{ element.deliveryDatetime }}
+        </td>
+      </ng-container>
 
       <ng-container matColumnDef="dispositionDeliveryAddress">
         <th mat-header-cell *matHeaderCellDef>Adres</th>
         <td mat-cell *matCellDef="let element">
-            <span class="mobile-label">Adres:</span>
+          <span class="mobile-label">Adres:</span>
           {{ element.dispositionDeliveryAddress }}
         </td>
       </ng-container>
@@ -40,7 +40,7 @@
       <ng-container matColumnDef="status">
         <th mat-header-cell *matHeaderCellDef>Status</th>
         <td mat-cell *matCellDef="let element">
-            <span class="mobile-label">Status:</span>
+          <span class="mobile-label">Status:</span>
           {{ element.status }}
         </td>
       </ng-container>
@@ -48,7 +48,7 @@
       <ng-container matColumnDef="totalItemsPrice">
         <th mat-header-cell *matHeaderCellDef>Koszt(zł)</th>
         <td mat-cell *matCellDef="let element">
-            <span class="mobile-label">Koszt(zł):</span>
+          <span class="mobile-label">Koszt(zł):</span>
           {{ element.listOfItems.totalItemsPrice }}
         </td>
       </ng-container>
@@ -56,7 +56,7 @@
       <ng-container matColumnDef="preview">
         <th mat-header-cell *matHeaderCellDef>Podgląd listy</th>
         <td mat-cell *matCellDef="let element">
-            <span class="mobile-label">Podgląd listy:</span>
+          <span class="mobile-label">Podgląd listy:</span>
           <i
             class="preview-icon material-icons"
             (click)="onPreviewIconClick(element)"
@@ -68,32 +68,46 @@
 
       <ng-container matColumnDef="supplier">
         <th mat-header-cell *matHeaderCellDef>Zleceniobiorca</th>
-        
+
         <td mat-cell *matCellDef="let element">
-            <span class="mobile-label">Zleceniobiorca:</span>
-            <span *ngIf="element.mandatory">
-                {{element.mandatory.email}}
-            </span>
-            <span *ngIf="!!element.mandatory">
-                -
-            </span>
-          </td>
+          <span class="mobile-label">Zleceniobiorca:</span>
+          <span *ngIf="element.mandatory">
+            {{ element.mandatory.email }}
+          </span>
+          <span *ngIf="!element.mandatory">
+            -
+          </span>
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="action">
         <th mat-header-cell *matHeaderCellDef>Odbiór</th>
         <td mat-cell *matCellDef="let element">
-            <span class="mobile-label">Odbiór:</span><i class="material-icons receive-icon" (click)="onReceiveIconClick(element)">
+          <span class="mobile-label">Odbiór:</span
+          ><i
+            *ngIf="element.status != 'Dostarczono'; else dash"
+            class="material-icons receive-icon"
+            (click)="onReceiveIconClick(element)"
+          >
             check_circle
-            </i></td>
+          </i>
+          <ng-template #dash>-</ng-template>
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="problem">
-          <th mat-header-cell *matHeaderCellDef>Zgłoś problem</th>
-          <td mat-cell *matCellDef="let element"><span class="mobile-label">Zgłoś problem:</span><i class="material-icons error-icon">
-              error
-              </i></td>
-        </ng-container>
+        <th mat-header-cell *matHeaderCellDef>Zgłoś problem</th>
+        <td mat-cell *matCellDef="let element">
+          <span class="mobile-label">Zgłoś problem:</span
+          ><i
+            *ngIf="element.status != 'Dostarczono'; else dash"
+            class="material-icons error-icon"
+          >
+            error
+          </i>
+          <ng-template #dash>-</ng-template>
+        </td>
+      </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>

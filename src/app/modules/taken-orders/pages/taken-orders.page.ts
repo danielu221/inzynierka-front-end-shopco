@@ -22,6 +22,7 @@ export class TakenOrdersPage implements OnInit {
     'totalItemsPrice',
     'preview',
     'contact',
+    'status',
     'getMoney'
   ];
   constructor(private store: Store<State>, private dialog: MatDialog) { 
