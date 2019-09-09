@@ -19,7 +19,8 @@ export const endpoints = {
         toTake:'/disposition/status/PUBLISHED',
         take:'/disposition/mandatory',
         takenOrders:'/disposition/mandatory',
-        sendCode:'/disposition/code'
+        sendCode:'/disposition/code',
+        sendProblem:'/problem'
     },
     carts:'/listofitems',
 };

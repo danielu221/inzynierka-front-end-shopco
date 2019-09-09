@@ -8,6 +8,7 @@ import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { OrderSummaryPreviewComponent } from '../components/order-summary-preview/order-summary-preview.component';
 import { Order } from 'src/app/shared/interface/order.interface';
 import { ReceiveOrderPopupComponent } from '../components/receive-order-popup/receive-order-popup.component';
+import { SendProblemComponent } from '../components/send-problem/send-problem.component';
 
 @Component({
   selector: 'app-your-orders',
@@ -46,6 +47,14 @@ export class YourOrdersPage implements OnInit {
 
   onReceiveIconClick(order:Order) {
     this.dialog.open(ReceiveOrderPopupComponent, {
+      width: '650px',
+      height: '600px',
+      data: {order:order}
+    });
+  }
+
+  onSendProblemIconClick(order:Order){
+    this.dialog.open(SendProblemComponent, {
       width: '650px',
       height: '600px',
       data: {order:order}

@@ -102,6 +102,7 @@
           ><i
             *ngIf="element.status != 'Dostarczono'; else dash"
             class="material-icons error-icon"
+            (click)="onSendProblemIconClick(element)"
           >
             error
           </i>
