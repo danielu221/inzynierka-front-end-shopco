@@ -20,7 +20,9 @@ import {
 import {
   ProductActionTypes,
   LoadProductsSuccess,
-  LoadProductsFailure
+  LoadProductsFailure,
+  SearchForProductSuccess,
+  SearchForProductFailure
 } from './product.action';
 
 import * as ProductActions from './product.action';
@@ -39,10 +41,6 @@ import { ToastConfig } from 'src/app/shared/interface/toast-config.interface';
 import { PublishCartModalComponent } from 'src/app/shared/components/publish-cart-modal/publish-cart-modal.component';
 
 import * as OrderActions from '../order/order.action';
-
-import * as CartsActions from '../carts/carts.actions';
-import { CartPreviewComponent } from 'src/app/modules/carts/components/cart-preview/cart-preview.component';
-import { CartsActionTypes } from '../carts/carts.actions';
 
 @Injectable()
 export class ProductsPageEffects {
@@ -85,8 +83,7 @@ export class ProductsPageEffects {
             if (
               action.type ===
               ProductActionTypes.SAVE_CURRENT_CART_AND_REDIRECT_TO_ORDER
-            ) 
-            {
+            ) {
               this.dialog.open(PublishCartModalComponent, {
                 width: '800px',
                 height: '650px'
@@ -96,7 +93,7 @@ export class ProductsPageEffects {
                   cartId: res.id,
                   cartName: res.listName,
                   totalItemsPrice: res.totalItemsPrice,
-                  cartItems:store.productsPageState.cartItems
+                  cartItems: store.productsPageState.cartItems
                 }
               );
             }
@@ -114,7 +111,32 @@ export class ProductsPageEffects {
     })
   );
 
-
+  @Effect()
+  searchForProducts = this.actions$.pipe(
+    ofType<ProductActions.SearchForProduct>(
+      ProductActionTypes.SEARCH_FOR_PRODUCT
+    ),
+    withLatestFrom(this.store$),
+    switchMap(([action, store]) =>
+      this.productService.searchForProducts(action.payload.searchValue).pipe(
+        map((res: Product[]) => {
+          let productStates = [];
+          res.forEach(product =>
+            productStates.push(
+              new ProductState(
+                product,
+                this.getIsInCartFromStore(store.productsPageState, product.id)
+              )
+            )
+          );
+          return new SearchForProductSuccess(productStates);
+        }),
+        catchError((err: HttpErrorResponse) =>
+          of(new SearchForProductFailure(err))
+        )
+      )
+    )
+  );
   // @Effect({dispatch: false})
   // openOrderDialog = this.actions$.pipe(
   //   ofType<CartsActions.OpenCartDialog>(
@@ -124,19 +146,25 @@ export class ProductsPageEffects {
   //     this.dialog.closeAll();
   //     this.dialog.open(CartPreviewComponent, {
   //       width: '800px',
-  //       height: '650px',  
+  //       height: '650px',
   //       data: {cartId:action.payload.cartId}
   //   })
   // }));
 
-  @Effect({dispatch: false})
+  @Effect({ dispatch: false })
   closeOrderDialog = this.actions$.pipe(
     ofType<OrderActions.PublishOrderSuccess>(
       OrderActions.OrderActionTypes.PUBLISH_ORDER_SUCCESS
     ),
     tap(() => {
       this.dialog.closeAll();
-  }));
+    })
+  );
+
+  getIsInCartFromStore(store: ProductsPageState, id: number) {
+    let isInCart = store.cartItems.find(product => product.id === id);
+    return !!isInCart ? true : false;
+  }
 
   constructor(
     private actions$: Actions,

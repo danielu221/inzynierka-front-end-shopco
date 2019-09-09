@@ -8,6 +8,7 @@ import { CartItem } from '../../../shared/interface/cart-item.interface';
 
 export interface ProductsPageState {
   products: ProductState[];
+  filteredProducts:ProductState[];
   cartItems: CartItem[];
   totalCostOfProductsInCart: number;
 }
@@ -15,6 +16,7 @@ export interface ProductsPageState {
 export const initialProductsPageState: ProductsPageState = {
   products: [],
   cartItems: [],
+  filteredProducts:[],
   totalCostOfProductsInCart: 0
 };
 
@@ -32,19 +34,19 @@ export function ProductsPageReducer(
     case ProductActionTypes.ADD:
       return {
         ...state,
-        cartItems: [...state.cartItems, action.payload].map(
-          product => {
-            return { ...product, quantity: 1, totalPrice: product.unitPrice };
-          }
-        ),
-        products: [...state.products.map(product =>
-          product.id === action.payload.id
-            ? {
-                ...product,
-                isInCart: true
-              }
-            : product
-        )],
+        cartItems: [...state.cartItems, action.payload].map(product => {
+          return { ...product, quantity: 1, totalPrice: product.unitPrice };
+        }),
+        products: [
+          ...state.products.map(product =>
+            product.id === action.payload.id
+              ? {
+                  ...product,
+                  isInCart: true
+                }
+              : product
+          )
+        ],
         totalCostOfProductsInCart: +(
           state.totalCostOfProductsInCart + action.payload.unitPrice
         ).toFixed(2)
@@ -54,18 +56,18 @@ export function ProductsPageReducer(
       let newState = {
         ...state,
         cartItems: [
-          ...state.cartItems.filter(
-            product => product.id !== action.payload.id
-          )
+          ...state.cartItems.filter(product => product.id !== action.payload.id)
         ],
-        products: [...state.products.map(product =>
-          product.id === action.payload.id
-            ? {
-                ...product,
-                isInCart: false
-              }
-            : product
-        )]
+        products: [
+          ...state.products.map(product =>
+            product.id === action.payload.id
+              ? {
+                  ...product,
+                  isInCart: false
+                }
+              : product
+          )
+        ]
       };
       return {
         ...newState,
@@ -95,20 +97,26 @@ export function ProductsPageReducer(
           newState.cartItems
         )
       };
-      case ProductActionTypes.SAVE_CURRENT_CART_AND_REDIRECT_TO_ORDER_SUCCESS:
-      case ProductActionTypes.SAVE_CART_SUCCESS:
-        return{
-          ...state,
-          products:[...state.products.map(product=>{
+    case ProductActionTypes.SAVE_CURRENT_CART_AND_REDIRECT_TO_ORDER_SUCCESS:
+    case ProductActionTypes.SAVE_CART_SUCCESS:
+      return {
+        ...state,
+        products: [
+          ...state.products.map(product => {
             return {
               ...product,
-              isInCart:false
-            }
-          })],
-          cartItems:[],
-          totalCostOfProductsInCart:null
-        }
-
+              isInCart: false
+            };
+          })
+        ],
+        cartItems: [],
+        totalCostOfProductsInCart: null
+      };
+    case ProductActionTypes.SEARCH_FOR_PRODUCT_SUCCESS:
+      return {
+        ...state,
+        products:[...action.payload]
+      };
     default:
       return state;
   }

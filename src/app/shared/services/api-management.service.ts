@@ -9,6 +9,7 @@ export const endpoints = {
         checkToken: '/checkToken',
     },
     products: '/product',
+    searchForProducts:'/product/search',
     cart:{
         save: '/listofitems'
     },

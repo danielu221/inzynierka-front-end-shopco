@@ -12,8 +12,11 @@ export enum ProductActionTypes {
   SAVE_CART = '[Cart] Save cart',
   SAVE_CART_SUCCESS = '[Cart] Save cart success',
   SAVE_CART_FAILURE = '[Cart] Save cart failed',
-  SAVE_CURRENT_CART_AND_REDIRECT_TO_ORDER='[Cart] Save current and redirect to order',
-  SAVE_CURRENT_CART_AND_REDIRECT_TO_ORDER_SUCCESS='[Cart] Save current and redirect to order success'
+  SAVE_CURRENT_CART_AND_REDIRECT_TO_ORDER = '[Cart] Save current and redirect to order',
+  SAVE_CURRENT_CART_AND_REDIRECT_TO_ORDER_SUCCESS = '[Cart] Save current and redirect to order success',
+  SEARCH_FOR_PRODUCT = '[Products]  search for products',
+  SEARCH_FOR_PRODUCT_SUCCESS = '[Products] search for products success',
+  SEARCH_FOR_PRODUCT_FAILURE = '[Products] search for products failure'
 }
 
 export class AddToList implements Action {
@@ -78,9 +81,34 @@ export class SaveCurrentCartAndRedirectToOrder implements Action {
 }
 
 export class SaveCurrentCartAndRedirectToOrderSuccess implements Action {
-  readonly type = ProductActionTypes.SAVE_CURRENT_CART_AND_REDIRECT_TO_ORDER_SUCCESS;
+  readonly type =
+    ProductActionTypes.SAVE_CURRENT_CART_AND_REDIRECT_TO_ORDER_SUCCESS;
 
-  constructor(public payload: { cartId: number,cartName:string, totalItemsPrice:number, cartItems:any}) {}
+  constructor(
+    public payload: {
+      cartId: number;
+      cartName: string;
+      totalItemsPrice: number;
+      cartItems: any;
+    }
+  ) {}
+}
+
+export class SearchForProduct implements Action {
+  readonly type = ProductActionTypes.SEARCH_FOR_PRODUCT;
+
+  constructor(public payload: { searchValue: string }) {}
+}
+
+export class SearchForProductSuccess implements Action {
+  readonly type = ProductActionTypes.SEARCH_FOR_PRODUCT_SUCCESS;
+  constructor(public payload: ProductState[]) {}
+}
+
+export class SearchForProductFailure implements Action {
+  readonly type = ProductActionTypes.SEARCH_FOR_PRODUCT_FAILURE;
+
+  constructor(public payload: any) {}
 }
 
 export type ProductActions =
@@ -94,4 +122,7 @@ export type ProductActions =
   | SaveCartFailure
   | SaveCartSuccess
   | SaveCurrentCartAndRedirectToOrder
-  | SaveCurrentCartAndRedirectToOrderSuccess;
+  | SaveCurrentCartAndRedirectToOrderSuccess
+  | SearchForProduct
+  | SearchForProductSuccess
+  | SearchForProductFailure;
