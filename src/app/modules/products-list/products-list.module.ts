@@ -13,6 +13,7 @@ import { ProductsPageEffects } from 'src/app/core/store/product/product.effects'
 import { ProductService } from 'src/app/core/store/product/product.service';
 import { CartInProductsComponent } from './components/cart/cart.component';
 import { PublishCartModalComponent } from 'src/app/shared/components/publish-cart-modal/publish-cart-modal.component';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -27,6 +28,7 @@ import { PublishCartModalComponent } from 'src/app/shared/components/publish-car
     CommonModule,
     ProductsListRouting,
     SharedModule,
+    FormsModule,
     StoreModule.forFeature('productsPageState', ProductsPageReducer),
     EffectsModule.forFeature([ProductsPageEffects])
   ],

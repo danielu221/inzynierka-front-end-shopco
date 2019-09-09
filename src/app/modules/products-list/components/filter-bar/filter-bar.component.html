@@ -1,17 +1,36 @@
 <div class="navbar navbar-dark bg-dark py-3">
   <div class="container px-3">
-      <ul class="navbar-nav mr-auto text-white d-flex  flex-md-row  p-2 align-items-center">
-        <li class="">
-          Szukaj <input>
-        </li>
+    <ul
+      class="navbar-nav mr-auto text-white d-flex  flex-md-row  p-2 align-items-center"
+    >
+      <li class="">
+        <app-icon-btn
+          style="height:40px"
+          [type]="'submit'"
+          [icon]="'search'"
+          (click)="onSearchClick()"
+          >Szukaj</app-icon-btn
+        >
+        <input
+          [(ngModel)]="searchValue"
+          name="search"
+          type="text"
+          style="height:40px"
+        />
+      </li>
 
-        <!-- <li class="p-2">Sortuj  <input></li> -->
-      </ul>
-      <div class="d-flex align-items-center list-holder" (click)="handleListIconClicked($event)">
-        <i class="material-icons list-icon">
-          list
-          </i>
-          <span *ngIf="numberOfProducts" class="products-quantity">{{numberOfProducts}} na liście</span>
-      </div>
+      <!-- <li class="p-2">Sortuj  <input></li> -->
+    </ul>
+    <div
+      class="d-flex align-items-center list-holder"
+      (click)="handleListIconClicked($event)"
+    >
+      <i class="material-icons list-icon">
+        list
+      </i>
+      <span *ngIf="numberOfProducts" class="products-quantity"
+        >{{ numberOfProducts }} na liście</span
+      >
+    </div>
   </div>
 </div>

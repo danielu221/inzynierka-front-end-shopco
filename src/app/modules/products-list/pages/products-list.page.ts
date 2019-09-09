@@ -31,11 +31,7 @@ export class ProductsListPage implements OnInit {
   }
 
   ngOnInit() {
-    this.products$.subscribe(products => {
-      if (products.length === 0) {
         this.store.dispatch(new LoadProducts());
-      }
-    });
   }
 
   addToList(product: ProductState) {

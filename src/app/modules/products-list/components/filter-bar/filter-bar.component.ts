@@ -2,6 +2,9 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { constructor } from 'q';
 import { MatDialog } from '@angular/material/dialog';
 import { CartInProductsComponent } from '../cart/cart.component';
+import { Store } from '@ngrx/store';
+import { ProductsPageState } from 'src/app/core/store/product/product.reducer';
+import { SearchForProduct } from 'src/app/core/store/product/product.action';
 
 @Component({
   selector: 'app-filter-bar',
@@ -15,20 +18,26 @@ export class FilterBarComponent implements OnInit {
   @Output()
   listIconClicked: EventEmitter<any> = new EventEmitter();
 
-  constructor(
-    public dialog: MatDialog) {}
+  searchValue = '';
+
+  constructor(public dialog: MatDialog,private store: Store<ProductsPageState> ) {}
 
   ngOnInit() {}
 
-  handleListIconClicked(){
+  handleListIconClicked() {
     const dialogRef = this.dialog.open(CartInProductsComponent, {
       width: '800px',
-      height:'650px',
+      height: '650px',
       data: {}
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
     });
+  }
+
+  onSearchClick(){
+    console.log(this.searchValue)
+    this.store.dispatch(new SearchForProduct({searchValue:this.searchValue}));
   }
 }
