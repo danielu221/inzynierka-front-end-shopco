@@ -64,6 +64,17 @@
       <mat-form-field floatLabel="auto">
         <input
           matInput
+          type="number"
+          placeholder="Numer karty płatniczej"
+          [ngrxFormControlState]="(formState$ | async).controls.cardNumber"
+        />
+        <mat-error *ngIf="(formState$ | async).errors.cardNumber?.required">
+          To pole jest wymagane
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field floatLabel="auto">
+        <input
+          matInput
           placeholder="Data urodzenia"
           [ngrxFormControlState]="(formState$ | async).controls.dateOfBirth"
         />

@@ -5,4 +5,5 @@ export interface FormRegister{
     email:string;
     password:string;
     dateOfBirth:string;
+    cardNumber:string
   }

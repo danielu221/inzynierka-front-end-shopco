@@ -39,7 +39,8 @@ const initialValue: FormRegister = {
   phone: '',
   email: '',
   password: '',
-  dateOfBirth: ''
+  dateOfBirth: '',
+  cardNumber: ''
 };
 
 export const INITIAL_STATE = createFormGroupState<FormRegister>(
@@ -53,7 +54,8 @@ export const validateAndUpdateForm = updateGroup<FormRegister>({
   phone: validate(required),
   email: validate(required, email),
   password: validate(required),
-  dateOfBirth: validate(required)
+  dateOfBirth: validate(required),
+  cardNumber: validate(required)
 });
 
 const reducers = combineReducers<State['register'], any>({

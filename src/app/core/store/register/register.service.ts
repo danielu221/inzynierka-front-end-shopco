@@ -28,7 +28,8 @@ export class RegisterService {
       phone: payload.phone,
       email: payload.email,
       password: payload.password,
-      dateOfBirth: payload.dateOfBirth
+      dateOfBirth: payload.dateOfBirth,
+      cardNumber: payload.cardNumber
     };
     return this.http.post(
       this.apiManagement.getURL(endpoints.auth.register),

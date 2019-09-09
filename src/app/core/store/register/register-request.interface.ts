@@ -5,4 +5,5 @@ export interface RegisterRequest {
   email: string;
   password: string;
   dateOfBirth: string;
+  cardNumber: string;
 }
