@@ -271,6 +271,34 @@ export class OrderEffects {
     )
   );
 
+  @Effect()
+  sendProblem = this.actions$.pipe(
+    ofType<OrderActions.SendProblem>(OrderActions.OrderActionTypes.SEND_PROBLEM),
+    map(action => action.payload),
+    switchMap(payload =>
+      this.orderService.sendProblem(payload.orderId, payload.description).pipe(
+        map((res: any) => {
+          const toast: ToastConfig = {
+            title:
+              'Wysłano Twoją wiadomośc. Postaramy się rozwiązać Twój problem jak najszybciej.'
+          };
+          this.toasterService.showSuccessMessage(toast);
+          return new OrderActions.SendProblemSuccess({
+            orderId: payload.orderId
+          });
+        }),
+        catchError((err: HttpErrorResponse) => {
+          const toast: ToastConfig = {
+            title: 'Błąd z wysłaniem żądania',
+            body: `Kod błędu: ${err.status}`
+          };
+          this.toasterService.showErrorMessage(toast);
+          return of(new OrderActions.SendProblemFailure(err));
+        })
+      )
+    )
+  );
+
   mapOrderResStatusToOrderStatus(orderResStatus: string): string {
     switch (orderResStatus) {
       case 'PUBLISHED':

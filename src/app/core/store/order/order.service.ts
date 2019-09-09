@@ -51,4 +51,12 @@ export class OrderService {
       { responseType: 'text' }
     );
   }
+
+  sendProblem(orderId: number, description: string): Observable<any> {
+    return this.http.post(
+      this.apiManagement.getURL(endpoints.order.sendProblem),
+      { dispositionId: orderId, description: description },
+      { responseType: 'text' }
+    );
+  }
 }
