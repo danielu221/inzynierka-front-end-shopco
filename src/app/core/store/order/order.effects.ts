@@ -76,7 +76,9 @@ export class OrderEffects {
                 id: orderRes.listOfItems.id
               },
               code: orderRes.code,
-              deliveryDatetime: orderRes.asap ? 'Jak najszybciej' : orderRes.deliveryDatetime,
+              deliveryDatetime: orderRes.asap
+                ? 'Jak najszybciej'
+                : orderRes.deliveryDatetime,
               status: this.mapOrderResStatusToOrderStatus(
                 orderRes.dispositionStatus.dispositionStatusName
               ),
@@ -111,7 +113,7 @@ export class OrderEffects {
           let ordersToTake: Order[] = [];
           ordersToTake = res.map(orderRes => {
             return {
-              dispositionDeliveryAddress:orderRes.dispositionDeliveryAddress ,
+              dispositionDeliveryAddress: orderRes.dispositionDeliveryAddress,
               listOfItems: {
                 cartItems: orderRes.listOfItems.items.map(orderResItem => {
                   return {
@@ -129,7 +131,9 @@ export class OrderEffects {
                 id: orderRes.listOfItems.id
               },
               code: orderRes.code,
-              deliveryDatetime: orderRes.asap ? 'Jak najszybciej' : orderRes.deliveryDatetime,
+              deliveryDatetime: orderRes.asap
+                ? 'Jak najszybciej'
+                : orderRes.deliveryDatetime,
               status: this.mapOrderResStatusToOrderStatus(
                 orderRes.dispositionStatus.dispositionStatusName
               ),
@@ -184,7 +188,9 @@ export class OrderEffects {
                 id: orderRes.listOfItems.id
               },
               code: orderRes.code,
-              deliveryDatetime: orderRes.asap ? 'Jak najszybciej' : orderRes.deliveryDatetime,
+              deliveryDatetime: orderRes.asap
+                ? 'Jak najszybciej'
+                : orderRes.deliveryDatetime,
               status: this.mapOrderResStatusToOrderStatus(
                 orderRes.dispositionStatus.dispositionStatusName
               ),
@@ -269,6 +275,10 @@ export class OrderEffects {
     switch (orderResStatus) {
       case 'PUBLISHED':
         return OrderStatus.Published;
+      case 'IN_REALIZATION':
+        return OrderStatus.InProgress;
+      case 'COMPLETED':
+        return OrderStatus.Completed;
       default:
         return '';
     }
