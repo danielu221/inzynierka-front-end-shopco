@@ -66,7 +66,7 @@ export function CartsPageReducer(
         ]
       };
 
-    case CartsActionTypes.REMOVE_FROM_CART:
+    case CartsActionTypes.REMOVE_FROM_CART_SUCCESS:
       newState = {
         ...state,
         carts: state.carts.map(cart =>

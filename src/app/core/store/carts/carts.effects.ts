@@ -23,7 +23,7 @@ import { ToastConfig } from 'src/app/shared/interface/toast-config.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { PublishCartModalComponent } from 'src/app/shared/components/publish-cart-modal/publish-cart-modal.component';
 import { CartPreviewComponent } from 'src/app/modules/carts/components/cart-preview/cart-preview.component';
-import * as OrderActions  from '../order/order.action';
+import * as OrderActions from '../order/order.action';
 
 interface CartResponse {
   creationDate: string;
@@ -84,12 +84,12 @@ export class CartsPageEffects {
             title: 'Pomyślnie usunięto listę'
           };
           this.toasterService.showSuccessMessage(toast);
-          return new CartsActions.RemoveCartSuccess({id:action.payload.id});
+          return new CartsActions.RemoveCartSuccess({ id: action.payload.id });
         }),
         catchError((err: HttpErrorResponse) => {
-          let toastBody = `Kod błędu: ${err.status}`
-          if(err.status === 409){
-            toastBody = `Lista znajduje się, w którymś z zamówień`
+          let toastBody = `Kod błędu: ${err.status}`;
+          if (err.status === 409) {
+            toastBody = `Lista znajduje się, w którymś z zamówień`;
           }
           const toast: ToastConfig = {
             title: 'Błąd podczas usuwania listy',
@@ -115,12 +115,19 @@ export class CartsPageEffects {
               title: 'Pomyślnie usunięto przedmiot z listy'
             };
             this.toasterService.showSuccessMessage(toast);
-            return new CartsActions.RemoveFromCartSuccess(res);
+            return new CartsActions.RemoveFromCartSuccess({
+              cartId: action.payload.cartId,
+              cartItemId: action.payload.cartItemId
+            });
           }),
           catchError((err: HttpErrorResponse) => {
+            let toastBody = `Kod błędu: ${err.status}`;
+            if (err.status === 409) {
+              toastBody = `Lista znajduje się, w którymś z zamówień`;
+            }
             const toast: ToastConfig = {
-              title: 'Błąd podczas usuwania przedmiotu',
-              body: `Kod błędu: ${err.status}`
+              title: 'Błąd podczas usuwania produktu z  listy',
+              body: toastBody
             };
             this.toasterService.showErrorMessage(toast);
             return of(new CartsActions.RemoveFromCartFailure(err));
@@ -160,7 +167,10 @@ export class CartsPageEffects {
               return new CartsActions.SaveCartAndRedirectToOrderSuccess({
                 cartId: action.payload.cartId,
                 cartName: action.payload.cartName,
-                totalItemsPrice:this.getTotalItemsPrice(store,action.payload.cartId)
+                totalItemsPrice: this.getTotalItemsPrice(
+                  store,
+                  action.payload.cartId
+                )
               });
             }
             return new CartsActions.UpdateCartSuccess({
@@ -180,30 +190,28 @@ export class CartsPageEffects {
     })
   );
 
-  @Effect({dispatch: false})
+  @Effect({ dispatch: false })
   openOrderDialog = this.actions$.pipe(
-    ofType<CartsActions.OpenCartDialog>(
-      CartsActionTypes.OPEN_CART_DIALOG
-    ),
-    tap((action) => {
+    ofType<CartsActions.OpenCartDialog>(CartsActionTypes.OPEN_CART_DIALOG),
+    tap(action => {
       this.dialog.closeAll();
       this.dialog.open(CartPreviewComponent, {
         width: '800px',
-        height: '650px',  
-        data: {cartId:action.payload.cartId}
+        height: '650px',
+        data: { cartId: action.payload.cartId }
+      });
     })
-  }));
+  );
 
-  @Effect({dispatch: false})
+  @Effect({ dispatch: false })
   closeOrderDialog = this.actions$.pipe(
     ofType<OrderActions.PublishOrderSuccess>(
       OrderActions.OrderActionTypes.PUBLISH_ORDER_SUCCESS
     ),
     tap(() => {
       this.dialog.closeAll();
-  }));
-
-
+    })
+  );
 
   getCartItemsFromStore(store: State, cartId: number) {
     return store.cartsPageState.carts.filter(cart => cart.id === cartId)[0]
@@ -214,7 +222,6 @@ export class CartsPageEffects {
     return store.cartsPageState.carts.filter(cart => cart.id === cartId)[0]
       .totalItemsPrice;
   }
-
 
   constructor(
     private actions$: Actions,

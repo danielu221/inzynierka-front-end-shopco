@@ -45,7 +45,7 @@ export class RemoveFromCart implements Action {
 
 export class RemoveFromCartSuccess implements Action {
   readonly type = CartsActionTypes.REMOVE_FROM_CART_SUCCESS;
-  constructor(public payload: any) {}
+  constructor(public payload: { cartId: number; cartItemId: number }) {}
 }
 
 export class RemoveFromCartFailure implements Action {
@@ -119,6 +119,7 @@ export type CartsActions =
   | UpdateQuantityInCartPreview
   | RemoveFromCart
   | RemoveFromCartFailure
+  | RemoveFromCartSuccess
   | RemoveCartSuccess
   | UpdateCart
   | UpdateCartFailure
